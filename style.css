@@ -4,13 +4,16 @@
 }
 
 body, html{
-  background-image: url(Images/shop-front.jpg);
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100%;
-  width: 100%;
-  background-size: cover;
   font-family: 'Quintessential', cursive;
+}
+
+body.index, html.index{
+    background-image: url(Images/shop-front.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
 }
 
 .navbar-brand{
@@ -43,3 +46,8 @@ body, html{
     margin-top: 10rem;
     margin-left: -11rem;
 }
+
+#About-Info{
+    margin-top: 5rem;
+}
+
