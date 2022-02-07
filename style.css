@@ -8,7 +8,7 @@ body, html{
 }
 
 body.index, html.index{
-    background-image: url(Images/shop-front.jpg);
+    background-image: url(Images/Backgrounds/shop-front.jpg);
     background-position: center;
     background-repeat: no-repeat;
     height: 100%;
@@ -52,3 +52,6 @@ body.index, html.index{
     padding-left: 8rem;
 }
 
+#About-Info img{
+    border-radius: 30%;
+}
