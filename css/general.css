@@ -16,6 +16,11 @@ body.index, html.index{
     background-size: cover;
 }
 
+html.about{
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 .navbar-brand{
     font-size: 1.5rem;
 }
@@ -49,7 +54,13 @@ body.index, html.index{
 
 #About-Info{
     margin-top: 5rem;
+    margin-bottom: 3rem;
     padding-left: 8rem;
+    font-family: 'Comfortaa', cursive;
+}
+
+#About-Info h3{
+    font-family: 'Kanit', sans-serif;
 }
 
 #About-Info img{
