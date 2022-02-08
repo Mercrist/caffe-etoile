@@ -1,3 +1,18 @@
 .cafe-block-content { 
     margin: 20px;
 }
+
+
+.card {
+    width: 18rem;
+    height: 40rem;
+    border: none;
+}
+
+.card-title {
+    font-family: 'Quintessential', cursive;
+}
+
+.menu-section-title { 
+    font-family: 'Quintessential', cursive;
+}
