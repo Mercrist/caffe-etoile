@@ -54,4 +54,6 @@ body.index, html.index{
 
 #About-Info img{
     border-radius: 30%;
+    width: auto;
+    height: 27rem;
 }
