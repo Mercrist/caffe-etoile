@@ -8,6 +8,14 @@
     height: 40rem;
     border: none;
 }
+.card-img-top {
+    width:18rem;
+    height: 25rem;
+}
+
+.card-text { 
+    text-align: left;
+}
 
 .card-title {
     font-family: 'Quintessential', cursive;
@@ -15,4 +23,9 @@
 
 .menu-section-title { 
     font-family: 'Quintessential', cursive;
+}
+
+.menu-item-price {
+    padding-left: 1rem;
+    text-align: right;
 }
