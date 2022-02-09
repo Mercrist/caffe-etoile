@@ -16,7 +16,10 @@ body.index, html.index{
     background-size: cover;
 }
 
-html.about{
+body.about, html.about{
+    background-image: url(../Images/Backgrounds/about.jpg);
+    background-position: center;
+    background-repeat: repeat;
     max-width: 100%;
     overflow-x: hidden;
 }
@@ -57,6 +60,14 @@ html.about{
     margin-bottom: 3rem;
     padding-left: 8rem;
     font-family: 'Comfortaa', cursive;
+}
+
+#About-Info .card, .card-header, .card-body, .card-footer{
+    border-radius: 20%;
+}
+
+#About-Info .card-footer{
+    background-color: #e7e6e6;
 }
 
 #About-Info h3{
