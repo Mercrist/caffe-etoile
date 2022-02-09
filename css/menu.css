@@ -21,6 +21,7 @@
 }
 
 .card-title {
+    font-weight: bold;
     position:relative;
     font-family: 'Quintessential', cursive;
 }
