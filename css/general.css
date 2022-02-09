@@ -4,13 +4,21 @@
 }
 
 body, html{
-  background-image: url(Images/shop-front.jpg);
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100%;
-  width: 100%;
-  background-size: cover;
   font-family: 'Quintessential', cursive;
+}
+
+body.index, html.index{
+    background-image: url(../Images/Backgrounds/shop-front.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+}
+
+html.about{
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 .navbar-brand{
@@ -42,4 +50,21 @@ body, html{
 #Description #Button{
     margin-top: 10rem;
     margin-left: -11rem;
+}
+
+#About-Info{
+    margin-top: 5rem;
+    margin-bottom: 3rem;
+    padding-left: 8rem;
+    font-family: 'Comfortaa', cursive;
+}
+
+#About-Info h3{
+    font-family: 'Kanit', sans-serif;
+}
+
+#About-Info img{
+    border-radius: 30%;
+    width: auto;
+    height: 27rem;
 }
