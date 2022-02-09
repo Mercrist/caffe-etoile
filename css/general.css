@@ -1,6 +1,7 @@
 :root{
     --solid-white: rgba(228, 230, 231, 0.568);
     --salmon: #FF404C;
+    --grey-footer: #e7e6e6;
 }
 
 body, html{
@@ -67,7 +68,7 @@ body.about, html.about{
 }
 
 #About-Info .card-footer{
-    background-color: #e7e6e6;
+    background-color: var(--grey-footer);
 }
 
 #About-Info h3{
