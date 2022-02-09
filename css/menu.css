@@ -1,3 +1,42 @@
 .cafe-block-content { 
     margin: 20px;
 }
+
+
+.card {
+    width: 18rem;
+    height: 40rem;
+    border: none;
+}
+.card-img-top {
+    width:18rem;
+    height: 25rem;
+}
+
+.card-text { 
+    text-align: left;
+    font-family: 'Crimson Pro', serif;
+}
+
+.card-title {
+    font-family: 'Quintessential', cursive;
+}
+
+.menu-section-title { 
+    font-family: 'Quintessential', cursive;
+}
+
+.menu-item-price {
+    padding-left: 1rem;
+    text-align: right;
+}
+
+
+body, html{
+    background-image: url(../Images/menu_pattern.jpg);
+    background-position: center;
+    /* background-repeat: no-repeat; */
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+  }
