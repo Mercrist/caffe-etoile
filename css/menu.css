@@ -7,6 +7,7 @@
     width: 18rem;
     height: 40rem;
     border: none;
+    background-color: transparent;
 }
 .card-img-top {
     width:18rem;
@@ -14,11 +15,13 @@
 }
 
 .card-text { 
+    position:absolute;
     text-align: left;
     font-family: 'Crimson Pro', serif;
 }
 
 .card-title {
+    position:relative;
     font-family: 'Quintessential', cursive;
 }
 
@@ -29,6 +32,12 @@
 .menu-item-price {
     padding-left: 1rem;
     text-align: right;
+}
+
+.item-btn { 
+    position:absolute;
+    bottom:30px;
+    left:0px
 }
 
 
