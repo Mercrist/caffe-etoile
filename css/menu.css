@@ -15,6 +15,7 @@
 
 .card-text { 
     text-align: left;
+    font-family: 'Crimson Pro', serif;
 }
 
 .card-title {
@@ -29,3 +30,13 @@
     padding-left: 1rem;
     text-align: right;
 }
+
+
+body, html{
+    background-image: url(../Images/menu_pattern.jpg);
+    background-position: center;
+    /* background-repeat: no-repeat; */
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+  }
