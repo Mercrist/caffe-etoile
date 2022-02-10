@@ -1,6 +1,8 @@
 :root{
     --solid-white: rgba(228, 230, 231, 0.568);
-    --salmon: #FF404C;
+    --gold: #ffcc40;
+    --grey-footer: #e7e6e6;
+    --grey-transparent: rgba(202, 197, 197, 0);
 }
 
 body, html{
@@ -13,16 +15,42 @@ body.index, html.index{
     background-repeat: no-repeat;
     height: 100%;
     width: 100%;
-    background-size: cover;
+    background-size: cover;   
 }
 
-html.about{
+body.about, html.about{
+    background-image: url(../Images/Backgrounds/about.jpg);
+    background-position: center;
+    background-repeat: repeat;
     max-width: 100%;
     overflow-x: hidden;
 }
 
 .navbar-brand{
     font-size: 1.5rem;
+}
+
+#Description{
+    padding-top: 0.5%;
+    margin: auto;
+    font-size: 3rem;
+}
+
+#Description span{
+    height: 13.5rem;
+    background-color: var(--grey-transparent);
+    backdrop-filter: blur(0.2rem);
+    -webkit-backdrop-filter: blur(0.2rem);
+    border-radius: 2rem;
+}
+
+#Description p{
+    color: var(--gold);
+}
+
+#Description #Button{
+    margin-top: 14rem;
+    margin-left: -15.5rem;
 }
 
 #Info p{
@@ -32,24 +60,17 @@ html.about{
     font-family: None;
 }
 
+#Info img:hover{
+    -webkit-border-radius: 2rem;
+    border-radius: 2rem;
+    -webkit-box-shadow: 0rem 0rem 2rem 0rem white;
+    box-shadow:         0rem 0rem 2rem 0rem white;
+}
+
 #Links a{
     font-size: 1.5rem;
     padding: 2rem;
     color: azure;
-}
-
-#Description{
-    padding-top: 10%;
-    font-size: 2rem;
-}
-
-#Description p{
-    color: 	var(--salmon);
-}
-
-#Description #Button{
-    margin-top: 10rem;
-    margin-left: -11rem;
 }
 
 #About-Info{
@@ -57,6 +78,14 @@ html.about{
     margin-bottom: 3rem;
     padding-left: 8rem;
     font-family: 'Comfortaa', cursive;
+}
+
+#About-Info .card, .card-header, .card-body, .card-footer{
+    border-radius: 20%;
+}
+
+#About-Info .card-footer{
+    background-color: var(--grey-footer);
 }
 
 #About-Info h3{
