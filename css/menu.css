@@ -6,24 +6,46 @@
 .card {
     width: 18rem;
     height: 40rem;
-    border: none;
+    border-color: white;
+    border-width: 5px;
+    padding: 20 px; 
+    background-color: #ffffffde;
 }
+
+.image-wrapper { 
+    height: 350px;
+    overflow: hidden; 
+}
+
 .card-img-top {
-    width:18rem;
-    height: 25rem;
+    max-width: 100%;
+    height: auto;
+    margin-top: auto;
+    margin-bottom: auto; 
 }
 
 .card-text { 
+    position:absolute;
     text-align: left;
     font-family: 'Crimson Pro', serif;
+    font-size: large;
 }
 
 .card-title {
+    font-weight: bold;
+    position:relative;
     font-family: 'Quintessential', cursive;
 }
 
 .menu-section-title { 
+    font-weight: bold;
     font-family: 'Quintessential', cursive;
+    position: relative;
+    margin-left:auto;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 300px; 
 }
 
 .menu-item-price {
@@ -31,12 +53,21 @@
     text-align: right;
 }
 
+.item-btn { 
+    position:absolute;
+    bottom:20px;
+    left:0px
+}
 
-body, html{
-    background-image: url(../Images/menu_pattern.jpg);
-    background-position: center;
-    /* background-repeat: no-repeat; */
+
+
+
+.bg { 
+    background-image: url(../Images/Backgrounds/menu_pattern.jpg);
+    background-position: center; 
+    background-repeat: no-repeat;
     height: 100%;
     width: 100%;
     background-size: cover;
-  }
+    position: fixed;
+}
