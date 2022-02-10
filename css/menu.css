@@ -49,6 +49,7 @@
 }
 
 .menu-item-price {
+    font-family: 'Crimson Pro', serif;
     padding-left: 1rem;
     text-align: right;
 }
@@ -56,7 +57,9 @@
 .item-btn { 
     position:absolute;
     bottom:20px;
-    left:0px
+    left:0px;
+    font-family: 'Crimson Pro', serif;
+
 }
 
 
