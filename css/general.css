@@ -97,3 +97,21 @@ body.about, html.about{
     width: auto;
     height: 27rem;
 }
+
+#Collapsables{
+    margin-top: 3rem;
+    width: 50%;
+}
+
+
+#Collapsables .card{
+    padding-bottom: 2rem;
+}
+
+body.contact, html.contact{
+    overflow-x: hidden;
+}
+
+#Map .col{
+    margin-left: 300rem;
+}
