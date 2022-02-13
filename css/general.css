@@ -3,6 +3,7 @@
     --gold: #ffcc40;
     --grey-footer: #e7e6e6;
     --grey-transparent: rgba(202, 197, 197, 0);
+    --lime: rgba(158, 228, 28, 0.863);
 }
 
 body, html{
@@ -121,7 +122,7 @@ body.contact, html.contact{
     margin-bottom: 10rem;
     overflow: auto;
     max-height: 30rem;
-    background-color: rgba(158, 228, 28, 0.863);
+    background-color: var(--lime);
 }
 
 #Collapsables .collapse, .card-body, .text{
