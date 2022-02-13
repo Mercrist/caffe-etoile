@@ -97,3 +97,55 @@ body.about, html.about{
     width: auto;
     height: 27rem;
 }
+
+body.contact, html.contact{
+    overflow-x: hidden;
+    background: url(../Images/Backgrounds/contact.png);
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+}
+
+#Collapsables{
+    display: block;
+    margin-top: 3rem;
+    width: 50%;
+    text-align: center;
+    font-family: 'Dancing Script', cursive;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+#Collapsables .card{
+    margin-bottom: 10rem;
+    overflow: auto;
+    max-height: 30rem;
+    background-color: rgba(158, 228, 28, 0.863);
+}
+
+#Collapsables .collapse, .card-body, .text{
+    background-color: white;
+}
+
+#Collapsables .Title{
+    font-size: 2em;
+}
+
+#Collapsables .text, .Table strong{
+    font-family: 'Noto Serif Display', serif;   
+}
+
+#Collapsables .Profile img{
+    border-radius: 50%;
+    margin-right: 1rem;
+}
+
+#Collapsables .Profile a{
+    text-decoration: none!important;
+}
+
+table, td{
+    border: solid 2px black;
+    font-family: 'Special Elite', cursive;
+}
