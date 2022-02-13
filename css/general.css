@@ -4,6 +4,7 @@
     --grey-footer: #e7e6e6;
     --grey-transparent: rgba(202, 197, 197, 0);
     --lime: rgb(141, 218, 0);
+    --cyan: rgb(5, 202, 192);
 }
 
 body, html{
@@ -144,6 +145,7 @@ body.contact, html.contact{
 #Collapsables .Profile img{
     border-radius: 50%;
     margin-right: 1rem;
+    border: 3px solid var(--cyan);
 }
 
 #Collapsables .Profile a{
