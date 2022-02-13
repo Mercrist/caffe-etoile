@@ -122,8 +122,12 @@ body.contact, html.contact{
     margin-bottom: 10rem;
     overflow: auto;
     max-height: 30rem;
+}
+
+#Collapsables .card-header{
     background-color: var(--lime);
 }
+
 
 #Collapsables .collapse, .card-body, .text{
     background-color: white;
