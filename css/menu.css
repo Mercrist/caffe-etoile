@@ -84,3 +84,17 @@
     background-size: cover;
     position: fixed;
 }
+
+#Info p{
+    color: rgba(228, 230, 231, 0.568);
+    padding-right: 1.5rem;
+    padding-top: 1rem;
+    font-family: None;
+}
+
+#Info img:hover{
+    -webkit-border-radius: 2rem;
+    border-radius: 2rem;
+    -webkit-box-shadow: 0rem 0rem 2rem 0rem white;
+    box-shadow:         0rem 0rem 2rem 0rem white;
+}
