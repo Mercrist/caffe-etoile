@@ -2,6 +2,19 @@
     margin: 20px;
 }
 
+#Links a{
+    font-size: 1.5rem;
+    padding: 2rem;
+    color: azure;
+    font-family: 'Quintessential', cursive;
+
+}
+
+.navbar-brand{
+    font-size: 1.5rem;
+    font-family: 'Quintessential', cursive;
+}
+
 
 .card {
     width: 18rem;
