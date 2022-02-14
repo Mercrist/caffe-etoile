@@ -3,6 +3,8 @@
     --gold: #ffcc40;
     --grey-footer: #e7e6e6;
     --grey-transparent: rgba(202, 197, 197, 0);
+    --lime: rgb(141, 218, 0);
+    --cyan: rgb(5, 202, 192);
 }
 
 body, html{
@@ -32,7 +34,7 @@ body.about, html.about{
 
 #Description{
     padding-top: 0.5%;
-    margin: auto;
+    margin-left: -3rem;
     font-size: 3rem;
 }
 
@@ -96,4 +98,61 @@ body.about, html.about{
     border-radius: 30%;
     width: auto;
     height: 27rem;
+}
+
+body.contact, html.contact{
+    overflow-x: hidden;
+    background: url(../Images/Backgrounds/contact.png);
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+}
+
+#Collapsables{
+    display: block;
+    margin-top: 6rem;
+    width: 50%;
+    text-align: center;
+    font-family: 'Dancing Script', cursive;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+#Collapsables .card{
+    margin-bottom: 10rem;
+    overflow: auto;
+    max-height: 30rem;
+}
+
+#Collapsables .card-header{
+    background-color: var(--lime);
+}
+
+
+#Collapsables .collapse, .card-body, .text{
+    background-color: white;
+}
+
+#Collapsables .Title{
+    font-size: 2em;
+}
+
+#Collapsables .text, .Table strong{
+    font-family: 'Noto Serif Display', serif;   
+}
+
+#Collapsables .Profile img{
+    border-radius: 50%;
+    margin-right: 1rem;
+    border: 3px solid var(--cyan);
+}
+
+#Collapsables .Profile a{
+    text-decoration: none!important;
+}
+
+table, td{
+    border: solid 2px black;
+    font-family: 'Special Elite', cursive;
 }
