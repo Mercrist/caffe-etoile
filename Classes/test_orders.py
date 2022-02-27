@@ -1,3 +1,4 @@
+from Shopping import ShoppingCart, Receipt
 import unittest
 
 class TestReceipt(unittest.TestCase):
