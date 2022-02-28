@@ -1,4 +1,5 @@
 from Shopping import ShoppingCart, Receipt
+from items import MenuItem
 import unittest
 
 class TestReceipt(unittest.TestCase):
@@ -47,15 +48,6 @@ class TestReceipt(unittest.TestCase):
         self.assertCountEqual(self.receipt1.get_order(), [{"Macaroons": [3, 6.00], "New York Cheesecakes": [2, 12.00], "Banana Bread": [1, 3.00]}, 45.00, 3.15, 48.15, 
                               ["Sunday", "9:00", "AM"], "Yariel"])
         self.assertCountEqual(self.receipt2.get_order(), [{"Capuccino": [1, 3.00], "BLT": [1, 10.00], "French Croissant": [1, 5.00]}, 21.00, 1.47, 22.47, [], "Xavier"])
-
-
-class TestCart(unittest.TestCase):
-    '''Tests the Receipt class along with its methods.'''
-    def test_types(self):
-        pass
-
-    def test_values(self):
-        pass
 
 
 if __name__ == "__main__":

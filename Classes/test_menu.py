@@ -1,4 +1,4 @@
-from menu import MenuItem
+from items import MenuItem
 import unittest
 
 class TestMenuItem(unittest.TestCase):
