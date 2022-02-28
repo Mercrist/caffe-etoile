@@ -23,7 +23,6 @@ class TestMenuItem(unittest.TestCase):
         self.assertRaises(ValueError, MenuItem, "item_name", -2, "link", "description")
         self.assertRaises(ValueError, MenuItem, "item_name", 5, "", "description")
         self.assertRaises(ValueError, MenuItem, "item_name", 6, "link", "")
-        self.assertRaises(ValueError, MenuItem, "item_name", 10, "link", "description")
 
 
 if __name__ == "__main__":
