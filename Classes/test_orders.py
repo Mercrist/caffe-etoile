@@ -3,6 +3,7 @@ import unittest
 
 class TestReceipt(unittest.TestCase):
     def setUp(self):
+        '''Test some correctly initialized receipts'''
         #Receipt(Items, Time, Name)
         self.receipt1 = Receipt({"Macaroons": [3, 6.00], "New York Cheesecakes": [2, 12.00], "Banana Bread": [1, 3.00]}, ["Sunday", "9:00", "AM"], "Yariel")
         self.receipt2 = Receipt({"Capuccino": [1, 3.00], "BLT": [1, 10.00], "French Croissant": [1, 5.00], "Banana Bread": [1, 3.00]}, [], "Xavier")
