@@ -1,40 +1,51 @@
 from Shopping import ShoppingCart, Receipt
-from items import MenuItem
+from dataclasses import MenuItem, Reservation
 import unittest
 
 class TestReceipt(unittest.TestCase):
     def setUp(self):
         '''Test some correctly initialized receipts'''
-        #Receipt(Items, Time, Name)
-        self.receipt1 = Receipt({"Macaroons": [3, 6.00], "New York Cheesecakes": [2, 12.00], "Banana Bread": [1, 3.00]}, ["Sunday", "9:00", "AM"], "Yariel")
-        self.receipt2 = Receipt({"Capuccino": [1, 3.00], "BLT": [1, 10.00], "French Croissant": [1, 5.00], "Banana Bread": [1, 3.00]}, [], "Xavier")
+        #Receipt(List of Items, Reservation Object, Name)
+        self.item1 = MenuItem("Macaroons", 6.00, 1)
+        self.item2 = MenuItem("New York Cheesecakes", 12.00, 2)
+        self.item3 = MenuItem("Banana Bread", 3.00, 1)    
+        self.item4 = MenuItem("Capuccino", 3.00, 1)
+        self.item5 = MenuItem("BLT", 10.00, 1)
+        self.item6 = MenuItem("French Croissant", 5.00, 1)
 
-    def test_init_types(self):
+        self.reservation1 = Reservation("Sunday", "9:00", "AM")
+        self.reservation2 = Reservation("Tuesday", "5:00", "pm")
+
+        self.receipt1 = Receipt([self.item1, self.item2, self.item3], self.reservation1, "Yariel")
+        self.receipt2 = Receipt([self.item4, self.item5, self.item6, self.item3], None, "Xavier")
+
+    def test_init(self):
         'Testing Items field'
-        self.assertRaises(TypeError, Receipt, False, ["Tuesday", "8:00", "AM"], "Bob")
-        self.assertRaises(TypeError, Receipt, None, ["Tuesday", "8:00", "AM"], "Bob")
-        self.assertRaises(TypeError, Receipt, 10.38, ["Tuesday", "8:00", "AM"], "Bob")
-        self.assertRaises(TypeError, Receipt, [], ["Tuesday", "8:00", "AM"], "Bob")
-        self.assertRaises(TypeError, Receipt, "2x Cake", ["Tuesday", "8:00", "AM"], "Bob")
-        self.assertRaises(TypeError, Receipt, None, ["Tuesday", "8:00", "AM"], "Bob") 
-        self.assertRaises(ValueError, Receipt, {}, ["Tuesday", "8:00", "AM"], "Bob") #Can't make an empty reservation
-        'Testing Time field'
-        self.assertRaises(TypeError, Receipt, {"Espresso": [1, 1.00]}, True, "Bob")
-        self.assertRaises(TypeError, Receipt, {"Espresso": [1, 1.00]}, 5.00, "Bob")
-        self.assertRaises(TypeError, Receipt, {"Espresso": [1, 1.00]}, (1+2j), "Bob")
-        self.assertRaises(TypeError, Receipt, {"Espresso": [1, 1.00]}, {}, "Bob")
-        self.assertRaises(TypeError, Receipt, {"Espresso": [1, 1.00]}, None, "Bob")
-        self.assertRaises(ValueError, Receipt, {"Espresso": [1, 1.00]}, ["Saturday", "7:00"], "Bob") #can't have only two attributes
+        self.assertRaises(TypeError, Receipt, False, self.reservation1, "Bob")
+        self.assertRaises(TypeError, Receipt, None, self.reservation1, "Bob")
+        self.assertRaises(TypeError, Receipt, 10.38, self.reservation1, "Bob")
+        self.assertRaises(TypeError, Receipt, "2x Cake", self.reservation1, "Bob")
+        self.assertRaises(TypeError, Receipt, {}, self.reservation1, "Bob") 
+        self.assertRaises(TypeError, Receipt, MenuItem("Macaroons", 7.00, 1), self.reservation1, "Bob")
+        self.assertRaises(ValueError, Receipt, [], self.reservation1, "Bob") #Can't make a reservation without food
+        self.assertRaises(ValueError, Receipt, ["Banana", "Coconut"], self.reservation1, "Bob") 
+        self.assertRaises(ValueError, Receipt, [15, 13], self.reservation1, "Bob") 
+        'Testing Reservations field'
+        self.assertRaises(TypeError, Receipt, [self.item4], True, "Bob")
+        self.assertRaises(TypeError, Receipt, [self.item4], 5.00, "Bob")
+        self.assertRaises(TypeError, Receipt, [self.item4], (1+2j), "Bob")
+        self.assertRaises(TypeError, Receipt, [self.item4], {}, "Bob")
         'Testing Names Field'
-        self.assertRaises(TypeError, Receipt, {"Espresso": [1, 1.00]}, ["Tuesday", "8:00", "AM"], 1010)
-        self.assertRaises(TypeError, Receipt, {"Espresso": [1, 1.00]}, ["Tuesday", "8:00", "AM"], None)
-        self.assertRaises(TypeError, Receipt, {"Espresso": [1, 1.00]}, ["Tuesday", "8:00", "AM"], ['J', 'o', 'h', 'n'])
-        self.assertRaises(TypeError, Receipt, {"Espresso": [1, 1.00]}, ["Tuesday", "8:00", "AM"], (5+10j))
-        self.assertRaises(TypeError, Receipt, {"Espresso": [1, 1.00]}, ["Tuesday", "8:00", "AM"], 323.100)
-        self.assertRaises(TypeError, Receipt, {"Espresso": [1, 1.00]}, ["Tuesday", "8:00", "AM"], {})
-        self.assertRaises(ValueError, Receipt, {"Espresso": [1, 1.00]}, ["Tuesday", "8:00", "AM"], "") #No empty names or numeric names
-        self.assertRaises(ValueError, Receipt, {"Espresso": [1, 1.00]}, ["Tuesday", "8:00", "AM"], "  ")
-        self.assertRaises(ValueError, Receipt, {"Espresso": [1, 1.00]}, ["Tuesday", "8:00", "AM"], "34Ronald87")
+        self.assertRaises(TypeError, Receipt, [self.item4], self.reservation2, 1010)
+        self.assertRaises(TypeError, Receipt, [self.item4], self.reservation2, None)
+        self.assertRaises(TypeError, Receipt, [self.item4], self.reservation2, ['J', 'o', 'h', 'n'])
+        self.assertRaises(TypeError, Receipt, [self.item4], self.reservation2, (5+10j))
+        self.assertRaises(TypeError, Receipt, [self.item4], self.reservation2, 323.100)
+        self.assertRaises(TypeError, Receipt, [self.item4], None, {})
+        self.assertRaises(ValueError, Receipt, [self.item4], None, "") 
+        self.assertRaises(ValueError, Receipt, [self.item4], None, "  ") #No empty names 
+        self.assertRaises(ValueError, Receipt, [self.item4], None, "34Ronald87") 
+        self.assertRaises(ValueError, Receipt, [self.item4], None, "Candace@White") #No Numeric names
 
     def test_values(self):
         '''Tests the Receipt class along with its methods.'''
@@ -44,10 +55,9 @@ class TestReceipt(unittest.TestCase):
         self.assertAlmostEquals(self.receipt2.tax(), 1.47)
         self.assertAlmostEquals(self.receipt1.total(), 48.15)
         self.assertAlmostEquals(self.receipt2.total(), 22.47)
-        #[{Item: [Freq, Price]}, Subtotal, Tax, Total, Time, Name] -> will get passed to string format for the CLI to generate the receipt
-        self.assertCountEqual(self.receipt1.get_order(), [{"Macaroons": [3, 6.00], "New York Cheesecakes": [2, 12.00], "Banana Bread": [1, 3.00]}, 45.00, 3.15, 48.15, 
-                              ["Sunday", "9:00", "AM"], "Yariel"])
-        self.assertCountEqual(self.receipt2.get_order(), [{"Capuccino": [1, 3.00], "BLT": [1, 10.00], "French Croissant": [1, 5.00]}, 21.00, 1.47, 22.47, [], "Xavier"])
+        #[Menu Items], Subtotal, Tax, Total, Reservation, Name] -> will get passed to string format for the CLI to generate the receipt
+        self.assertCountEqual(self.receipt1.get_order(), [[self.item1, self.item2, self.item3], 45.00, 3.15, 48.15,  self.reservation1, "Yariel"])
+        self.assertCountEqual(self.receipt2.get_order(), [[self.item4, self.item5, self.item6, self.item3], 21.00, 1.47, 22.47, None, "Xavier"])
 
 
 if __name__ == "__main__":
