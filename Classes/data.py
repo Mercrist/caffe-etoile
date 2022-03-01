@@ -1,0 +1,2 @@
+foods = {}
+working_hours = {}
