@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from time import strptime
-import data
 
 @staticmethod
 def validTime(time:str)->bool:
