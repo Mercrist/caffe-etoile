@@ -1,6 +1,6 @@
 from statics import MenuItem
 
-foods = {
+menu = {
     #coffee
     "Espresso": MenuItem("Espresso", 1.00, "Coffee"), 
     "Cappuccino": MenuItem("Cappuccino", 3.00, "Coffee"), 
