@@ -1,4 +1,4 @@
-from Shopping import ShoppingCart, Receipt
+from Shopping import Receipt
 from statics import MenuItem, Reservation
 import unittest
 

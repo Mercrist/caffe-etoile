@@ -2,14 +2,14 @@ import unittest
 from Shopping import ShoppingCart 
 from statics import MenuItem, Reservation
 
-
 class TestShoppingCart(unittest.TestCase):
     def setUp(self) -> None:
         self.cart = ShoppingCart("xavier")
         self.cart2 = ShoppingCart("yariel")
         self.cart2.add_items('Espresso',1)
         self.cart2.add_items('Americano',3)
-        self.cart2.set_reservation('Sunday','12:00','PM')
+        self.cart2.set_reservation(Reservation('Sunday','12:00','PM'))
+
     def test_types(self):
         self.assertRaises(TypeError,self.cart.add_items(10,5))
         self.assertRaises(TypeError, self.cart.add_items("Espresso","1"))
@@ -31,8 +31,8 @@ class TestShoppingCart(unittest.TestCase):
 
     def test_cart_attributes(self):
         self.assertTrue(len(self.cart.items) == 0) 
+        self.assertTrue(self.cart.reservation == None)
         self.assertTrue(self.cart.total == 0.00)
         self.assertTrue(len(self.cart2.items) == 4)
         self.assertTrue(self.cart2.reservation == Reservation("Sunday","12:00","PM"))
-
 
