@@ -28,7 +28,10 @@ def in_cafe_schedule(day: str, hour:str, meridiem:str)->bool:
     # when the meridiem is 'PM'
     closing_time = strptime(data.working_hours.get(day)[CLOSING].hour, '%H:%M')
     if given_time.tm_hour == closing_time.tm_hour:
-        return given_time.tm_min <= closing_time.tm_min and given_time.tm_sec <= closing_time.tm_sec #check the minutes, a minute later we're close
+        if given_time.tm_min == closing_time.tm_min:
+            return given_time.tm_sec <= closing_time.tm_sec #check the minutes, a minute later we're closed
+
+        return given_time.tm_min < closing_time.tm_min
 
     return given_time.tm_hour < closing_time.tm_hour
     
