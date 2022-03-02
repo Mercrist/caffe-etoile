@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from time import strptime
+import data
 
 @staticmethod
 def validTime(time:str)->bool:
@@ -13,9 +14,24 @@ def validTime(time:str)->bool:
     return time_obj.tm_hour <= 12 or time_obj.tm_hour >= 1
 
 @staticmethod
-def workingHours(day: str, time:str, meridiem:str)->bool:
+def in_cafe_schedule(day: str, hour:str, meridiem:str)->bool:
     "Returns whether the working hours fit within a day or not according to the website's schedule."
-    pass
+    OPENING = 0 #opening and closing time offsets
+    CLOSING = 1
+    given_time = strptime(hour, '%H:%M')
+    meridiem = meridiem.upper()
+
+    if meridiem == "AM": #compare only against opening hours, strictly if reservation is before opening hours
+        opening_time = strptime(data.working_hours.get(day)[OPENING].hour, '%H:%M')  
+        return given_time.tm_hour >= opening_time.tm_hour
+            
+    # when the meridiem is 'PM'
+    closing_time = strptime(data.working_hours.get(day)[CLOSING].hour, '%H:%M')
+    if given_time.tm_hour == closing_time.tm_hour:
+        return given_time.tm_min <= closing_time.tm_min and given_time.tm_sec <= closing_time.tm_sec #check the minutes, a minute later we're close
+
+    return given_time.tm_hour < closing_time.tm_hour
+    
 
 
 @dataclass()
@@ -44,22 +60,20 @@ class MenuItem:
 @dataclass()
 class Reservation:
     day: str
-    time: str
+    hour: str
     meridiem: str
 
-    def __init__(self, day:str, time: str, meridiem: str):
-        self.working = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-
+    def __init__(self, day:str, hour: str, meridiem: str):
         if type(day) != str:
             raise TypeError("Day must be a valid string! Please enter a weekday.")
 
-        if day not in self.working:
+        if day not in data.working_hours:
             raise ValueError("Not a valid working day!")
 
-        if type(time) != str:
-            raise TypeError("Time must be a string object!")
+        if type(hour) != str:
+            raise TypeError("Time must be a string!")
 
-        if not validTime(time):
+        if not validTime(hour):
             raise ValueError("Time must be in the 12 hour format!")
 
         if type(meridiem) != str:
@@ -68,9 +82,9 @@ class Reservation:
         if meridiem.upper() not in ['AM', 'PM'] or len(meridiem) != 2:
             raise ValueError("Not a valid meridiem! Remember meridiem means AM or PM strictly!")
 
-        if not workingHours(day, time, meridiem):
+        if not in_cafe_schedule(day, hour, meridiem):
             raise ValueError("The cafe isn't open during these hours!")
 
         self.day = day 
-        self.time = time
+        self.hour = hour
         self.meridiem = meridiem

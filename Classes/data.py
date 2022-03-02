@@ -1,3 +1,4 @@
+from collections import namedtuple
 from statics import MenuItem
 
 menu = {
@@ -25,4 +26,14 @@ menu = {
     "Macaroons": MenuItem("Macaroons", 2.00, "Desserts")
     }
 
-working_hours = {}
+hour_format = namedtuple('hour_format', 'hour, meridiem') #accessing the opened and closing hours by .get(day)[0 or 1].hour and .meridiem
+
+working_hours = {
+    "Sunday": [hour_format("9:00", "AM"), hour_format("3:00", "PM")],
+    "Monday": [hour_format("7:00", "AM"), hour_format("5:00", "PM")],
+    "Tuesday": [hour_format("7:00", "AM"), hour_format("5:00", "PM")],
+    "Wednesday": [hour_format("7:00", "AM"), hour_format("5:00", "PM")],
+    "Thursday": [hour_format("7:00", "AM"), hour_format("5:00", "PM")],
+    "Friday": [hour_format("7:00", "AM"), hour_format("3:00", "PM")],
+    "Saturday": [hour_format("9:00", "AM"), hour_format("3:00", "PM")]
+}

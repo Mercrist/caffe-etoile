@@ -3,7 +3,7 @@ from Shopping import ShoppingCart
 from statics import MenuItem, Reservation
 
 class TestShoppingCart(unittest.TestCase):
-    def setUp(self) -> None:
+    def setUp(self):
         self.cart = ShoppingCart("xavier")
         self.cart2 = ShoppingCart("yariel")
         self.cart2.add_items('Espresso',1)
@@ -26,6 +26,7 @@ class TestShoppingCart(unittest.TestCase):
         self.assertRaises(ValueError, self.cart.set_reservation("Saturday","1:00","AM"))
         self.assertRaises(ValueError, self.cart.set_reservation("Monday", "4:00", "AM"))
         self.assertRaises(ValueError, self.cart.set_reservation("twensday", "4:00","PM"))
+        self.assertRaises(ValueError, self.cart.set_reservation("Monday","100:00", "AM"))
         self.assertRaises(ValueError, self.cart.set_reservation("Monday","100:00", "AM"))
 
 
