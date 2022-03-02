@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from multiprocessing.sharedctypes import Value
 from time import strptime
 import data
 
@@ -42,8 +41,6 @@ class MenuItem:
         self.price = price
         self.image_link = image_link
         self.description = description
-        self.amount = amount
-
 
 @dataclass()
 class Reservation:
