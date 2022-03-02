@@ -12,10 +12,7 @@ def validTime(time:str)->bool:
     except ValueError:
         return False
 
-    if time_obj.tm_hour <= 12 or time_obj.tm_hour >= 1:
-        return True
-
-    return False
+    return time_obj.tm_hour <= 12 or time_obj.tm_hour >= 1
 
 @staticmethod
 def workingHours(day: str, time:str, meridiem:str)->bool:
