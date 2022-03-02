@@ -24,11 +24,11 @@ def workingHours(day: str, time:str, meridiem:str)->bool:
 class MenuItem:
     name: str
     price: float
+    category: str
     image_link: str
     description: str
-    amount: int
 
-    def __init__(self, name:str, price:int, amount:int, description:str = "", image_link:str = ""):
+    def __init__(self, name:str, price:int, description:str = "", category:str = "", image_link:str = ""):
         if type(name) is not str or type(image_link) is not str or type(description) is not str:
             raise TypeError("Invalid type passed. The item's name, image link and description should be strings!")
         if type(price) is not int:
