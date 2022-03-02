@@ -1,5 +1,5 @@
 from Shopping import ShoppingCart, Receipt
-from dataclasses import MenuItem, Reservation
+from statics import MenuItem, Reservation
 import unittest
 
 class TestReceipt(unittest.TestCase):
