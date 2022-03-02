@@ -1,6 +1,4 @@
-from dataclasses import MenuItem, Reservation
-from multiprocessing.sharedctypes import Value
-from typing import Type
+from statics import MenuItem, Reservation
 import unittest
 
 class TestMenuItem(unittest.TestCase):

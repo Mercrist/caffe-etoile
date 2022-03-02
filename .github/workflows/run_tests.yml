@@ -1,6 +1,6 @@
 name: Unit tests
 
-on: [push, merge]
+on: [push, pull_request]
 
 jobs:
   build:
