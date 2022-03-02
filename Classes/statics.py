@@ -3,7 +3,7 @@ from time import strptime
 import data
 
 @staticmethod
-def validTime(time:str)->bool:
+def valid_time(time:str)->bool:
     "Returns whether a given string is in a valid 12 hour time format."
     try:
         time_obj = strptime(time, '%H:%M')
@@ -42,23 +42,30 @@ class MenuItem:
     name: str
     price: float
     category: str
-    image_link: str
     description: str
+    image_link: str
 
-    def __init__(self, name:str, price:int, description:str = "", category:str = "", image_link:str = ""):
+    def __init__(self, name:str, price:int, category:str = "", description:str = "", image_link:str = ""):
         if type(name) is not str or type(image_link) is not str or type(description) is not str:
             raise TypeError("Invalid type passed. The item's name, image link and description should be strings!")
+
         if type(price) is not int:
             raise TypeError("The items price should be an int.")
+
         if len(name) == 0 or len(image_link) == 0 or len(description) == 0:
             raise ValueError("Empty string are not valid! Check that values aren't empty")
+
         if price <= 0:
             raise ValueError("Items cannot be priced 0 or less!")
+
+        if name not in data.menu:
+            raise ValueError("That food item isn't on the menu!")
         
         self.name = name 
         self.price = price
-        self.image_link = image_link
+        self.category = category
         self.description = description
+        self.image_link = image_link
 
 @dataclass()
 class Reservation:
@@ -76,7 +83,7 @@ class Reservation:
         if type(hour) != str:
             raise TypeError("Time must be a string!")
 
-        if not validTime(hour):
+        if not valid_time(hour):
             raise ValueError("Time must be in the 12 hour format!")
 
         if type(meridiem) != str:
