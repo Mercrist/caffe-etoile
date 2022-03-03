@@ -48,3 +48,6 @@ class TestShoppingCart(unittest.TestCase):
         self.assertTrue(self.cart.total == 0.00)
         self.assertTrue(len(self.cart2.items) == 4)
         self.assertTrue(self.cart2.reservation == Reservation("Sunday","12:00","PM"))
+
+    if __name__ == "__main__":
+        unittest.main()

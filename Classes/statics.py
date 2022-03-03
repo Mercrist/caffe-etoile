@@ -3,7 +3,6 @@ from time import strptime
 from collections import namedtuple
 
 
-
 @staticmethod
 def valid_time(time:str)->bool:
     "Returns whether a given string is in a valid 12 hour time format."
@@ -25,11 +24,11 @@ def in_cafe_schedule(day: str, hour:str, meridiem:str)->bool:
     day = day.lower()
 
     if meridiem == "AM": #compare only against opening hours, strictly if reservation is before opening hours
-        opening_time = strptime(data.working_hours.get(day)[OPENING].hour, '%H:%M')  
+        opening_time = strptime(working_hours.get(day)[OPENING].hour, '%H:%M')  
         return given_time.tm_hour >= opening_time.tm_hour
             
     # when the meridiem is 'PM'
-    closing_time = strptime(data.working_hours.get(day)[CLOSING].hour, '%H:%M')
+    closing_time = strptime(working_hours.get(day)[CLOSING].hour, '%H:%M')
     if given_time.tm_hour == closing_time.tm_hour:
         if given_time.tm_min == closing_time.tm_min:
             return given_time.tm_sec <= closing_time.tm_sec #check the minutes, a minute later we're closed
@@ -48,12 +47,12 @@ class MenuItem:
     description: str
     image_link: str
 
-    def __init__(self, name:str, price:int, category:str = "", description:str = "", image_link:str = ""):
+    def __init__(self, name:str, price, category:str = "", description:str = "", image_link:str = ""):
         if type(name) is not str or type(image_link) is not str or type(description) is not str:
             raise TypeError("Invalid type passed. The item's name, image link and description should be strings!")
 
-        if type(price) is not int:
-            raise TypeError("The items price should be an int.")
+        if type(price) not in [int,float]:
+            raise TypeError("The items price should be a number.")
 
         if len(name) == 0 or len(image_link) == 0 or len(description) == 0:
             raise ValueError("Empty string are not valid!")
@@ -61,10 +60,8 @@ class MenuItem:
         if price <= 0:
             raise ValueError("Items cannot be priced 0 or less!")
 
-        if name not in menu:
-            raise ValueError(f"{name} isn't on the menu!")
         
-        self.name = name 
+        self.name = name.lower()
         self.price = price
         self.category = category
         self.description = description
@@ -80,7 +77,7 @@ class Reservation:
         if type(day) != str:
             raise TypeError("Day must be a valid string! Please enter a weekday.")
 
-        if day.lower() not in data.working_hours:
+        if day.lower() not in working_hours:
             raise ValueError(f"{day} is not a valid working day!")
 
         if type(hour) != str:
@@ -105,31 +102,30 @@ class Reservation:
     def __str__(self):
         return f"{self.day} at {self.hour} {self.meridiem}"
 
-
 menu = {
     #coffee
-    "espresso": MenuItem("Espresso", 1.00, "Coffee"), 
-    "cappuccino": MenuItem("Cappuccino", 3.00, "Coffee"), 
-    "americano": MenuItem("Americano", 2.00, "Coffee"),
-    "vietnamese egg coffee": MenuItem("Vietnamese Egg Coffee", 3.00, "Specialty"),
-    "cuban cortadito": MenuItem("Cuban Cortadito", 3.00, "Specialty"),
-    "turkish coffee": MenuItem("Turkish Coffee", 3.00, "Specialty"), 
+    "espresso": MenuItem("Espresso", 1.00, "Coffee","The staple drink of italian origin, the espresso shot offers a strong coffee taste, showing the bean's flavors as well as leaving a nice crema on the top to enjoy.","https://bit.ly/3Ljp8xC"), 
+    "cappuccino": MenuItem("Cappuccino", 3.00, "Coffee","Espresso-based drink with a nice, steamed milk foam, the cappuccino gives a soft yet rich drinking experience.","https://bit.ly/3Baw4bB"), 
+    "americano": MenuItem("Americano", 2.00, "Coffee", "A diluted espresso shot, the americano looks to keep the espresso's deep flavors while softening it's strength.", "https://bit.ly/3Llk8Z8"),
+    "vietnamese egg coffee": MenuItem("Vietnamese Egg Coffee", 3.00, "Specialty","Considered a delicacy in Vietnam, egg coffee combines their world class robusta beans with an egg for crema.","https://bit.ly/3oUQEbl"),
+    "cuban cortadito": MenuItem("Cuban Cortadito", 3.00, "Specialty", "A small espresso shot with a cut of heated, sweetened condesed milk, taste a part of Cuban culture.", "https://bit.ly/3LtSolp"),
+    "turkish coffee": MenuItem("Turkish Coffee", 3.00, "Specialty", "Coffee prepared in a <i>cezve</i> and prepared without filtering, experience a tradition existing since the Ottoman Empire.", "https://bit.ly/3HJ505O"), 
 
     #sandwiches
-    "breakfast panini": MenuItem("Breakfast Panini", 7.00, "Sandwiches"),
-    "avocado toast": MenuItem("Avocado Toast", 5.00, "Sandwiches"),
-    "blt": MenuItem("BLT", 5.00, "Sandwiches"),
+    "breakfast panini": MenuItem("Breakfast Panini", 7.00, "Sandwiches", "Buttered Panini bread stuffed with egg, spinach, and more.", "https://bit.ly/3gGhaR2"),
+    "avocado toast": MenuItem("Avocado Toast", 5.00, "Sandwiches", "Toasted bread with slices of avocado along with whatever topping you'd like.", "https://bit.ly/3JrtTDq"),
+    "blt": MenuItem("BLT", 5.00, "Sandwiches", "Bacon, Lettuce, and Tomato.", "https://bit.ly/3oNtrHL"),
 
     #pastries
-    "french croissant": MenuItem("French Croissant", 3.00, "Pastries"),
-    "puerto rican quesito": MenuItem("Puerto Rican Quesito", 2.00, "Pastries"),
-    "mexican concha" : MenuItem("Mexican Concha", 3.00, "Pastries"), 
+    "french croissant": MenuItem("French Croissant", 3.00, "Pastries", "Crescent shaped delicacy, made from dough layered with butter leading to a layered, flaky texture.", "https://bit.ly/3HGS40r"),
+    "puerto rican quesito": MenuItem("Puerto Rican Quesito", 2.00, "Pastries", "Rich, cheese filled puff pastry dough brushed with a simple sugar glaze.", "https://bit.ly/3Ba4gUU"),
+    "mexican concha" : MenuItem("Mexican Concha", 3.00, "Pastries", "Concha's, or <i>shell</i>, are ubiquitous in Mexican culture coated in a cruncy topping.", "https://bit.ly/33bDn6j"), 
 
     #desserts
-    "banana bread": MenuItem("Banana Bread", 3.00, "Desserts"), 
-    "new york cheesecake": MenuItem("New York Cheesecake", 4.00, "Desserts"),
-    "macaroons": MenuItem("Macaroons", 2.00, "Desserts")
-    }
+    "banana bread": MenuItem("Banana Bread", 3.00, "Desserts", "Sweet and savory bread with a crumbly texture serves a nice pair to a cup of coffee.", "https://bit.ly/3rLklNL"), 
+    "new york cheesecake": MenuItem("New York Cheesecake", 4.00, "Desserts", "A staple of the big apple, comes with a reduced strawberry coating to enchance its flavor.", "https://bit.ly/3HPMQzh"),
+    "macaroons": MenuItem("Macaroons", 2.00, "Desserts", "Small cakes made from almonds mixed with sugar and a grand variety of flavorings.", "https://bit.ly/3HPNiNZ")
+}
 
 hour_format = namedtuple('hour_format', 'hour, meridiem') #accessing the opened and closing hours by .get(day)[0 or 1].hour and .meridiem
 
