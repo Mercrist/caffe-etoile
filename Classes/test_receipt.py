@@ -1,4 +1,4 @@
-from Shopping import ShoppingCart, Receipt
+from Shopping import Receipt
 from statics import MenuItem, Reservation
 import unittest
 
@@ -19,7 +19,7 @@ class TestReceipt(unittest.TestCase):
         self.assertRaises(TypeError, Receipt, 10.38, self.reservation1, "Bob")
         self.assertRaises(TypeError, Receipt, "2x Cake", self.reservation1, "Bob")
         self.assertRaises(TypeError, Receipt, [], self.reservation1, "Bob") 
-        self.assertRaises(TypeError, Receipt, MenuItem("Macaroons", 7.00, 1), self.reservation1, "Bob")
+        self.assertRaises(TypeError, Receipt, MenuItem("Macaroons", 7.00), self.reservation1, "Bob")
         self.assertRaises(TypeError, Receipt, ["Banana", "Coconut"], self.reservation1, "Bob") 
         self.assertRaises(TypeError, Receipt, [15, 13], self.reservation1, "Bob") 
         self.assertRaises(ValueError, Receipt, {}, self.reservation1, "Bob") #Can't make a reservation without food

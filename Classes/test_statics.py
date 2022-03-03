@@ -61,6 +61,7 @@ class TestReservation(unittest.TestCase):
         self.assertRaises(ValueError, Reservation, "Sunday", "3:01", "PM")
         self.assertRaises(ValueError, Reservation, "Wednesday", "6:59", "AM")
         self.assertRaises(ValueError, Reservation, "Friday", "6:00", "PM")
+        self.assertRaises(ValueError, Reservation, "Thursday", "6:58", "AM")
 
 if __name__ == "__main__":
     unittest.main(failfast=True)
