@@ -1,8 +1,6 @@
 from collections import defaultdict
-from statics import Reservation
+from statics import Reservation, menu
 from tabulate import tabulate
-from typing import Union
-import data
 
 class ShoppingCart:
     def __init__(self, name:str):
@@ -26,7 +24,7 @@ class ShoppingCart:
         else:
             rows = []
             for item in self.cart:
-                rows.append([data.menu.get(item).name, self.cart.get(item), f"${data.menu.get(item).price:.2f}"]) #item name, amount, and price
+                rows.append([menu.get(item).name, self.cart.get(item), f"${menu.get(item).price:.2f}"]) #item name, amount, and price
 
             table = tabulate(rows, headers=[self.name, "Amount", "Price"]) #specifies the headers for each column
 
@@ -40,7 +38,7 @@ class ShoppingCart:
         original_string = item #such that the error string returned isn't formatted
         item = item.lower()
 
-        if not data.menu.get(item):
+        if not menu.get(item):
             raise ValueError(f"{original_string} does not exist on the menu!")
 
         if type(amount) != int:
@@ -53,7 +51,7 @@ class ShoppingCart:
             raise ValueError("You can't place more than 10 orders of an item!")
 
         self.cart[item] += amount
-        self.total_cost += data.menu.get(item).price*amount #update the total cost of the shopping cart as items are added or removed (no tax)
+        self.total_cost += menu.get(item).price*amount #update the total cost of the shopping cart as items are added or removed (no tax)
 
     def remove_items(self, item:str, amount_to_remove:int=1)->None:
         # Verifying if item to add is valid
@@ -84,7 +82,7 @@ class ShoppingCart:
         else:
             self.cart[item] -= amount_to_remove
 
-        self.total_cost -= data.menu.get(item).price*amount_to_remove 
+        self.total_cost -= menu.get(item).price*amount_to_remove 
 
     def set_reservation(self, day:str, hour:str, meridiem:str)->None:
         try:
