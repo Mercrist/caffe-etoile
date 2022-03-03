@@ -20,6 +20,7 @@ def in_cafe_schedule(day: str, hour:str, meridiem:str)->bool:
     CLOSING = 1
     given_time = strptime(hour, '%H:%M')
     meridiem = meridiem.upper()
+    day = day.lower()
 
     if meridiem == "AM": #compare only against opening hours, strictly if reservation is before opening hours
         opening_time = strptime(data.working_hours.get(day)[OPENING].hour, '%H:%M')  
@@ -53,13 +54,13 @@ class MenuItem:
             raise TypeError("The items price should be an int.")
 
         if len(name) == 0 or len(image_link) == 0 or len(description) == 0:
-            raise ValueError("Empty string are not valid! Check that values aren't empty")
+            raise ValueError("Empty string are not valid!")
 
         if price <= 0:
             raise ValueError("Items cannot be priced 0 or less!")
 
         if name not in data.menu:
-            raise ValueError("That food item isn't on the menu!")
+            raise ValueError(f"{name} isn't on the menu!")
         
         self.name = name 
         self.price = price
@@ -77,8 +78,8 @@ class Reservation:
         if type(day) != str:
             raise TypeError("Day must be a valid string! Please enter a weekday.")
 
-        if day not in data.working_hours:
-            raise ValueError("Not a valid working day!")
+        if day.lower() not in data.working_hours:
+            raise ValueError(f"{day} is not a valid working day!")
 
         if type(hour) != str:
             raise TypeError("Time must be a string!")
@@ -90,11 +91,14 @@ class Reservation:
             raise TypeError("Meridiem must be in string format!")
 
         if meridiem.upper() not in ['AM', 'PM'] or len(meridiem) != 2:
-            raise ValueError("Not a valid meridiem! Remember meridiem means AM or PM strictly!")
+            raise ValueError(f"{meridiem} is not a valid meridiem! Remember meridiem means AM or PM strictly!")
 
         if not in_cafe_schedule(day, hour, meridiem):
-            raise ValueError("The cafe isn't open during these hours!")
+            raise ValueError(f"The cafe isn't open on {day} at {hour} {meridiem}")
 
-        self.day = day 
+        self.day = self.day[0].upper() + self.day[1:].lower()
         self.hour = hour
-        self.meridiem = meridiem
+        self.meridiem = meridiem.upper()
+
+    def __str__(self):
+        return f"{self.day} at {self.hour} {self.meridiem}"
