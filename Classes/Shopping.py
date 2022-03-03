@@ -6,10 +6,14 @@ class ShoppingCart:
     def __init__(self, name:str):
         if type(name) != str:
             raise TypeError("Customer name must be a string!")
-        
+
+        if not name or not name.strip():
+            raise ValueError("Customer name must not be empty!")
+
         for names in name.split():
             if not names.isalpha():
                 raise ValueError("Customer name must not be empty or have special characters or numbers!")
+
 
         self.name = name
         self.cart = defaultdict(int) #keys are strings of the menu item and values are the amount of orders of that item
