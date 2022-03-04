@@ -41,6 +41,7 @@ class TestShoppingCart(unittest.TestCase):
         self.assertRaises(ValueError, self.cart1.set_reservation,"Monday","100:00", "AM")
         self.assertRaises(ValueError, self.cart1.set_reservation, "Monday", "10:00", "PM")
         self.assertRaises(ValueError, self.cart1.set_reservation, "Monday", "5:01", "PM")
+        self.assertRaises(ValueError, self.cart1.clear_reservation) # reservation already cleared
 
 
     def test_cart_attributes(self):

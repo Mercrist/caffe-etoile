@@ -90,7 +90,11 @@ class ShoppingCart:
         self.reservation = Reservation(day, hour, meridiem)
 
     def clear_reservation(self)->None:
-        self.reservation = None
+        if self.reservation:
+            self.reservation = None
+
+        else:
+            raise ValueError("You can't clear empty reservations!")
 
         
 class Receipt:
