@@ -1,7 +1,6 @@
 from dataclasses import dataclass
-from time import strptime
 from collections import namedtuple
-
+from time import strptime
 
 @staticmethod
 def valid_time(time:str)->bool:
@@ -22,6 +21,9 @@ def in_cafe_schedule(day: str, hour:str, meridiem:str)->bool:
     given_time = strptime(hour, '%H:%M')
     meridiem = meridiem.upper()
     day = day.lower()
+
+    if given_time.tm_hour == 12: #edge case 
+        return meridiem == "PM" #always open at noon!
 
     if meridiem == "AM": #compare only against opening hours, strictly if reservation is before opening hours
         opening_time = strptime(working_hours.get(day)[OPENING].hour, '%H:%M')  
@@ -95,12 +97,15 @@ class Reservation:
         if not in_cafe_schedule(day, hour, meridiem):
             raise ValueError(f"The cafe isn't open on {day} at {hour} {meridiem}")
 
-        self.day = self.day[0].upper() + self.day[1:].lower()
+        self.day = day[0].upper() + day[1:].lower()
         self.hour = hour
         self.meridiem = meridiem.upper()
 
-    def __str__(self):
+    def __str__(self)->str:
         return f"{self.day} at {self.hour} {self.meridiem}"
+
+    def __eq__(self, other:'Reservation')->bool:
+        return self.day == other.day and self.hour == other.hour and self.meridiem == other.meridiem
 
 menu = {
     #coffee
@@ -109,7 +114,7 @@ menu = {
     "americano": MenuItem("Americano", 2.00, "Coffee", "A diluted espresso shot, the americano looks to keep the espresso's deep flavors while softening it's strength.", "https://bit.ly/3Llk8Z8"),
     "vietnamese egg coffee": MenuItem("Vietnamese Egg Coffee", 3.00, "Specialty","Considered a delicacy in Vietnam, egg coffee combines their world class robusta beans with an egg for crema.","https://bit.ly/3oUQEbl"),
     "cuban cortadito": MenuItem("Cuban Cortadito", 3.00, "Specialty", "A small espresso shot with a cut of heated, sweetened condesed milk, taste a part of Cuban culture.", "https://bit.ly/3LtSolp"),
-    "turkish coffee": MenuItem("Turkish Coffee", 3.00, "Specialty", "Coffee prepared in a <i>cezve</i> and prepared without filtering, experience a tradition existing since the Ottoman Empire.", "https://bit.ly/3HJ505O"), 
+    "turkish coffee": MenuItem("Turkish Coffee", 3.00, "Specialty", "Coffee prepared in a cezve and prepared without filtering, experience a tradition existing since the Ottoman Empire.", "https://bit.ly/3HJ505O"), 
 
     #sandwiches
     "breakfast panini": MenuItem("Breakfast Panini", 7.00, "Sandwiches", "Buttered Panini bread stuffed with egg, spinach, and more.", "https://bit.ly/3gGhaR2"),
@@ -119,7 +124,7 @@ menu = {
     #pastries
     "french croissant": MenuItem("French Croissant", 3.00, "Pastries", "Crescent shaped delicacy, made from dough layered with butter leading to a layered, flaky texture.", "https://bit.ly/3HGS40r"),
     "puerto rican quesito": MenuItem("Puerto Rican Quesito", 2.00, "Pastries", "Rich, cheese filled puff pastry dough brushed with a simple sugar glaze.", "https://bit.ly/3Ba4gUU"),
-    "mexican concha" : MenuItem("Mexican Concha", 3.00, "Pastries", "Concha's, or <i>shell</i>, are ubiquitous in Mexican culture coated in a cruncy topping.", "https://bit.ly/33bDn6j"), 
+    "mexican concha" : MenuItem("Mexican Concha", 3.00, "Pastries", "Concha's, or shell, are ubiquitous in Mexican culture coated in a cruncy topping.", "https://bit.ly/33bDn6j"), 
 
     #desserts
     "banana bread": MenuItem("Banana Bread", 3.00, "Desserts", "Sweet and savory bread with a crumbly texture serves a nice pair to a cup of coffee.", "https://bit.ly/3rLklNL"), 

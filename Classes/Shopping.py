@@ -1,15 +1,18 @@
-from collections import defaultdict
 from statics import Reservation, menu
+from collections import defaultdict
 from tabulate import tabulate
 
 class ShoppingCart:
     def __init__(self, name:str):
         if type(name) != str:
             raise TypeError("Customer name must be a string!")
+
+        if not name or not name.strip():
+            raise ValueError("Customer name cannot be empty!")
         
         for names in name.split():
             if not names.isalpha():
-                raise ValueError("Customer name must not be empty or have special characters or numbers!")
+                raise ValueError("Customer name must not have special characters or numbers!")
 
         self.name = name
         self.cart = defaultdict(int) #keys are strings of the menu item and values are the amount of orders of that item
@@ -30,7 +33,7 @@ class ShoppingCart:
 
         cart_string += table + "\n\n" + f"Current subtotal: ${self.total_cost:.2f}" + "\n" + f"Reservation: {self.reservation}" + "\n\n"
         return cart_string
-
+    
     def add_items(self, item:str, amount:int=1)->None:
         if type(item) != str:
             raise TypeError("Menu item must be a valid string!")
@@ -85,11 +88,7 @@ class ShoppingCart:
         self.total_cost -= menu.get(item).price*amount_to_remove 
 
     def set_reservation(self, day:str, hour:str, meridiem:str)->None:
-        try:
-            self.reservation = Reservation(day, hour, meridiem)
-
-        except (TypeError, ValueError):
-            self.reservation = None
+        self.reservation = Reservation(day, hour, meridiem)
 
         
 class Receipt:
