@@ -5,33 +5,39 @@ class TestMenuItem(unittest.TestCase):
     '''Tests the MenuItem dataclass along with its methods.'''
     def setUp(self):
         try:
-            self.item1 = MenuItem(
-                "Espresso",
-                3,
-                "https://bit.ly/3Ljp8xC",
-                "The staple drink of italian origin, the espresso offers a strong coffee taste, showing the bean's flavor as well as leaving a nice crema on top to enjoy."
-            )
+            self.item1 = MenuItem("Espresso", 1.00, "Coffee",
+            "The staple drink of italian origin, the espresso shot offers a strong coffee taste, \
+            showing the bean's flavors as well as leaving a nice crema on the top to enjoy.",
+            "https://bit.ly/3Ljp8xC")
+
         except:
             print("Failed to set up test menu test values!")
 
     def test_types(self):
-        self.assertRaises(TypeError, MenuItem, None, 5.00, "some_link", "some_description", 1)
-        self.assertRaises(TypeError, MenuItem, "item_name", None, "some_link", "some_description", 1)
-        self.assertRaises(TypeError, MenuItem, "item_name", 1, ["some_link"], "ds", 1)
-        self.assertRaises(TypeError, MenuItem, "some_name", 10, "link", 40, 1)
+        self.assertRaises(TypeError, MenuItem, None, 5.00, "some_category", "some_description", "some_link")
+        self.assertRaises(TypeError, MenuItem, "item_name", None, "some_category", "some_description", "some_link")
+        self.assertRaises(TypeError, MenuItem, "item_name", 2.00, {"____"}, "ds", "some_link")
+        self.assertRaises(TypeError, MenuItem, "item_name", 2.00, "some_category", ["ds"], "some_link")
+        self.assertRaises(TypeError, MenuItem, "item_name", 2.00, "some_category", "ds", ["some_link"])
 
     def test_values(self):
-        self.assertRaises(ValueError, MenuItem, "", 10, "link", "description")
-        self.assertRaises(ValueError, MenuItem, "item_name", -2, "link", "description")
-        self.assertRaises(ValueError, MenuItem, "item_name", 5.00, "", "description", 1)
-        self.assertRaises(ValueError, MenuItem, "item_name", 6.00, "link", "", 1)
-        self.assertRaises(ValueError, MenuItem, "Macaroons", 6.00, "https://bit.ly/3M6jfEi", "Almond dessert", -11) 
-        'Optional parameter testing'
-        self.assertraises(ValueError, MenuItem, "Banana Bread", 2, "A delicious sweet bread") #price not included. Only name, count, and desc
-        self.assertraises(ValueError, MenuItem, "Banana Bread", 2.00, "link_here") #amount not included. Only name, price, and img link
-        'Item not on the menu'
-        self.assertRaises(ValueError, MenuItem, "Creme Brulee", 6.00, 1) 
-        self.assertRaises(ValueError, MenuItem, "Hamburger", 6.00, "https://bit.ly/3M6jfEi", "Borger", 1) 
+        'No valid food name'
+        self.assertRaises(ValueError, MenuItem, "    ", 10, "Desserts", "description", "https://bit.ly/3INsUxy") #No empty names
+        'No valid pricing'
+        self.assertRaises(ValueError, MenuItem, "item_name", -2, "Desserts", "description", "link")
+        self.assertRaises(ValueError, MenuItem, "item_name", 200, "Desserts", "description", "link") #excessive pricing
+        self.assertRaises(ValueError, MenuItem, "item_name", 80, "Desserts", "description", "link") 
+        'No valid descriptions'
+        self.assertRaises(ValueError, MenuItem, "item_name", 5.00, "Desserts", "     ", "link") 
+        self.assertRaises(ValueError, MenuItem, "item_name", 5.00, "Desserts", "", "link") 
+        'Not valid categories'
+        self.assertRaises(ValueError, MenuItem, "Macaroons", 6.00, "Almond dessert", "desc", "https://bit.ly/3M6jfEi") #not a valid category 
+        self.assertRaises(ValueError, MenuItem, "Macaroons", 6.00, "Entree", "desc", "https://bit.ly/3M6jfEi")  
+        self.assertRaises(ValueError, MenuItem, "Macaroons", 6.00, "Pasta", "desc", "https://bit.ly/3M6jfEi") 
+        'No valid urls'
+        self.assertRaises(ValueError, MenuItem, "Macaroons", 6.00, "Desserts", "desc", "") 
+        self.assertRaises(ValueError, MenuItem, "Macaroons", 6.00, "Desserts", "desc", " ") 
+
 
 class TestReservation(unittest.TestCase):
     def test_init(self):

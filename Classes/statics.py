@@ -38,8 +38,6 @@ def in_cafe_schedule(day: str, hour:str, meridiem:str)->bool:
         return given_time.tm_min < closing_time.tm_min
 
     return given_time.tm_hour < closing_time.tm_hour
-    
-
 
 @dataclass()
 class MenuItem:
@@ -49,9 +47,9 @@ class MenuItem:
     description: str
     image_link: str
 
-    def __init__(self, name:str, price, category:str = "", description:str = "", image_link:str = ""):
+    def __init__(self, name:str, price:float, category:str = "", description:str = "", image_link:str = ""):
         if type(name) is not str or type(image_link) is not str or type(description) is not str:
-            raise TypeError("Invalid type passed. The item's name, image link and description should be strings!")
+            raise TypeError("Invalid type passed. The item's name, image link, and description should be strings!")
 
         if type(price) not in [int,float]:
             raise TypeError("The items price should be a number.")
@@ -63,7 +61,7 @@ class MenuItem:
             raise ValueError("Items cannot be priced 0 or less!")
 
         
-        self.name = name.lower()
+        self.name = name
         self.price = price
         self.category = category
         self.description = description

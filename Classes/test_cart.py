@@ -5,6 +5,8 @@ import unittest
 class TestShoppingCart(unittest.TestCase):
     def setUp(self):
         self.cart1 = ShoppingCart("xavier")
+        self.cart1.set_reservation('Monday','12:00','PM')
+        self.cart1.clear_reservation()
         self.cart2 = ShoppingCart("yariel")
         self.cart2.add_items('Espresso')
         self.cart2.add_items('Americano',3)
@@ -52,13 +54,4 @@ class TestShoppingCart(unittest.TestCase):
         self.assertEqual(self.cart2.total_cost, 49.00)
 
 if __name__ == "__main__":
-    # unittest.main(failfast=True)
-
-    cart2 = ShoppingCart("yariel")
-    cart2.add_items('Espresso')
-    cart2.add_items('Americano',3)
-    cart2.add_items('Americano',7)
-    cart2.add_items('new york cheesecake',7)
-    cart2.set_reservation('Sunday','12:00','PM')
-
-    print(cart2)
+    unittest.main(failfast=True)

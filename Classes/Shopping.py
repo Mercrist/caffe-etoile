@@ -22,14 +22,14 @@ class ShoppingCart:
     def __str__(self):
         cart_string = "\n\n"
         if len(self.cart) < 1:
-            table = "No menu items currently in cart."
+            table = f"No menu items currently in {self.name}'s cart."
 
         else:
             rows = []
             for item in self.cart:
                 rows.append([menu.get(item).name, self.cart.get(item), f"${menu.get(item).price:.2f}"]) #item name, amount, and price
 
-            table = tabulate(rows, headers=[self.name, "Amount", "Price"]) #specifies the headers for each column
+            table = tabulate(rows, headers=[self.name, "Amount", "Price"], stralign="left", numalign="center") #specifies the headers for each column
 
         cart_string += table + "\n\n" + f"Current subtotal: ${self.total_cost:.2f}" + "\n" + f"Reservation: {self.reservation}" + "\n\n"
         return cart_string
@@ -57,8 +57,7 @@ class ShoppingCart:
         self.total_cost += menu.get(item).price*amount #update the total cost of the shopping cart as items are added or removed (no tax)
 
     def remove_items(self, item:str, amount_to_remove:int=1)->None:
-        # Verifying if item to add is valid
-        if type(item) != str:
+        if type(item) != str: # Verifying if item to add is valid
             raise TypeError(f"The item to be removed must be a string!")
 
         original_string = item 
@@ -89,6 +88,9 @@ class ShoppingCart:
 
     def set_reservation(self, day:str, hour:str, meridiem:str)->None:
         self.reservation = Reservation(day, hour, meridiem)
+
+    def clear_reservation(self)->None:
+        self.reservation = None
 
         
 class Receipt:
