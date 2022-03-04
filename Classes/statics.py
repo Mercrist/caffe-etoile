@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from collections import namedtuple
-from time import strptime
+from time import strptime   
 
 @staticmethod
 def valid_time(time:str)->bool:

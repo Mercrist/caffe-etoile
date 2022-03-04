@@ -51,7 +51,7 @@ class TestShoppingCart(unittest.TestCase):
         self.assertEqual(self.cart1.total_cost, 0.00)
         'Testing cart 2'
         self.assertEqual(len(self.cart2.cart), 3)
-        self.assertEqual(self.cart2.reservation, Reservation("Sunday","12:00","PM"))
+        self.assertEqual(self.cart2.reservation, Reservation("SuNdAy","12:00","PM"))
         self.assertEqual(self.cart2.total_cost, 49.00)
 
 if __name__ == "__main__":
