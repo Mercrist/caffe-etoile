@@ -3,6 +3,18 @@ from collections import defaultdict
 from tabulate import tabulate
 
 class ShoppingCart:
+    """ 
+    A class that represents the current customers' shopping 
+    cart. It contains their name, the current items added to the
+    cart along with the items' quantity, the current subtotal, 
+    and date of a reservation, if any was made.
+
+    Attributes:
+        name: A string representing the customers' name, if valid.
+        cart: A dictionary containing each menu item in the cart, as a string, along with its quantity.
+        reservation: A reservation object, if a valid reservation is created
+    
+    """
     def __init__(self, name:str):
         if type(name) != str:
             raise TypeError("Customer name must be a string!")
@@ -17,7 +29,7 @@ class ShoppingCart:
         self.name = name
         self.cart = defaultdict(int) #keys are strings of the menu item and values are the amount of orders of that item
         self.reservation = None
-        self.total_cost = 0
+        self.subtotal = 0
 
     def __str__(self)->str:
         cart_string = "\n\n"
@@ -26,19 +38,19 @@ class ShoppingCart:
 
         else:
             rows = []
-            for item in self.cart:
+            for item in self.cart: #creates each row in the table
                 rows.append([menu.get(item).name, self.cart.get(item), f"${menu.get(item).price:.2f}"]) #item name, amount, and price
 
             table = tabulate(rows, headers=[self.name, "Amount", "Price"], stralign="left", numalign="center") #specifies the headers for each column
 
-        cart_string += table + "\n\n" + f"Current subtotal: ${self.total_cost:.2f}" + "\n" + f"Reservation: {self.reservation}" + "\n\n"
+        cart_string += table + "\n\n" + f"Current subtotal: ${self.subtotal:.2f}" + "\n" + f"Reservation: {self.reservation}" + "\n\n" #format string
         return cart_string
     
     def add_items(self, item:str, amount_to_add:int=1)->None:
         if type(item) != str:
             raise TypeError("Menu item must be a valid string!")
         
-        original_string = item #such that the error string returned isn't formatted
+        original_string = item #needed so that the error string returned isn't formatted
         item = item.lower()
 
         if not menu.get(item):
@@ -54,7 +66,7 @@ class ShoppingCart:
             raise ValueError("You can't place more than 10 orders of an item!")
 
         self.cart[item] += amount_to_add
-        self.total_cost += menu.get(item).price*amount_to_add #update the total cost of the shopping cart as items are added or removed (no tax)
+        self.subtotal += menu.get(item).price*amount_to_add #update the subtotal of the shopping cart as items are added or removed (no tax)
 
     def remove_items(self, item:str, amount_to_remove:int=1)->None:
         if type(item) != str: # Verifying if item to add is valid
@@ -84,7 +96,7 @@ class ShoppingCart:
         else:
             self.cart[item] -= amount_to_remove
 
-        self.total_cost -= menu.get(item).price*amount_to_remove 
+        self.subtotal -= menu.get(item).price*amount_to_remove 
 
     def set_reservation(self, day:str, hour:str, meridiem:str)->None:
         self.reservation = Reservation(day, hour, meridiem)

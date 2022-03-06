@@ -1,5 +1,5 @@
-from dataclasses import dataclass
 from collections import namedtuple
+from dataclasses import dataclass
 from time import strptime   
 
 @staticmethod
@@ -14,7 +14,7 @@ def valid_time(time:str)->bool:
     return time_obj.tm_hour <= 12 or time_obj.tm_hour >= 1
 
 @staticmethod
-def in_cafe_schedule(day: str, hour:str, meridiem:str)->bool:
+def in_cafe_schedule(day:str, hour:str, meridiem:str)->bool:
     "Returns whether the working hours fit within a day or not according to the website's schedule."
     OPENING = 0 #opening and closing time offsets
     CLOSING = 1
@@ -69,11 +69,11 @@ class MenuItem:
 
 @dataclass()
 class Reservation:
-    day: str
-    hour: str
-    meridiem: str
+    day:str
+    hour:str
+    meridiem:str
 
-    def __init__(self, day:str, hour: str, meridiem: str):
+    def __init__(self, day:str, hour:str, meridiem:str):
         if type(day) != str:
             raise TypeError("Day must be a valid string! Please enter a weekday.")
 
