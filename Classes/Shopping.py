@@ -3,6 +3,7 @@ from collections import defaultdict
 from tabulate import tabulate
 
 class ShoppingCart:
+    
     def __init__(self, name:str):
         if type(name) != str:
             raise TypeError("Customer name must be a string!")
@@ -98,4 +99,37 @@ class ShoppingCart:
 
         
 class Receipt:
-    pass
+    def __init__(self, items: dict, reservation: Reservation, name: str, subtotal: float):
+
+        if type(items) is not dict:
+            raise TypeError(f"Items must be a dictionary. Given type: {type(items)}") 
+        if type(reservation) is not Reservation:
+            raise TypeError(f"Error: Reservations must be Reservation type. Given type: {type(reservation)}")
+        if type(name) is not str:
+            raise TypeError(f"Error: name must be a string. Given type: {type(name)}")
+        if type(subtotal) not in [int, float]:
+            raise TypeError(f"Error: Total is not a number type. Given type: {type(subtotal)}")
+        self.items = items
+        self.reservation = reservation
+        self.name = name 
+        self.subtotal = subtotal 
+        self.tax = 0.07
+
+    def tax(self):
+        return self.subtotal * self.tax
+
+    def total(self):
+        return self.subtotal + self.tax() 
+
+    def print_receipt(self):
+        rows =[]
+        for item in self.cart:
+                rows.append([menu.get(item).name, self.cart.get(item), f"${menu.get(item).price:.2f}"]) #item name, amount, and price
+        table = tabulate(
+            rows,
+            headers=[self.name, "Amount", "Price"], 
+            stralign="left",
+            numalign="center"
+        )
+        cart_string += table + "\n\n" + f"Current subtotal: ${self.subtotal:.2f}" + "\n" + f"Reservation: {self.reservation}" + "\n\n"
+        return cart_string
