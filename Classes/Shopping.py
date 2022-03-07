@@ -30,13 +30,8 @@ class ShoppingCart:
             raise TypeError("Customer name must be a string!")
 
         if not name or not name.strip():
-<<<<<<< HEAD
             raise ValueError("Customer name cannot be empty!")
         
-=======
-            raise ValueError("Customer name must not be empty!")
-
->>>>>>> 3297775a7c53c9f8c968e50ca0065831ffba7f64
         for names in name.split():
             if not names.isalpha():
                 raise ValueError("Customer name must not have special characters or numbers!")
