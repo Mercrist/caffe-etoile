@@ -167,24 +167,55 @@ class Receipt:
     def __init__(self, items: dict, reservation: Reservation, name: str, subtotal: float):
 
         if type(items) is not dict:
-            raise TypeError(f"Items must be a dictionary. Given type: {type(items)}") 
+            raise TypeError(f"Items must be a dictionary. Given type: {type(items)}")
         if type(reservation) is not Reservation:
             raise TypeError(f"Error: Reservations must be Reservation type. Given type: {type(reservation)}")
         if type(name) is not str:
             raise TypeError(f"Error: name must be a string. Given type: {type(name)}")
         if type(subtotal) not in [int, float]:
             raise TypeError(f"Error: Total is not a number type. Given type: {type(subtotal)}")
+
+        if not items or None in items.values() or sum(1 for amount in items.values() if amount < 0):
+            raise ValueError("Error: Cannot generate receipt of no items.")
+
+        if not name or not name.split():
+            raise ValueError("Error: Customer name must not be empty")
+
+        for letter in name.split():
+            if not letter.isalpha() or letter.isspace():
+                raise ValueError("Error: Customer name must not have special characters or numbers.")
+
         self.items = items
         self.reservation = reservation
         self.name = name 
         self.subtotal = subtotal 
-        self.tax = 0.07
+        self.tax_percent = 0.07
 
-    def tax(self):
-        return self.subtotal * self.tax
+    def tax(self) -> float:
+        return self.subtotal * self.tax_percent
 
-    def total(self):
+    def total(self) -> float:
         return self.subtotal + self.tax() 
+
+    def receipt_number(self) -> str: 
+
+        def to_pennies(value: float) -> str:
+            return str(value * 100)[0:2]
+
+        def first_three_length_cart(length: int) -> str:
+            length = str(length)
+            if len(length) < 3:
+                length = str(length).zfill(3)
+            return length[0:2]
+
+        name_hash = str(hash(self.name))[0:4]
+        pennies = to_pennies(self.subtotal)
+        length = first_three_length_cart(len(self.items))
+
+        return name_hash + pennies + length
+        
+ 
+
 
     def print_receipt(self):
         rows =[]
