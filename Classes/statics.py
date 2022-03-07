@@ -40,8 +40,10 @@ def in_cafe_schedule(day:str, hour:str, meridiem:str)->bool:
     meridiem = meridiem.upper()
     day = day.lower()
 
-    if given_time.tm_hour == 12: #edge case 
-        return meridiem == "PM" #always open at noon!
+    if given_time.tm_hour == 12:
+        if meridiem == "AM": #edge case, never open at midnight
+            return False
+        return True #always open at noon
 
     if meridiem == "AM": #compare only against opening hours, strictly if reservation is before opening hours
         opening_time = strptime(working_hours.get(day)[OPENING].hour, '%H:%M')  
@@ -56,6 +58,7 @@ def in_cafe_schedule(day:str, hour:str, meridiem:str)->bool:
         return given_time.tm_min < closing_time.tm_min
 
     return given_time.tm_hour < closing_time.tm_hour
+    
 
 @dataclass()
 class MenuItem:
