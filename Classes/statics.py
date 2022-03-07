@@ -2,7 +2,7 @@ from collections import namedtuple
 from dataclasses import dataclass
 from time import strptime   
 
-@staticmethod
+
 def valid_time(time:str)->bool:
     """Determines whether the input parameter is in the cafe's requested 12-hour, time format.
 
@@ -18,9 +18,9 @@ def valid_time(time:str)->bool:
     except ValueError:
         return False
 
-    return time_obj.tm_hour <= 12 or time_obj.tm_hour >= 1
+    return time_obj.tm_hour <= 12 and time_obj.tm_hour >= 1
 
-@staticmethod
+
 def in_cafe_schedule(day:str, hour:str, meridiem:str)->bool:
     """Determines whether the given reservation fields are within the cafe's opening and closing hours.
        All parameters are validated within the reservation class's constructor beforehand.
@@ -69,18 +69,23 @@ class MenuItem:
     image_link: str
 
     def __init__(self, name:str, price:float, category:str = "", description:str = "", image_link:str = ""):
-        if type(name) is not str or type(image_link) is not str or type(description) is not str:
+        if type(name) is not str or type(category) is not str or type(image_link) is not str or type(description) is not str:
             raise TypeError("Invalid type passed. The item's name, image link, and description should be strings!")
 
         if type(price) not in [int,float]:
             raise TypeError("The items price should be a number.")
 
-        if len(name) == 0 or len(image_link) == 0 or len(description) == 0:
+        if not name.split() or not category.split() or not description.split() or not image_link.split():
             raise ValueError("Empty string are not valid!")
 
         if price <= 0:
             raise ValueError("Items cannot be priced 0 or less!")
 
+        if price >= 50: #arbitrary value
+            raise ValueError("Excessive pricing")
+
+        if category.lower() not in ["specialty","coffee","desserts","sandwiches","pastries"]:
+            raise ValueError("Not a valid category")
         
         self.name = name
         self.price = price
