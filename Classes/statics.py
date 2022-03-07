@@ -1,10 +1,17 @@
-from dataclasses import dataclass
 from collections import namedtuple
+from dataclasses import dataclass
 from time import strptime   
 
 @staticmethod
 def valid_time(time:str)->bool:
-    "Returns whether a given string is in a valid 12 hour time format."
+    """Determines whether the input parameter is in the cafe's requested 12-hour, time format.
+
+    Args:
+        time (str): The time format to verify, from 1:00 up to and including 12:00.
+
+    Returns:
+        bool: True, if time is a valid 12-hour, time format. False otherwise.
+    """
     try:
         time_obj = strptime(time, '%H:%M')
 
@@ -14,8 +21,19 @@ def valid_time(time:str)->bool:
     return time_obj.tm_hour <= 12 or time_obj.tm_hour >= 1
 
 @staticmethod
-def in_cafe_schedule(day: str, hour:str, meridiem:str)->bool:
-    "Returns whether the working hours fit within a day or not according to the website's schedule."
+def in_cafe_schedule(day:str, hour:str, meridiem:str)->bool:
+    """Determines whether the given reservation fields are within the cafe's opening and closing hours.
+       All parameters are validated within the reservation class's constructor beforehand.
+
+    Args:
+        day (str): The given day of the week.
+        hour (str): The hour, in 12-hour format, at which the reservation is to be made.
+        meridiem (str): AM or PM, and used in conjunction with the hour in order to verify whether the reservation day
+                        fits within the cafe's schedule.
+
+    Returns:
+        bool: True, if the given date and time is within the cafe's opening and closing hours. False otherwise.
+    """
     OPENING = 0 #opening and closing time offsets
     CLOSING = 1
     given_time = strptime(hour, '%H:%M')
@@ -33,9 +51,9 @@ def in_cafe_schedule(day: str, hour:str, meridiem:str)->bool:
             
     # when the meridiem is 'PM' after noon
     closing_time = strptime(working_hours.get(day)[CLOSING].hour, '%H:%M')
-    if given_time.tm_hour == closing_time.tm_hour:
+    if given_time.tm_hour == closing_time.tm_hour: #if the hours are the same, check the minutes
         if given_time.tm_min == closing_time.tm_min:
-            return given_time.tm_sec <= closing_time.tm_sec #check the minutes, a minute later we're closed
+            return given_time.tm_sec <= closing_time.tm_sec #minute later after the closing time
 
         return given_time.tm_min < closing_time.tm_min
 
@@ -72,11 +90,24 @@ class MenuItem:
 
 @dataclass()
 class Reservation:
-    day: str
-    hour: str
-    meridiem: str
+    day:str
+    hour:str
+    meridiem:str
 
-    def __init__(self, day:str, hour: str, meridiem: str):
+    def __init__(self, day:str, hour:str, meridiem:str)->None:
+        """Initializes an instance of a cafe reservation.
+
+        Args:
+            day (str): The day of the week to set the reservation.
+            hour (str): The hour of the day, between 1 and 12, to set the reservation on.
+            meridiem (str): The meridiem, AM or PM, on which the reservation will be set.
+
+        Raises:
+            TypeError: Raised if the day, hour, or meridiem aren't strings.
+            ValueError: Raised if the day isn't a day of the week, the hour isn't between 1:00-12:00, the
+                        meridiem isn't AM or PM, or if the date provided is outside of the cafe's opening 
+                        and closing hours.
+        """
         if type(day) != str:
             raise TypeError("Day must be a valid string! Please enter a weekday.")
 
@@ -103,9 +134,29 @@ class Reservation:
         self.meridiem = meridiem.upper()
 
     def __str__(self)->str:
+        """Generates a string, printed to the command line, which displays the exact date of the current 
+           customers' reservation.
+
+        Returns:
+            str: A string, displaying the exact date of the current reservation.
+        """
         return f"{self.day} at {self.hour} {self.meridiem}"
 
     def __eq__(self, other:'Reservation')->bool:
+        """Compares two reservation objects by checking if their attributes are the same.
+
+        Args:
+            other (Reservation): The reservation object to compare to the current instance.
+
+        Returns:
+            bool: True, if the current instance and the parameter reservation object are the same. False otherwise.
+
+        Raises:
+            TypeError: Raised if the parameter isn't a Reservation object.
+        """
+        if type(other) != Reservation:
+            raise TypeError("Object to compare must be a valid Reservation object!")
+
         return self.day == other.day and self.hour == other.hour and self.meridiem == other.meridiem
 
 menu = {
