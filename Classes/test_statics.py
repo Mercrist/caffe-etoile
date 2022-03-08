@@ -1,4 +1,4 @@
-from statics import MenuItem, Reservation
+from Statics import MenuItem, Reservation
 import unittest
 
 class TestMenuItem(unittest.TestCase):
@@ -9,6 +9,8 @@ class TestMenuItem(unittest.TestCase):
             "The staple drink of italian origin, the espresso shot offers a strong coffee taste, \
             showing the bean's flavors as well as leaving a nice crema on the top to enjoy.",
             "https://bit.ly/3Ljp8xC")
+
+            self.item2 = MenuItem("Creme Brulee", 7.00)
 
         except:
             print("Failed to set up test menu test values!")
@@ -25,6 +27,7 @@ class TestMenuItem(unittest.TestCase):
         self.assertRaises(ValueError, MenuItem, "    ", 10, "Desserts", "description", "https://bit.ly/3INsUxy") #No empty names
         'No valid pricing'
         self.assertRaises(ValueError, MenuItem, "item_name", -2, "Desserts", "description", "link")
+        self.assertRaises(ValueError, MenuItem, "item_name", 0, "Desserts", "description", "link") #pricing can't be zero
         self.assertRaises(ValueError, MenuItem, "item_name", 200, "Desserts", "description", "link") #excessive pricing
         self.assertRaises(ValueError, MenuItem, "item_name", 80, "Desserts", "description", "link") 
         'No valid descriptions'
