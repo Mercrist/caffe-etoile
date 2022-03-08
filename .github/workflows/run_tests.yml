@@ -1,10 +1,6 @@
 name: Unit tests
 
-on:
-  push:
-    branches:
-      - main
-      - feature-menu-cli
+on: [push]
 
 jobs:
   build:
