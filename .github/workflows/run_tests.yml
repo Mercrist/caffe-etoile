@@ -3,8 +3,7 @@ name: Unit tests
 on:
   push:
     paths:
-      - Classes/Statics.py
-      - Classes/Shopping.py
+      - Classes/**.py
 
 jobs:
   build:
