@@ -1,5 +1,5 @@
 from datetime import datetime, timezone
-from Statics import Reservation, menu
+from Statics import Reservation, menu   
 from collections import defaultdict
 from tabulate import tabulate
 import hashlib
