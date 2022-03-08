@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from Statics import Reservation, menu
 from collections import defaultdict
 from tabulate import tabulate
@@ -57,8 +58,8 @@ class ShoppingCart:
 
         else:
             rows = []
-            for item in self.cart: #creates each row in the table
-                rows.append([menu.get(item).name, self.cart.get(item), f"${menu.get(item).price:.2f}"]) #item name, amount, and price
+            for item, quantity in self.cart.items(): #creates each row in the table
+                rows.append([menu.get(item).name, quantity, f"${menu.get(item).price:.2f}"]) #item name, amount, and price
 
             table = tabulate(rows, headers=[self.name, "Amount", "Price"], stralign="left", numalign="center") #specifies the headers for each column
 
@@ -179,7 +180,7 @@ class Receipt:
         tax_percent: A float which represents the sales tax rate for the cafe.
     """
 
-    def __init__(self, items:dict, reservation:'Reservation', name:str, subtotal:float)->None:
+    def __init__(self, food_items:dict, reservation:'Reservation', name:str, subtotal:float)->None:
         """Initializes an instance of a receipt object.
 
         Args:
@@ -196,8 +197,8 @@ class Receipt:
                         non alphanumeric characters or is empty, or if the subtotal is less than or equals to zero. All orders
                         must have a positive, non zero subtotal.
         """
-        if type(items) is not dict:
-            raise TypeError(f"Items must be a dictionary. Given type: {type(items)}")
+        if type(food_items) is not dict:
+            raise TypeError(f"Items must be a dictionary. Given type: {type(food_items)}")
             
         if type(reservation) is not Reservation:
             raise TypeError(f"Error: Reservations must be Reservation type. Given type: {type(reservation)}")
@@ -208,7 +209,7 @@ class Receipt:
         if type(subtotal) not in [int, float]:
             raise TypeError(f"Error: Total is not a number type. Given type: {type(subtotal)}")
 
-        if not items or None in items.values() or sum(1 for amount in items.values() if amount < 0):
+        if not food_items or None in food_items.values() or sum(1 for amount in food_items.values() if amount < 0):
             raise ValueError("Error: Cannot generate receipt of no items.")
 
         if not name or not name.split():
@@ -221,24 +222,11 @@ class Receipt:
         if subtotal <= 0:
             raise ValueError("Cannot make a receipt for a purchase with no total or a purchase with a sub zero total!")
 
-        self.items = items
+        self.food_items = food_items
         self.reservation = reservation
         self.name = name 
         self.subtotal = subtotal 
         self.tax_percent = 10.25/100
-
-    # def __str__(self):
-    #     rows =[]
-    #     for item in self.cart:
-    #             rows.append([menu.get(item).name, self.cart.get(item), f"${menu.get(item).price:.2f}"]) #item name, amount, and price
-    #     table = tabulate(
-    #         rows,
-    #         headers=[self.name, "Amount", "Price"], 
-    #         stralign="left",
-    #         numalign="center"
-    #     )
-    #     cart_string += table + "\n\n" + f"Current subtotal: ${self.subtotal:.2f}" + "\n" + f"Reservation: {self.reservation}" + "\n\n"
-    #     return cart_string
 
     def tax(self)->float:
         """Calculates the sales tax amount for the given orders' subtotal.
@@ -323,6 +311,50 @@ class Receipt:
         #calculates the receipt number
         name_hash = simple_hash(self.name)
         pennies = to_pennies(self.total())
-        length = first_three_length_cart(len(self.items))
+        length = first_three_length_cart(len(self.food_items))
 
         return name_hash + pennies + length
+
+    def generate_receipt(self)->None:
+        """Writes the final receipt to a text file within the current directory.
+           Displays the receipt's attributes and more such as: items ordered with their 
+           quantities, the totals, the receipt number, the time at which the order was 
+           placed, and more.
+        """
+        receipt_string = "CAFFÈ ÉTOILÉ\n"
+
+        rows = []
+        for food_order, quantity in self.food_items.items():
+            rows.append([menu.get(food_order.lower()).name, quantity, f"${menu.get(food_order.lower()).price:.2f}"]) #item name, amount, and price
+        
+        table = tabulate(
+            rows,
+            headers=["Items", "Amount", "Price"], 
+            stralign="left",
+            numalign="center",
+            tablefmt="psql"
+        )
+        
+        receipt_string += table + "\n\n"
+
+        #Price calculations
+        rows2 = [["Subtotal: ", f"${self.subtotal:.2f}"], ["Tax: ", f"${self.tax():.2f}"], ["Total: ", f"${self.total():.2f}"]]
+        table2 = tabulate(
+            rows2,
+            stralign="left",
+            numalign="left",
+            tablefmt="simple"
+        )
+
+        utc_now = datetime.now(timezone.utc) #gets the current time in utc
+        local_time_obj = utc_now.astimezone() #gets the specific utc timezone (from the computer system)
+        local_time_str = local_time_obj.strftime("%m-%d-%Y-%H:%M") #format as 24 hour time format
+        time_obj = datetime.strptime(local_time_str, "%m-%d-%Y-%H:%M") #format the local time
+        time_string = time_obj.strftime("%m-%d-%Y at %I:%M %p") #get as 12-hour string
+
+        receipt_string += table2 + "\n\n" + f"Customer: {self.name}\n" + f"Receipt Number: #{self.receipt_number()}\n" + f"Reservation: {self.reservation}\n" \
+                         f"Time Generated: {time_string}\n\n" + "Thanks for stopping by!" 
+
+        with open("Classes/receipt.txt", "w", encoding='utf-8') as receipt_file: #write receipt to text file, utf-8 for special characters
+            receipt_file.write(receipt_string)
+        

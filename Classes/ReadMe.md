@@ -16,5 +16,5 @@ This project utilizes some external libraries in order for the CLI to run. Insta
 ## Design Document
 More information on the CLI and class design can be found in the [design document][2] for this project.
 
-[1]: https://i.imgur.com/X8g64Kh.png "UML Diagram"
-[2]: https://docs.google.com/document/d/1MGX-FJaVH08It__gCW3-Ja_oFVA535P_7ZlL1mbavcU/edit?usp=sharing&resourcekey=0-Nbmp1yoCrM28XlymrSHyHw
+[1]: https://i.imgur.com/hj0gS99.png "UML Diagram"
+[2]: https://docs.google.com/document/d/1MGX-FJaVH08It__gCW3-Ja_oFVA535P_7ZlL1mbavcU/edit?usp=sharing&resourcekey=0-Nbmp1yoCrM28XlymrSHyHw "Design Doc"
