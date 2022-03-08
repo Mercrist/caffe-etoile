@@ -1,9 +1,8 @@
+from Classes.Shopping import ShoppingCart, Receipt
 from argparse import ArgumentParser
-import webbrowser
-from Classes.Shopping import ShoppingCart,Receipt
-from Classes.statics import menu
+from Classes.Statics import menu
 from tabulate import tabulate
-
+import webbrowser
 
 description = "CLI tool used to interact with Caffè Étoilé."
 

@@ -1,11 +1,11 @@
-from statics import MenuItem, Reservation
+from Statics import Reservation
 from Shopping import Receipt
 import unittest
 
 class TestReceipt(unittest.TestCase):
     def setUp(self):
         '''Test some correctly initialized receipts'''
-        #Receipt(Dictionary of Items, Reservation Object, Name)
+        #Receipt(Dictionary of Items, Reservation Object, Name, subtotal)
         self.reservation1 = Reservation("Sunday", "9:00", "AM")
         self.reservation2 = Reservation("Tuesday", "5:00", "pm")
 
@@ -36,13 +36,19 @@ class TestReceipt(unittest.TestCase):
         self.assertRaises(TypeError, Receipt, {"Espresso": 1}, self.reservation2, 1010, 26.00)
         self.assertRaises(TypeError, Receipt, {"Espresso": 1}, self.reservation2, None, 26.00)
         self.assertRaises(TypeError, Receipt, {"Espresso": 1}, self.reservation2, ['J', 'o', 'h', 'n'], 26.00)
-        self.assertRaises(TypeError, Receipt, {"Espresso": 1}, self.reservation2, (5+10j),26.00)
-        self.assertRaises(TypeError, Receipt, {"Espresso": 1}, self.reservation2, 323.100,26.00)
-        self.assertRaises(TypeError, Receipt, {"Espresso": 1}, self.reservation2, {},26.00)
-        self.assertRaises(ValueError, Receipt, {"Espresso": 1}, self.reservation2, "",26.00) 
-        self.assertRaises(ValueError, Receipt, {"Espresso": 1}, self.reservation2, "  ",26.00) #No empty names 
+        self.assertRaises(TypeError, Receipt, {"Espresso": 1}, self.reservation2, (5+10j), 26.00)
+        self.assertRaises(TypeError, Receipt, {"Espresso": 1}, self.reservation2, 323.100, 26.00)
+        self.assertRaises(TypeError, Receipt, {"Espresso": 1}, self.reservation2, {}, 26.00)
+        self.assertRaises(ValueError, Receipt, {"Espresso": 1}, self.reservation2, "", 26.00) 
+        self.assertRaises(ValueError, Receipt, {"Espresso": 1}, self.reservation2, "  ", 26.00) #No empty names 
         self.assertRaises(ValueError, Receipt, {"Espresso": 1}, self.reservation2, "34Ronald87", 26.00) 
         self.assertRaises(ValueError, Receipt, {"Espresso": 1}, self.reservation2, "Candace@White",26.00) #No Numeric names
+        'Testing subtotal'
+        self.assertRaises(TypeError, Receipt, {"Espresso": 1}, self.reservation2, "Bob", True)
+        self.assertRaises(TypeError, Receipt, {"Espresso": 1}, self.reservation2, "Bob", [10.25])
+        self.assertRaises(TypeError, Receipt, {"Espresso": 1}, self.reservation2, "Bob", None)
+        self.assertRaises(ValueError, Receipt, {"Espresso": 1}, self.reservation2, "Bob", -3.12)
+        self.assertRaises(ValueError, Receipt, {"Espresso": 1}, self.reservation2, "Bob", 0)
 
     def test_values(self):
         '''Tests the Receipt class along with its methods.'''
@@ -54,9 +60,6 @@ class TestReceipt(unittest.TestCase):
         self.assertAlmostEqual(self.receipt2.total(), 27.82)
         self.assertTrue(self.receipt1.receipt_number(), "6537385003")
         self.assertTrue(self.receipt2.receipt_number(), "8821278003")
-        #[Menu Items], Subtotal, Tax, Total, Reservation, Name] -> will get passed to string format for the CLI to generate the receipt
-        # self.assertCountEqual(self.receipt1.get_order(), [{"Macaroons": 1, "New York Cheesecakes": 2, "Banana Bread": 2}, 36.00, 2.52, 38.52,  self.reservation1, "Yariel"])
-        # self.assertCountEqual(self.receipt2.get_order(), [{"Capuccino": 1, "BLT": 2, "French Croissant": 2, "Banana Bread": 1}, 26.00, 1.82, 27.82, None, "Xavier"])
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(failfast=True)

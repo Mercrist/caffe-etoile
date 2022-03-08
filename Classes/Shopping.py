@@ -1,10 +1,10 @@
-from statics import Reservation, menu
+from Statics import Reservation, menu
 from collections import defaultdict
 from tabulate import tabulate
 
 class ShoppingCart:
     """ 
-    A class that represents the current customers' shopping 
+    A class that represents the customers' shopping 
     cart. It contains their name, the current items added to the
     cart along with the items' quantity, the current subtotal, 
     and the date of a reservation if any was made.
@@ -162,16 +162,47 @@ class ShoppingCart:
         else:
             raise ValueError("You can't clear empty reservations!")
 
-        
 class Receipt:
-    def __init__(self, items: dict, reservation: Reservation, name: str, subtotal: float):
+    """ 
+    A class that represents the customers' order receipt. Based
+    on their final order after payment, contains all information 
+    based on their order info: the items and quantities purchased,
+    the reservation date if any was made, the customers' name, and
+    their subtotal.
 
+    Attributes:
+        items: A dictionary containing each food item from their order, as string keys, and their quantities as integer values.
+        reservation: A reservation object containing the date of the reservation, or None if a reservation wasn't set.
+        name: A string, representing a valid customer name.
+        subtotal: A float which represents the final subtotal. Items ordered cannot be changed.
+    """
+
+    def __init__(self, items:dict, reservation:'Reservation', name:str, subtotal:float)->None:
+        """Initializes an instance of a receipt object.
+
+        Args:
+            items (dict): Contains the items in the final order as key strings and their quantities as integer values.
+            reservation (Reservation): Contains the date of the reservation. None if a reservation wasn't set.
+            name (str): Represents the customers' name.
+            subtotal (float): Contains the final subtotal. Items ordered cannot be changed.
+
+        Raises:
+            TypeError: Raised if the food items aren't in a dictionary, if the reservation is not a valid Reservation object,
+                       the customer name isn't a string, or the subtotal isn't a float or integer.
+
+            ValueError: Raised if the food items' dictionary is empty or contains invalid keys or values, the customer name contains 
+                        non alphanumeric characters or is empty, or if the subtotal is less than or equals to zero. All orders
+                        must have a positive, non zero subtotal.
+        """
         if type(items) is not dict:
             raise TypeError(f"Items must be a dictionary. Given type: {type(items)}")
+            
         if type(reservation) is not Reservation:
             raise TypeError(f"Error: Reservations must be Reservation type. Given type: {type(reservation)}")
+
         if type(name) is not str:
             raise TypeError(f"Error: name must be a string. Given type: {type(name)}")
+
         if type(subtotal) not in [int, float]:
             raise TypeError(f"Error: Total is not a number type. Given type: {type(subtotal)}")
 
@@ -185,47 +216,93 @@ class Receipt:
             if not letter.isalpha() or letter.isspace():
                 raise ValueError("Error: Customer name must not have special characters or numbers.")
 
+        if subtotal <= 0:
+            raise ValueError("Cannot make a receipt for a purchase with no total or a purchase with a sub zero total!")
+
         self.items = items
         self.reservation = reservation
         self.name = name 
         self.subtotal = subtotal 
         self.tax_percent = 0.07
 
-    def tax(self) -> float:
+    # def __str__(self):
+    #     rows =[]
+    #     for item in self.cart:
+    #             rows.append([menu.get(item).name, self.cart.get(item), f"${menu.get(item).price:.2f}"]) #item name, amount, and price
+    #     table = tabulate(
+    #         rows,
+    #         headers=[self.name, "Amount", "Price"], 
+    #         stralign="left",
+    #         numalign="center"
+    #     )
+    #     cart_string += table + "\n\n" + f"Current subtotal: ${self.subtotal:.2f}" + "\n" + f"Reservation: {self.reservation}" + "\n\n"
+    #     return cart_string
+
+    def tax(self)->float:
+        """Calculates the sales tax amount for the given orders' subtotal.
+
+        Returns:
+            float: The sales tax of the customers' order.
+        """
         return self.subtotal * self.tax_percent
 
-    def total(self) -> float:
+    def total(self)->float:
+        """Calculates the customers' final order total. By definition, 
+           the final total is the sum of the order subtotal combined
+           with its corresponding sales tax.
+
+        Returns:
+            float: The final total of the customers' order.
+        """
         return self.subtotal + self.tax() 
 
-    def receipt_number(self) -> str: 
+    def receipt_number(self)->str: 
+        """Generates a 10 digit receipt number for the current order. 
+           Every receipt must have a unique, corresponding receipt number 
+           which can be recreated given the customers' order info.
+           Generated by taking the first four digits of the customers'
+           name hash, the first three digits of the subtotal's value in
+           pennies, and the number of unique items ordered. 
+        
+        Returns:
+            str: The current receipts unique receipt number, as a string. 
+        """
+        
+        def to_pennies(subtotal:float)->str:
+            """Converts the order's subtotal from USD to pennies.
+               Since the cheapest item in the menu is a dollar, 
+               this is always guaranteed to be at least three digits
+               long.
 
-        def to_pennies(value: float) -> str:
-            return str(value * 100)[0:2]
+            Args:
+                value (float): The final orders' subtotal, in USD.
 
-        def first_three_length_cart(length: int) -> str:
-            length = str(length)
-            if len(length) < 3:
-                length = str(length).zfill(3)
-            return length[0:2]
+            Returns:
+                str: The final orders' subtotal in pennies, as a string.
+            """
+            return str(subtotal * 100)[0:2] #converting usd to pennies and getting the first three digits
 
+        def first_three_length_cart(items_ordered:int)->str:
+            """Calculates the final three digits in the receipt number
+               by getting the amount of unique items ordered. 
+               If this amount is less than three, fills in the 
+               remaining digits to the left with zeros.
+
+            Args:
+                items_ordered (int): The number of unique items ordered, not their quantity.
+
+            Returns:
+                str: The number of unique items ordered, formatted as a string. If this amount is less
+                     than three, fills in the remaining spots with zeros.
+            """
+            items_ordered = str(items_ordered)
+            if len(items_ordered) < 3:
+                items_ordered = str(items_ordered).zfill(3) #fill as many remaining spots with zero (1 or 2 zeros)
+            return items_ordered[0:2]
+
+        #calculates the receipt number
         name_hash = str(hash(self.name))[0:4]
         pennies = to_pennies(self.subtotal)
         length = first_three_length_cart(len(self.items))
 
         return name_hash + pennies + length
-        
- 
-
-
-    def print_receipt(self):
-        rows =[]
-        for item in self.cart:
-                rows.append([menu.get(item).name, self.cart.get(item), f"${menu.get(item).price:.2f}"]) #item name, amount, and price
-        table = tabulate(
-            rows,
-            headers=[self.name, "Amount", "Price"], 
-            stralign="left",
-            numalign="center"
-        )
-        cart_string += table + "\n\n" + f"Current subtotal: ${self.subtotal:.2f}" + "\n" + f"Reservation: {self.reservation}" + "\n\n"
-        return cart_string

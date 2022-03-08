@@ -1,5 +1,5 @@
 from Shopping import ShoppingCart 
-from statics import Reservation
+from Statics import Reservation
 import unittest 
 
 class TestShoppingCart(unittest.TestCase):

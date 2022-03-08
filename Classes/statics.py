@@ -2,9 +2,9 @@ from collections import namedtuple
 from dataclasses import dataclass
 from time import strptime   
 
-
+@staticmethod
 def valid_time(time:str)->bool:
-    """Determines whether the input parameter is in the cafe's requested 12-hour, time format.
+    """Determines whether the input parameter is in the cafe's requested, 12-hour time format.
 
     Args:
         time (str): The time format to verify, from 1:00 up to and including 12:00.
@@ -20,7 +20,7 @@ def valid_time(time:str)->bool:
 
     return time_obj.tm_hour <= 12 and time_obj.tm_hour >= 1
 
-
+@staticmethod
 def in_cafe_schedule(day:str, hour:str, meridiem:str)->bool:
     """Determines whether the given reservation fields are within the cafe's opening and closing hours.
        All parameters are validated within the reservation class's constructor beforehand.
@@ -41,15 +41,13 @@ def in_cafe_schedule(day:str, hour:str, meridiem:str)->bool:
     day = day.lower()
 
     if given_time.tm_hour == 12:
-        if meridiem == "AM": #edge case, never open at midnight
-            return False
-        return True #always open at noon
+        return meridiem == "PM" #edge case, never open at midnight, always open at noon
 
     if meridiem == "AM": #compare only against opening hours, strictly if reservation is before opening hours
         opening_time = strptime(working_hours.get(day)[OPENING].hour, '%H:%M')  
         return given_time.tm_hour >= opening_time.tm_hour
             
-    # when the meridiem is 'PM' after noon
+    # when the meridiem is 'PM' and after noon
     closing_time = strptime(working_hours.get(day)[CLOSING].hour, '%H:%M')
     if given_time.tm_hour == closing_time.tm_hour: #if the hours are the same, check the minutes
         if given_time.tm_min == closing_time.tm_min:
@@ -62,6 +60,16 @@ def in_cafe_schedule(day:str, hour:str, meridiem:str)->bool:
 
 @dataclass()
 class MenuItem:
+    """An immutable data class which instintiates a cafe menu item.
+       Allows for quick retrieval of an items' attributes.
+
+    Attributes:
+        name: A string, representing the menu items' name, with proper punctuation.
+        price: The price of a menu item, in USD, as a float.
+        category: The menu category to which the item belongs to, as a string.
+        description: Flavor text describing the menu item, as a string.
+        image_link: A string containing the image link for the food item, as displayed on the website.
+    """
     name: str
     price: float
     category: str
@@ -69,6 +77,20 @@ class MenuItem:
     image_link: str
 
     def __init__(self, name:str, price:float, category:str = "", description:str = "", image_link:str = ""):
+        """Initializes an instance of a cafe menu item.
+
+        Args:
+            name (str): A valid menu item name.
+            price (float): The non-zero, positive price of the menu item.
+            category (str, optional): The menu category the food belongs to. Defaults to an empty string.
+            description (str, optional): The food item description, as shown on the cafe's website. Defaults to an empty string.
+            image_link (str, optional): The image link for the food item, as displayed on the cafe's website. Defaults to an empty string.
+
+        Raises:
+            TypeError: Raised if none of the parameters are strings, with the exception of the menu item price which must be a float.
+            ValueError: Raised if any of the string categories are empty, the price is unreasonable or invalid, or the food category
+                        is not a valid menu category.
+        """
         if type(name) is not str or type(category) is not str or type(image_link) is not str or type(description) is not str:
             raise TypeError("Invalid type passed. The item's name, image link, and description should be strings!")
 
@@ -95,6 +117,16 @@ class MenuItem:
 
 @dataclass()
 class Reservation:
+    """An immutable data class containing information
+       pertaining to the exact date a customer sets
+       a cafe reservation.
+
+    Attributes:
+        day: A string representing the day of the week at which the customer desires to set the reservation.
+        hour: The hour, as a 12-hour format string, at which to set the reservation.
+        meridiem: A string denoting whether the time of the reservation shall be at AM or PM. 
+                  Must be within the cafe's opening and closing hours.
+    """
     day:str
     hour:str
     meridiem:str
@@ -164,6 +196,7 @@ class Reservation:
 
         return self.day == other.day and self.hour == other.hour and self.meridiem == other.meridiem
 
+"Static values pertaining to the cafe's menu and working schedule"
 menu = {
     #coffee
     "espresso": MenuItem("Espresso", 1.00, "Coffee","The staple drink of italian origin, the espresso shot offers a strong coffee taste, showing the bean's flavors as well as leaving a nice crema on the top to enjoy.","https://bit.ly/3Ljp8xC"), 
