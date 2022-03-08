@@ -54,12 +54,12 @@ class TestReceipt(unittest.TestCase):
         '''Tests the Receipt class along with its methods.'''
         self.assertAlmostEqual(self.receipt1.subtotal, 36.00)
         self.assertAlmostEqual(self.receipt2.subtotal, 26.00)
-        self.assertAlmostEqual(self.receipt1.tax(), 2.52)
-        self.assertAlmostEqual(self.receipt2.tax(), 1.82)
-        self.assertAlmostEqual(self.receipt1.total(), 38.52)
-        self.assertAlmostEqual(self.receipt2.total(), 27.82)
-        self.assertTrue(self.receipt1.receipt_number(), "6537385003")
-        self.assertTrue(self.receipt2.receipt_number(), "8821278003")
+        self.assertAlmostEqual(self.receipt1.tax(), 3.69)
+        self.assertAlmostEqual(self.receipt2.tax(), 2.67)
+        self.assertAlmostEqual(self.receipt1.total(), 39.69)
+        self.assertAlmostEqual(self.receipt2.total(), 28.67)
+        self.assertEqual(self.receipt1.receipt_number(), "2017396003")
+        self.assertEqual(self.receipt2.receipt_number(), "2316286004")
 
 if __name__ == "__main__":
     unittest.main(failfast=True)
