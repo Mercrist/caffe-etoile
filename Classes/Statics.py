@@ -2,7 +2,6 @@ from collections import namedtuple
 from dataclasses import dataclass
 from time import strptime   
 
-@staticmethod
 def valid_time(time:str)->bool:
     """Determines whether the input parameter is in the cafe's requested, 12-hour time format.
 
@@ -20,7 +19,6 @@ def valid_time(time:str)->bool:
 
     return time_obj.tm_hour <= 12 and time_obj.tm_hour >= 1
 
-@staticmethod
 def in_cafe_schedule(day:str, hour:str, meridiem:str)->bool:
     """Determines whether the given reservation fields are within the cafe's opening and closing hours.
        All parameters are validated within the reservation class's constructor beforehand.
