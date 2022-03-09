@@ -200,7 +200,7 @@ class Receipt:
         if type(food_items) is not dict:
             raise TypeError(f"Items must be a dictionary. Given type: {type(food_items)}")
             
-        if type(reservation) is not Reservation:
+        if type(reservation) is not Reservation and reservation is not None: #Reservations can be None
             raise TypeError(f"Error: Reservations must be Reservation type. Given type: {type(reservation)}")
 
         if type(name) is not str:
@@ -317,9 +317,10 @@ class Receipt:
 
     def generate_receipt(self)->None:
         """Writes the final receipt to a text file within the current directory.
-           Displays the receipt's attributes and more such as: items ordered with their 
-           quantities, the totals, the receipt number, the time at which the order was 
-           placed, and more.
+           Displays the receipt's attributes, orders, and more such as: 
+           items ordered with their quantities, the totals, the receipt number, 
+           the time at which the order was placed, the customer's name, 
+           and the reservation date.
         """
         receipt_string = "CAFFÈ ÉTOILÉ\n"
 
@@ -348,9 +349,7 @@ class Receipt:
 
         utc_now = datetime.now(timezone.utc) #gets the current time in utc
         local_time_obj = utc_now.astimezone() #gets the specific utc timezone (from the computer system)
-        local_time_str = local_time_obj.strftime("%m-%d-%Y-%H:%M") #format as 24 hour time format
-        time_obj = datetime.strptime(local_time_str, "%m-%d-%Y-%H:%M") #format the local time
-        time_string = time_obj.strftime("%m-%d-%Y at %I:%M %p") #get as 12-hour string
+        time_string = local_time_obj.strftime("%m-%d-%Y at %I:%M %p") #get current/local time as 12-hour string
 
         receipt_string += payments + "\n\n" + f"Customer: {self.name}\n" + f"Receipt Number: #{self.receipt_number()}\n" + f"Reservation: {self.reservation}\n" \
                          f"Time Generated: {time_string}\n\n" + "Thanks for stopping by!" 

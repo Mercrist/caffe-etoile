@@ -10,7 +10,7 @@ class TestReceipt(unittest.TestCase):
         self.reservation2 = Reservation("Tuesday", "5:00", "pm")
 
         self.receipt1 = Receipt({"Macaroons": 1, "New York Cheesecakes": 2, "Banana Bread": 2}, self.reservation1, "Yariel", 36.00)
-        self.receipt2 = Receipt({"Capuccino": 1, "BLT": 2, "French Croissant": 2, "Banana Bread": 1}, self.reservation2, "Xavier", 26.00)
+        self.receipt2 = Receipt({"Cappuccino": 1, "BLT": 2, "French Croissant": 2, "Banana Bread": 1}, self.reservation2, "Xavier", 26.00)
 
     def test_init(self):
         'Testing Items field'
