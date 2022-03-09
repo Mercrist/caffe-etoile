@@ -197,7 +197,7 @@ class Receipt:
                         non alphanumeric characters or is empty, or if the subtotal is less than or equals to zero. All orders
                         must have a positive, non zero subtotal.
         """
-        if type(food_items) is not dict:
+        if type(food_items) not in [dict, defaultdict]:
             raise TypeError(f"Items must be a dictionary. Given type: {type(food_items)}")
             
         if type(reservation) is not Reservation and reservation is not None: #Reservations can be None
@@ -354,6 +354,6 @@ class Receipt:
         receipt_string += payments + "\n\n" + f"Customer: {self.name}\n" + f"Receipt Number: #{self.receipt_number()}\n" + f"Reservation: {self.reservation}\n" \
                          f"Time Generated: {time_string}\n\n" + "Thanks for stopping by!" 
 
-        with open("Classes/receipt.txt", "w", encoding='utf-8') as receipt_file: #write receipt to text file, utf-8 for special characters
+        with open("receipt.txt", "w", encoding='utf-8') as receipt_file: #write receipt to text file, utf-8 for special characters
             receipt_file.write(receipt_string)
         
