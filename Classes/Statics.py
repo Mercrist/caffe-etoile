@@ -74,15 +74,15 @@ class MenuItem:
     description: str
     image_link: str
 
-    def __init__(self, name:str, price:float, category:str = "", description:str = "", image_link:str = ""):
+    def __init__(self, name:str, price:float, category:str = "specialty", description:str = "N/A", image_link:str = "invalid_link"):
         """Initializes an instance of a cafe menu item.
 
         Args:
             name (str): A valid menu item name.
             price (float): The non-zero, positive price of the menu item.
-            category (str, optional): The menu category the food belongs to. Defaults to an empty string.
-            description (str, optional): The food item description, as shown on the cafe's website. Defaults to an empty string.
-            image_link (str, optional): The image link for the food item, as displayed on the cafe's website. Defaults to an empty string.
+            category (str, optional): The menu category the food belongs to. Defaults to the specialty category.
+            description (str, optional): The food item description, as shown on the cafe's website. Defaults to "Not Applicable".
+            image_link (str, optional): The image link for the food item, as displayed on the cafe's website. Defaults to placeholder text.
 
         Raises:
             TypeError: Raised if none of the parameters are strings, with the exception of the menu item price which must be a float.

@@ -6,12 +6,10 @@ class TestReceipt(unittest.TestCase):
     def setUp(self):
         '''Test some correctly initialized receipts'''
         #Receipt(Dictionary of Items, Reservation Object, Name, subtotal)
-        self.reservation1 = Reservation("Sunday", "9:00", "AM")
-        self.reservation2 = Reservation("Tuesday", "5:00", "pm")
+        self.reservation = Reservation("Sunday", "9:00", "AM")
 
-        self.receipt1 = Receipt({"Macaroons": 1, "New York Cheesecakes": 2, "Banana Bread": 2}, self.reservation1, "Yariel", 36.00)
-        self.receipt2 = Receipt({"Cappuccino": 1, "BLT": 2, "French Croissant": 2, "Banana Bread": 1}, self.reservation2, "Xavier", 26.00)
-        self.receipt3 = Receipt({"Espresso": 3}, None, "Claire", 3.00) #empty reservation works
+        self.receipt1 = Receipt({"Macaroons": 1, "New York Cheesecakes": 2, "Banana Bread": 2}, self.reservation, "Yariel", 36.00)
+        self.receipt2 = Receipt({"Cappuccino": 1, "BLT": 2, "French Croissant": 2, "Banana Bread": 1}, None, "Xavier", 26.00)
 
 
     def test_init(self):

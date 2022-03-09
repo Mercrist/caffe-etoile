@@ -4,16 +4,12 @@ import unittest
 class TestMenuItem(unittest.TestCase):
     '''Tests the MenuItem dataclass along with its methods.'''
     def setUp(self):
-        try:
-            self.item1 = MenuItem("Espresso", 1.00, "Coffee",
+        self.item1 = MenuItem("Espresso", 1.00, "Coffee",
             "The staple drink of italian origin, the espresso shot offers a strong coffee taste, \
             showing the bean's flavors as well as leaving a nice crema on the top to enjoy.",
             "https://bit.ly/3Ljp8xC")
 
-            self.item2 = MenuItem("Creme Brulee", 7.00)
-
-        except:
-            print("Failed to set up test menu test values!")
+        self.item2 = MenuItem("Creme Brulee", 7.00)
 
     def test_types(self):
         self.assertRaises(TypeError, MenuItem, None, 5.00, "some_category", "some_description", "some_link")
@@ -43,6 +39,12 @@ class TestMenuItem(unittest.TestCase):
 
 
 class TestReservation(unittest.TestCase):
+    def setUp(self):
+        self.reservation1 = Reservation("Tuesday", "5:00", "pm")
+        self.reservation2 = Reservation("Wednesday", "4:59", "pm")
+        self.reservation3 = Reservation("Thursday", "7:01", "Am")
+        self.reservation4 = Reservation("friday", "3:00", "pm")
+
     def test_init(self):
         'Testing days'
         self.assertRaises(TypeError, Reservation, None, "9:30", "am")
