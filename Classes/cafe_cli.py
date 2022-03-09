@@ -1,6 +1,6 @@
-from Classes.Shopping import ShoppingCart, Receipt
+from Shopping import ShoppingCart, Receipt
 from argparse import ArgumentParser
-from Classes.Statics import menu
+from Statics import Reservation, menu
 from tabulate import tabulate
 import webbrowser
 
@@ -14,22 +14,45 @@ def generate_parser():
 def interactive():
     print("Welcome to Cafe Ettoile!")
     print("What would you like to do today?")
-    print("1.Start ordering\n2.View reservation\n3.Exit")
+    print("1.Start ordering\n2.View menu\n3.Exit")
     user = input(": ")
     if user == "1":
         view = input("Would you like to see the menu in your browser?\nNote: The browser shows more details into each specific food\n(y/n): ").lower()
         if view == "y" or view == "yes":
-            webbrowser.open("Pages/menu.html",new=2) 
+            webbrowser.open("../Pages/menu.html",new=2) 
         cart = get_order()   
-        reservation = get_reservation() 
+        day = input("Enter the day of your reservation:\nSunday Monday Tuesday Wednesday Thursday Friday Saturday\n: ").lower().strip()
+        hour = input("Hour of reservation\n(XX:XX format): ").lower().strip()
+        meridiem = input("AM or PM?\n: ").lower().strip()
+        cart.set_reservation(day,hour,meridiem)
+        print(cart)
+        if input("Ready to checkout?]\n(y/n): ") == "y":
+            receipt = create_receipt(cart)
+            receipt.generate_receipt()
+            print("Thank you for visiting!")
+            print("Generated a copy of your receipt in Classes/receipt.txt")
     elif user == "2":
-        reservation = input("Enter your receipt number to view your reservation")
+        webbrowser.open("../Pages/menu.html",new=2) 
     else:
         print("Thank you for visiting!")
         return 
 
 def get_reservation():
-    pass
+    reservation = None
+    while reservation is None:
+        day = input("Enter the day of your reservation:\nSunday Monday Tuesday Wednesday Thursday Friday Saturday\n:").lower().strip() 
+        hour = input("Hour of reservation\n(XX:XX format):").lower().strip()
+        meridiem = input("AM or PM:\n").lower().strip()
+
+        try:
+            reservation = Reservation(day,hour,meridiem)
+            if input(f"Please confirm your reservation: {str(reservation)} \n(y/n):") == "n":
+                reservation = None
+        except:
+            print("Sorry, something went wrong with your reservation. Try again!")
+    
+    return reservation
+
 
 def get_order():
     cart = ShoppingCart(input("Enter your name to begin: "))
@@ -43,7 +66,7 @@ def get_order():
         for item,count in cart.cart.items():
             print(f"{item}:\t{count}")
         print(f"\nTotal in cart: {cart.subtotal:.2f}")
-        print("\na. Add to cart\t b.Remove from cart\t c.Exit")
+        print("\na. Add to cart\t b.Remove from cart\t c.Reservation and Checkout")
         action = input(": ")
         if action.lower() == "a":
             print("What item would you like to add?")
@@ -68,7 +91,13 @@ def get_order():
         elif action.lower() == "c":
             return cart
             
-
+def create_receipt(cart: ShoppingCart) -> Receipt:
+    return Receipt(
+        cart.cart,
+        cart.reservation,
+        cart.name,
+        cart.subtotal,
+    )
 
 
 if __name__ == "__main__":
@@ -76,10 +105,10 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.action == "menu": 
-        webbrowser.open("Pages/menu.html",new=2)
+        webbrowser.open("../Pages/menu.html",new=2)
 
     elif args.action == "interactive":
         interactive() 
     
     elif args.action == "about":
-        webbrowser.open("index.html",new=2)
+        webbrowser.open("../index.html",new=2)
