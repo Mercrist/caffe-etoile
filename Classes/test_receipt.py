@@ -14,16 +14,16 @@ class TestReceipt(unittest.TestCase):
 
     def test_init(self):
         'Testing Items field'
-        self.assertRaises(TypeError, Receipt, False, self.reservation1, "Bob",26.00)
-        self.assertRaises(TypeError, Receipt, None, self.reservation1, "Bob",26.00)
-        self.assertRaises(TypeError, Receipt, 10.38, self.reservation1, "Bob",26.00)
-        self.assertRaises(TypeError, Receipt, "2x Cake", self.reservation1, "Bob",26.00)
-        self.assertRaises(TypeError, Receipt, [], self.reservation1, "Bob",26.00) 
-        self.assertRaises(TypeError, Receipt, ["Banana", "Coconut"], self.reservation1, "Bob",26.00) 
-        self.assertRaises(TypeError, Receipt, [15, 13], self.reservation1, "Bob",26.00) 
-        self.assertRaises(ValueError, Receipt, {"Macaroons": None}, self.reservation1, "Bob",26.00)
-        self.assertRaises(ValueError, Receipt, {"Macaroons": -1}, self.reservation1, "Bob",26.00) 
-        self.assertRaises(ValueError, Receipt, {}, self.reservation1, "Bob",26.00) #can't generate a receipt with no items
+        self.assertRaises(TypeError, Receipt, False, self.reservation, "Bob",26.00)
+        self.assertRaises(TypeError, Receipt, None, self.reservation, "Bob",26.00)
+        self.assertRaises(TypeError, Receipt, 10.38, self.reservation, "Bob",26.00)
+        self.assertRaises(TypeError, Receipt, "2x Cake", self.reservation, "Bob",26.00)
+        self.assertRaises(TypeError, Receipt, [], self.reservation, "Bob",26.00) 
+        self.assertRaises(TypeError, Receipt, ["Banana", "Coconut"], self.reservation, "Bob",26.00) 
+        self.assertRaises(TypeError, Receipt, [15, 13], self.reservation, "Bob",26.00) 
+        self.assertRaises(ValueError, Receipt, {"Macaroons": None}, self.reservation, "Bob",26.00)
+        self.assertRaises(ValueError, Receipt, {"Macaroons": -1}, self.reservation, "Bob",26.00) 
+        self.assertRaises(ValueError, Receipt, {}, self.reservation, "Bob",26.00) #can't generate a receipt with no items
         'Testing Reservations field'
         self.assertRaises(TypeError, Receipt, {"Espresso": 1}, True, "Bob",26.00)
         self.assertRaises(TypeError, Receipt, {"Espresso": 1}, [], "Bob",26.00)
@@ -33,22 +33,22 @@ class TestReceipt(unittest.TestCase):
         self.assertRaises(TypeError, Receipt, {"Espresso": 1}, "Sunday", "Bob",26.00)
         self.assertRaises(TypeError, Receipt, {"Espresso": 1}, "9:00", "Bob",26.00)
         'Testing Names Field'
-        self.assertRaises(TypeError, Receipt, {"Espresso": 1}, self.reservation2, 1010, 26.00)
-        self.assertRaises(TypeError, Receipt, {"Espresso": 1}, self.reservation2, None, 26.00)
-        self.assertRaises(TypeError, Receipt, {"Espresso": 1}, self.reservation2, ['J', 'o', 'h', 'n'], 26.00)
-        self.assertRaises(TypeError, Receipt, {"Espresso": 1}, self.reservation2, (5+10j), 26.00)
-        self.assertRaises(TypeError, Receipt, {"Espresso": 1}, self.reservation2, 323.100, 26.00)
-        self.assertRaises(TypeError, Receipt, {"Espresso": 1}, self.reservation2, {}, 26.00)
-        self.assertRaises(ValueError, Receipt, {"Espresso": 1}, self.reservation2, "", 26.00) 
-        self.assertRaises(ValueError, Receipt, {"Espresso": 1}, self.reservation2, "  ", 26.00) #No empty names 
-        self.assertRaises(ValueError, Receipt, {"Espresso": 1}, self.reservation2, "34Ronald87", 26.00) 
-        self.assertRaises(ValueError, Receipt, {"Espresso": 1}, self.reservation2, "Candace@White",26.00) #No Numeric names
+        self.assertRaises(TypeError, Receipt, {"Espresso": 1}, self.reservation, 1010, 26.00)
+        self.assertRaises(TypeError, Receipt, {"Espresso": 1}, self.reservation, None, 26.00)
+        self.assertRaises(TypeError, Receipt, {"Espresso": 1}, self.reservation, ['J', 'o', 'h', 'n'], 26.00)
+        self.assertRaises(TypeError, Receipt, {"Espresso": 1}, self.reservation, (5+10j), 26.00)
+        self.assertRaises(TypeError, Receipt, {"Espresso": 1}, self.reservation, 323.100, 26.00)
+        self.assertRaises(TypeError, Receipt, {"Espresso": 1}, self.reservation, {}, 26.00)
+        self.assertRaises(ValueError, Receipt, {"Espresso": 1}, self.reservation, "", 26.00) 
+        self.assertRaises(ValueError, Receipt, {"Espresso": 1}, self.reservation, "  ", 26.00) #No empty names 
+        self.assertRaises(ValueError, Receipt, {"Espresso": 1}, self.reservation, "34Ronald87", 26.00) 
+        self.assertRaises(ValueError, Receipt, {"Espresso": 1}, self.reservation, "Candace@White",26.00) #No Numeric names
         'Testing subtotal'
-        self.assertRaises(TypeError, Receipt, {"Espresso": 1}, self.reservation2, "Bob", True)
-        self.assertRaises(TypeError, Receipt, {"Espresso": 1}, self.reservation2, "Bob", [10.25])
-        self.assertRaises(TypeError, Receipt, {"Espresso": 1}, self.reservation2, "Bob", None)
-        self.assertRaises(ValueError, Receipt, {"Espresso": 1}, self.reservation2, "Bob", -3.12)
-        self.assertRaises(ValueError, Receipt, {"Espresso": 1}, self.reservation2, "Bob", 0)
+        self.assertRaises(TypeError, Receipt, {"Espresso": 1}, self.reservation, "Bob", True)
+        self.assertRaises(TypeError, Receipt, {"Espresso": 1}, self.reservation, "Bob", [10.25])
+        self.assertRaises(TypeError, Receipt, {"Espresso": 1}, self.reservation, "Bob", None)
+        self.assertRaises(ValueError, Receipt, {"Espresso": 1}, self.reservation, "Bob", -3.12)
+        self.assertRaises(ValueError, Receipt, {"Espresso": 1}, self.reservation, "Bob", 0)
 
     def test_values(self):
         '''Tests the Receipt class along with its methods.'''
