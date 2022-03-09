@@ -220,7 +220,7 @@ menu = {
     "macaroons": MenuItem("Macaroons", 2.00, "Desserts", "Small cakes made from almonds mixed with sugar and a grand variety of flavorings.", "https://bit.ly/3HPNiNZ")
 }
 
-hour_format = namedtuple('hour_format', 'hour, meridiem') #accessing the opened and closing hours by .get(day)[0 or 1].hour and .meridiem
+hour_format = namedtuple('hour_format', 'hour meridiem') #accessing the opened and closing hours by .get(day)[0 or 1].hour and .meridiem
 
 working_hours = {
     "sunday": [hour_format("9:00", "AM"), hour_format("3:00", "PM")],
