@@ -1,6 +1,6 @@
-from Classes.Shopping import ShoppingCart, Receipt
+from Shopping import ShoppingCart, Receipt
 from argparse import ArgumentParser
-from Classes.Statics import Reservation, menu
+from Statics import Reservation, menu
 from tabulate import tabulate
 import webbrowser
 
@@ -19,7 +19,7 @@ def interactive():
     if user == "1":
         view = input("Would you like to see the menu in your browser?\nNote: The browser shows more details into each specific food\n(y/n): ").lower()
         if view == "y" or view == "yes":
-            webbrowser.open("Pages/menu.html",new=2) 
+            webbrowser.open("../Pages/menu.html",new=2) 
         cart = get_order()   
         day = input("Enter the day of your reservation:\nSunday Monday Tuesday Wednesday Thursday Friday Saturday\n: ").lower().strip()
         hour = input("Hour of reservation\n(XX:XX format): ").lower().strip()
@@ -30,9 +30,9 @@ def interactive():
             receipt = create_receipt(cart)
             receipt.generate_receipt()
             print("Thank you for visiting!")
-            print("Generated a copy of your receipt in Classes/Receipt.txt")
+            print("Generated a copy of your receipt in Classes/receipt.txt")
     elif user == "2":
-        webbrowser.open("Pages/menu.html",new=2) 
+        webbrowser.open("../Pages/menu.html",new=2) 
     else:
         print("Thank you for visiting!")
         return 
@@ -105,10 +105,10 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.action == "menu": 
-        webbrowser.open("Pages/menu.html",new=2)
+        webbrowser.open("../Pages/menu.html",new=2)
 
     elif args.action == "interactive":
         interactive() 
     
     elif args.action == "about":
-        webbrowser.open("index.html",new=2)
+        webbrowser.open("../index.html",new=2)

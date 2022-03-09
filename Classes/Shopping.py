@@ -1,5 +1,5 @@
 from datetime import datetime, timezone
-from .Statics import Reservation, menu   
+from Statics import Reservation, menu   
 from collections import defaultdict
 from tabulate import tabulate
 import hashlib
@@ -355,6 +355,6 @@ class Receipt:
         receipt_string += payments + "\n\n" + f"Customer: {self.name}\n" + f"Receipt Number: #{self.receipt_number()}\n" + f"Reservation: {self.reservation}\n" \
                          f"Time Generated: {time_string}\n\n" + "Thanks for stopping by!" 
 
-        with open("Classes/receipt.txt", "w", encoding='utf-8') as receipt_file: #write receipt to text file, utf-8 for special characters
+        with open("receipt.txt", "w", encoding='utf-8') as receipt_file: #write receipt to text file, utf-8 for special characters
             receipt_file.write(receipt_string)
         
