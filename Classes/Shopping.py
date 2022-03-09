@@ -57,11 +57,11 @@ class ShoppingCart:
             table = f"No menu items currently in {self.name}'s cart."
 
         else:
-            rows = []
+            menu_rows = []
             for item, quantity in self.cart.items(): #creates each row in the table
-                rows.append([menu.get(item).name, quantity, f"${menu.get(item).price:.2f}"]) #item name, amount, and price
+                menu_rows.append([menu.get(item).name, quantity, f"${menu.get(item).price:.2f}"]) #item name, amount, and price
 
-            table = tabulate(rows, headers=[self.name, "Amount", "Price"], stralign="left", numalign="center") #specifies the headers for each column
+            table = tabulate(menu_rows, headers=[self.name, "Amount", "Price"], stralign="left", numalign="center") #specifies the headers for each column
 
         cart_string += table + "\n\n" + f"Current subtotal: ${self.subtotal:.2f}" + "\n" + f"Reservation: {self.reservation}" + "\n\n" #format string
         return cart_string
@@ -323,24 +323,24 @@ class Receipt:
         """
         receipt_string = "CAFFÈ ÉTOILÉ\n"
 
-        rows = []
+        receipt_rows = []
         for food_order, quantity in self.food_items.items():
-            rows.append([menu.get(food_order.lower()).name, quantity, f"${menu.get(food_order.lower()).price:.2f}"]) #item name, amount, and price
+            receipt_rows.append([menu.get(food_order.lower()).name, quantity, f"${menu.get(food_order.lower()).price:.2f}"]) #item name, amount, and price
         
-        table = tabulate(
-            rows,
+        receipt_body = tabulate(
+            receipt_rows,
             headers=["Items", "Amount", "Price"], 
             stralign="left",
             numalign="center",
             tablefmt="psql"
         )
         
-        receipt_string += table + "\n\n"
+        receipt_string += receipt_body + "\n\n"
 
         #Price calculations
-        rows2 = [["Subtotal: ", f"${self.subtotal:.2f}"], ["Tax: ", f"${self.tax():.2f}"], ["Total: ", f"${self.total():.2f}"]]
-        table2 = tabulate(
-            rows2,
+        to_pay_rows = [["Subtotal: ", f"${self.subtotal:.2f}"], ["Tax: ", f"${self.tax():.2f}"], ["Total: ", f"${self.total():.2f}"]]
+        payments = tabulate(
+            to_pay_rows,
             stralign="left",
             numalign="left",
             tablefmt="simple"
@@ -352,7 +352,7 @@ class Receipt:
         time_obj = datetime.strptime(local_time_str, "%m-%d-%Y-%H:%M") #format the local time
         time_string = time_obj.strftime("%m-%d-%Y at %I:%M %p") #get as 12-hour string
 
-        receipt_string += table2 + "\n\n" + f"Customer: {self.name}\n" + f"Receipt Number: #{self.receipt_number()}\n" + f"Reservation: {self.reservation}\n" \
+        receipt_string += payments + "\n\n" + f"Customer: {self.name}\n" + f"Receipt Number: #{self.receipt_number()}\n" + f"Reservation: {self.reservation}\n" \
                          f"Time Generated: {time_string}\n\n" + "Thanks for stopping by!" 
 
         with open("Classes/receipt.txt", "w", encoding='utf-8') as receipt_file: #write receipt to text file, utf-8 for special characters
