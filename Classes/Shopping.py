@@ -1,5 +1,5 @@
 from datetime import datetime, timezone
-from Statics import Reservation, menu   
+from .Statics import Reservation, menu   
 from collections import defaultdict
 from tabulate import tabulate
 import hashlib
@@ -197,7 +197,7 @@ class Receipt:
                         non alphanumeric characters or is empty, or if the subtotal is less than or equals to zero. All orders
                         must have a positive, non zero subtotal.
         """
-        if type(food_items) is not dict:
+        if type(food_items) not in [dict,defaultdict]:
             raise TypeError(f"Items must be a dictionary. Given type: {type(food_items)}")
             
         if type(reservation) is not Reservation:
