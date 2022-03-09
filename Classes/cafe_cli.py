@@ -1,12 +1,12 @@
 from Shopping import ShoppingCart, Receipt
+from Statics import menu, working_hours
 from argparse import ArgumentParser
-from Statics import Reservation, menu, working_hours
 from tabulate import tabulate
 import webbrowser
 
 description = "CLI tool used to interact with Caffè Étoilé."
 
-def generate_parser() -> ArgumentParser:
+def generate_parser()->'ArgumentParser':
     """
     Generate an ArgumentParser object to handle user input from command line.
     """
@@ -14,7 +14,7 @@ def generate_parser() -> ArgumentParser:
     parser.add_argument("action", help="Main action to take.",default="interactive",choices=["interactive","menu","reservation","about"])
     return parser
 
-def interactive() -> None:
+def interactive()->None:
     """
     Function to handle user input process. Asks users to choose whether to begin ordering,
     view the menu in their browser or exit from the program. Asks user for desired action
@@ -27,7 +27,7 @@ def interactive() -> None:
         Returns:
             None
     """
-    print("Welcome to Cafe Ettoile!")
+    print("\nWelcome to Cafe Ettoile!")
     print("What would you like to do today?")
     print("1.Start ordering\n2.View menu\n3.Exit")
     user = input(": ")
@@ -53,7 +53,7 @@ def interactive() -> None:
         if input("Ready to checkout?]\n(y/n): ") == "y":
             receipt = create_receipt(cart)
             receipt.generate_receipt()
-            print("Thank you for visiting!")
+            print("\nThank you for visiting!")
             print("Generated a copy of your receipt in Classes/receipt.txt")
     elif user == "2":
         webbrowser.open("../Pages/menu.html",new=2) 
@@ -62,7 +62,7 @@ def interactive() -> None:
         return 
 
 
-def get_order() -> ShoppingCart:
+def get_order()->'ShoppingCart':
     """
     Function to handle user's order information and generate a ShoppingCart object.
     Used by interactive() function above. Asks user for action to add to user's cart,
@@ -78,6 +78,7 @@ def get_order() -> ShoppingCart:
         food_table.append([item.name,item.price])
 
     while True:
+        print("\n")
         print(tabulate(food_table,headers=["Item","Price"],showindex=True, tablefmt="presto"))
         print("\nItems in cart:")
         for item,count in cart.cart.items():
@@ -108,7 +109,7 @@ def get_order() -> ShoppingCart:
         elif action.lower() == "c":
             return cart
             
-def create_receipt(cart: ShoppingCart) -> Receipt:
+def create_receipt(cart: ShoppingCart)->'Receipt':
     """
     Small wrapper function to generate Receipt based from a shopping cart.
 
