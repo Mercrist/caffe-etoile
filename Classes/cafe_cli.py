@@ -11,7 +11,7 @@ def generate_parser() -> ArgumentParser:
     Generate an ArgumentParser object to handle user input from command line.
     """
     parser = ArgumentParser(description) 
-    parser.add_argument("action", help="Main action to take.",default="interactive",choices=["interactive","menu","reservation","about"])
+    parser.add_argument("action", help="Main action to take.",default="interactive",choices=["interactive","menu","about"],const="interactive",nargs="?")
     return parser
 
 def interactive() -> None:
