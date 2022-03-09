@@ -32,23 +32,25 @@ def interactive() -> None:
     print("1.Start ordering\n2.View menu\n3.Exit")
     user = input(": ")
     if user == "1":
-        view = input("Would you like to see the menu in your browser?\nNote: The browser shows more details into each specific food\n(y/n): ").lower()
+        view = input("Would you like to see the menu in your browser?\nNote: The browser shows more details into each specific food\n(y/n): ").lower().strip()
         if view == "y" or view == "yes":
             webbrowser.open("../Pages/menu.html",new=2) 
         cart = get_order()
-        hours = []   
+        hours = []  
+
         for day,window in working_hours.items():
             hours.append([day,f"{window[0].hour} {window[0].meridiem} - {window[1].hour} {window[1].meridiem}"]) 
 
-        while cart.reservation is None:
-            print(tabulate(hours,headers=["Days","Hours"]))
-            day = input("\nEnter the day of your reservation:\n: ").lower().strip()
-            hour = input("\nHour of reservation\n(XX:XX format): ").lower().strip()
-            meridiem = input("\nAM or PM?\n: ").lower().strip()
-            try:
-                cart.set_reservation(day,hour,meridiem)
-            except ValueError:
-                print("Sorry, one of your inputs wasn't correct. Try again!")
+        if input("Would you like to make a reservation?\n(y/n): ").lower().strip() == "y":
+            while cart.reservation is None:
+                print(tabulate(hours,headers=["Days","Hours"]))
+                day = input("\nEnter the day of your reservation:\n: ").lower().strip()
+                hour = input("\nHour of reservation\n(XX:XX format): ").lower().strip()
+                meridiem = input("\nAM or PM?\n: ").lower().strip()
+                try:
+                    cart.set_reservation(day,hour,meridiem)
+                except ValueError:
+                    print("Sorry, one of your inputs wasn't correct. Try again!")
         print(cart)
         if input("Ready to checkout?]\n(y/n): ") == "y":
             receipt = create_receipt(cart)
