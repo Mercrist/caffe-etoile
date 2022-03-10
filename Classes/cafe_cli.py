@@ -1,12 +1,12 @@
 from Shopping import ShoppingCart, Receipt
+from Statics import menu, working_hours
 from argparse import ArgumentParser
-from Statics import Reservation, menu, working_hours
 from tabulate import tabulate
 import webbrowser
 
 description = "CLI tool used to interact with Caffè Étoilé."
 
-def generate_parser() -> ArgumentParser:
+def generate_parser()->'ArgumentParser':
     """
     Generate an ArgumentParser object to handle user input from command line.
 
@@ -19,7 +19,7 @@ def generate_parser() -> ArgumentParser:
     parser.add_argument("action", help="Main action to take.",default="interactive",choices=["interactive","menu","about"],const="interactive",nargs="?")
     return parser
 
-def interactive() -> None:
+def interactive()->None:
     """
     Function to handle user input process. Asks users to choose whether to begin ordering,
     view the menu in their browser or exit from the program. Asks user for desired action
@@ -77,7 +77,7 @@ def interactive() -> None:
             return 
 
 
-def get_order() -> ShoppingCart:
+def get_order()->'ShoppingCart':
     """
     Function to handle user's order information and generate a ShoppingCart object.
     Used by interactive() function above. Asks user for action to add to user's cart,
@@ -93,6 +93,7 @@ def get_order() -> ShoppingCart:
         food_table.append([item.name,item.price])
 
     while True:
+        print("\n")
         print(tabulate(food_table,headers=["Item","Price"],showindex=True, tablefmt="presto"))
         print("\nItems in cart:")
         for item,count in cart.cart.items():
@@ -123,7 +124,7 @@ def get_order() -> ShoppingCart:
         elif action.lower() == "c":
             return cart
             
-def create_receipt(cart: ShoppingCart) -> Receipt:
+def create_receipt(cart: ShoppingCart)->'Receipt':
     """
     Small wrapper function to generate Receipt based from a shopping cart.
 
