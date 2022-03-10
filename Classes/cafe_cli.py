@@ -50,7 +50,7 @@ def interactive()->None:
             hours = []  
 
             for day,window in working_hours.items():
-                hours.append([day,f"{window[0].hour} {window[0].meridiem} - {window[1].hour} {window[1].meridiem}"]) 
+                hours.append([day.capitalize(),f"{window[0].hour} {window[0].meridiem} - {window[1].hour} {window[1].meridiem}"]) 
 
             if input("Would you like to make a reservation?\n(y/n): ").lower().strip() == "y":
                 while cart.reservation is None:
@@ -101,7 +101,7 @@ def get_order()->'ShoppingCart':
         for item,count in cart.cart.items():
             print(f"{menu[item].name}:\t{count}")
         print(f"\nTotal in cart: {cart.subtotal:.2f}")
-        print("\na. Add to cart\t b.Remove from cart\t c.Checkout")
+        print("\na.Add to cart  b.Remove from cart  c.Checkout")
         action = input(": ")
         if action.lower() == "a":
             print("What item would you like to add?")
