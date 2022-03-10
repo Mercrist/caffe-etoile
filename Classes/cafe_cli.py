@@ -108,9 +108,13 @@ def get_order()->'ShoppingCart':
         if action.lower() == "a":
             print("What item would you like to add?")
             item = input(": ")
-            if item.isnumeric():
-                item = food_table[int(item)][0]
-            amount = input("Enter amount to add to order: ")
+            try:
+                if item.isnumeric():
+                    item = food_table[int(item)][0]
+                amount = input("Enter amount to add to order: ")
+            except:
+                clear_screen()
+                print("\nInvalid number; be sure to use the item name or the number next to it.")
             try:
                 cart.add_items(item,int(amount))
             except:
@@ -118,9 +122,13 @@ def get_order()->'ShoppingCart':
         elif action.lower() == "b":
             print("What item would you like to remove?")
             item = input(": ")
-            if item.isnumeric():
-                item = food_table[int(item)][0]
-            amount = input("Enter amount to add to remove: ")
+            try:
+                if item.isnumeric():
+                    item = food_table[int(item)][0]
+                amount = input("Enter amount to add to remove: ")
+            except:
+                clear_screen()
+                print("\nInvalid number; be sure to use the item name or the number next to it.")
             try:
                 cart.remove_items(item,int(amount))
             except:
