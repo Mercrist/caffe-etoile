@@ -29,7 +29,7 @@ def interactive() -> None:
     """
     print("Welcome to Cafe Ettoile!")
     print("What would you like to do today?")
-    print("1.Start ordering\n2.View menu\n3.Exit")
+    print("1.Start ordering\n2.View menu in browser\n3.Exit")
     user = input(": ")
     if user == "1":
         view = input("Would you like to see the menu in your browser?\nNote: The browser shows more details into each specific food\n(y/n): ").lower().strip()
@@ -92,21 +92,21 @@ def get_order() -> ShoppingCart:
             item = input(": ")
             if item.isnumeric():
                 item = food_table[int(item)][0]
-            amount = int(input("Enter amount to add to order: "))
+            amount = input("Enter amount to add to order: ")
             try:
-                cart.add_items(item,amount)
-            except ValueError:
-                print("Sorry, that item isn't available on the menu. Try again!")
+                cart.add_items(item,int(amount))
+            except:
+                print("\nSorry, that item isn't available on the menu. Try again!\n")
         elif action.lower() == "b":
             print("What item would you like to remove?")
             item = input(": ")
             if item.isnumeric():
                 item = food_table[int(item)][0]
-            amount = int(input("Enter amount to add to remove: "))
+            amount = input("Enter amount to add to remove: ")
             try:
-                cart.remove_items(item,amount)
-            except ValueError:
-                print("Sorry, that item isn't available on the menu. Try again!")
+                cart.remove_items(item,int(amount))
+            except:
+                print("\nSorry, that item isn't available on the menu. Try again!\n")
         elif action.lower() == "c":
             return cart
             
