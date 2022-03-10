@@ -66,10 +66,12 @@ def interactive()->None:
             clear_screen()
             print(cart)
             if input("Ready to checkout?\n(y/n): ") == "y":
+                clear_screen()
                 receipt = create_receipt(cart)
                 receipt.generate_receipt()
                 print("Thank you for visiting!")
                 print("Generated a copy of your receipt in Classes/receipt.txt")
+                return
         elif user == "2":
             webbrowser.open("../Pages/menu.html",new=2) 
         else:
@@ -95,9 +97,9 @@ def get_order()->'ShoppingCart':
     while True:
         print("\n")
         print(tabulate(food_table,headers=["Item","Price"],showindex=True, tablefmt="presto"))
-        print("\nItems in cart:")
+        print("\nItems in cart:\n")
         for item,count in cart.cart.items():
-            print(f"{item}:\t{count}")
+            print(f"{menu[item].name}:\t{count}")
         print(f"\nTotal in cart: {cart.subtotal:.2f}")
         print("\na. Add to cart\t b.Remove from cart\t c.Checkout")
         action = input(": ")
