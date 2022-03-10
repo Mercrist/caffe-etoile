@@ -2,6 +2,8 @@ from Shopping import ShoppingCart, Receipt
 from Statics import menu, working_hours
 from argparse import ArgumentParser
 from tabulate import tabulate
+from os import system,name
+from pathlib import Path
 import webbrowser
 
 description = "CLI tool used to interact with Caffè Étoilé."
@@ -41,7 +43,7 @@ def interactive()->None:
         if user == "1":
             view = input("Would you like to see the menu in your browser?\nNote: The browser shows more details into each specific food\n(y/n): ").lower().strip()
             if view == "y" or view == "yes":
-                webbrowser.open("../Pages/menu.html",new=2) 
+                webbrowser.open(str(Path("../Pages/menu.html")),new=2) 
             clear_screen()
             cart = get_order()
             if not cart.cart:
@@ -73,7 +75,7 @@ def interactive()->None:
                 print("Generated a copy of your receipt in Classes/receipt.txt")
                 return
         elif user == "2":
-            webbrowser.open("../Pages/menu.html",new=2) 
+            webbrowser.open(str(Path("../Pages/menu.html")),new=2) 
         else:
             print("Thank you for visiting!")
             return 
@@ -152,7 +154,6 @@ def clear_screen():
         Returns:
             None
     """
-    from os import system,name
     if name == "nt":
         _ = system("cls")
     else:
@@ -163,10 +164,10 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.action == "menu": 
-        webbrowser.open("../Pages/menu.html",new=2)
+        webbrowser.open(str(Path("../Pages/menu.html")),new=2)
 
     elif args.action == "interactive":
         interactive()
     
     elif args.action == "about":
-        webbrowser.open("../index.html",new=2)
+        webbrowser.open(str(Path("../index.html")),new=2)
