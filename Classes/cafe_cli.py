@@ -36,10 +36,14 @@ def interactive()->None:
     """
     while True:
         clear_screen()
-        print("Welcome to Cafe Ettoile!")
-        print("What would you like to do today?")
-        print("1.Start ordering\n2.View menu in browser\n3.Exit")
-        user = input(": ")
+        user = "0"
+
+        while user not in ["1", "2", "3"]:
+            print("Welcome to Cafe Ettoile!")
+            print("What would you like to do today?")
+            print("1.Start ordering\n2.View menu in browser\n3.Exit")
+            user = input(": ")
+
         if user == "1":
             view = input("Would you like to see the menu in your browser?\nNote: The browser shows more details into each specific food\n(y/n): ").lower().strip()
             if view == "y" or view == "yes":
@@ -63,8 +67,8 @@ def interactive()->None:
                     meridiem = input("\nAM or PM?\n: ").lower().strip()
                     try:
                         cart.set_reservation(day,hour,meridiem)
-                    except ValueError:
-                        print("Sorry, one of your inputs wasn't correct. Try again!")
+                    except ValueError as error:
+                        print(error)
             clear_screen()
             print(cart)
             if input("Ready to checkout?\n(y/n): ") == "y":
@@ -91,7 +95,14 @@ def get_order()->'ShoppingCart':
         
         Returns: ShoppingCart object.
     """
-    cart = ShoppingCart(input("Enter your name to begin: "))
+    cart = None
+
+    while cart is None:
+        try:
+            cart = ShoppingCart(input("Enter your name to begin: "))
+        except ValueError as error:
+            print(error)
+        
     food_table = []
     for item in menu.values():
         food_table.append([item.name,item.price])
@@ -117,8 +128,8 @@ def get_order()->'ShoppingCart':
                 print("\nInvalid number; be sure to use the item name or the number next to it.")
             try:
                 cart.add_items(item,int(amount))
-            except:
-                print("\nSorry, that item isn't available on the menu. Try again!\n")
+            except (ValueError, TypeError) as errors:
+                print(errors)
         elif action.lower() == "b":
             print("What item would you like to remove?")
             item = input(": ")
@@ -131,8 +142,8 @@ def get_order()->'ShoppingCart':
                 print("\nInvalid number; be sure to use the item name or the number next to it.")
             try:
                 cart.remove_items(item,int(amount))
-            except:
-                print("\nSorry, that item isn't available on the menu. Try again!\n")
+            except (ValueError, TypeError) as errors:
+                print(errors)
         elif action.lower() == "c":
             return cart
             
