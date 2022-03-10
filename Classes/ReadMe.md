@@ -14,6 +14,7 @@ This project utilizes some external libraries in order for the CLI to run. Insta
 The CLI program (called cafe_cli.py) handles any and all input for users to order from the cafe. Passing a – help flag will show the users the command options. 
 ```bash
 > python cafe_cli.py –help
+
 usage: CLI tool used to interact with Caffè Étoilé. [-h] [{interactive,menu,about}]
 
 positional arguments:
@@ -26,7 +27,17 @@ optional arguments:
 When a user starts the program with no arguments, they should be greeted with the default interactive mode. Interactive mode presents the user with options to begin an order, view the menu, and exit the program.
 
 ```bash
-> python cafe_cli.py python3 or  cafe_cli.py interactive
+> python cafe_cli.py 
+```
+
+or 
+
+```bash
+> python cafe_cli.py interactive
+```
+
+Will display:
+```bash
 Welcome to Cafe Ettoile!
 What would you like to do today?
 1.Start ordering
