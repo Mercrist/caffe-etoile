@@ -46,15 +46,16 @@ What would you like to do today?
 :
 ```
 
+The menu command will open the user’s browser with a new tab containing the menu of the cafe. An important distinction to make is that it will not open the interactive menu and instantly exits. 
 ```bash
 > python cafe_cli.py menu
 ```
-The menu command will open the user’s browser with a new tab containing the menu of the cafe. An important distinction to make is that it will not open the interactive menu and instantly exits. 
+
+Similar to the menu command, the about parameter opens the user’s browser with a new tab containing the main page of the cafe.
 
 ```bash
 > python cafe_cli.py about
 ```
-Like the menu command, opens the user’s browser with a new tab containing the main page of the cafe.
 
 
 ## Design Document
