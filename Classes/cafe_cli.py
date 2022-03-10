@@ -9,6 +9,11 @@ description = "CLI tool used to interact with Caffè Étoilé."
 def generate_parser() -> ArgumentParser:
     """
     Generate an ArgumentParser object to handle user input from command line.
+
+        Parameters:
+            None
+        Returns: 
+            ArgumentParser object
     """
     parser = ArgumentParser(description) 
     parser.add_argument("action", help="Main action to take.",default="interactive",choices=["interactive","menu","about"],const="interactive",nargs="?")
@@ -27,44 +32,49 @@ def interactive() -> None:
         Returns:
             None
     """
-    print("Welcome to Cafe Ettoile!")
-    print("What would you like to do today?")
-    print("1.Start ordering\n2.View menu in browser\n3.Exit")
-    user = input(": ")
-    if user == "1":
-        view = input("Would you like to see the menu in your browser?\nNote: The browser shows more details into each specific food\n(y/n): ").lower().strip()
-        if view == "y" or view == "yes":
+    while True:
+        clear_screen()
+        print("Welcome to Cafe Ettoile!")
+        print("What would you like to do today?")
+        print("1.Start ordering\n2.View menu in browser\n3.Exit")
+        user = input(": ")
+        if user == "1":
+            view = input("Would you like to see the menu in your browser?\nNote: The browser shows more details into each specific food\n(y/n): ").lower().strip()
+            if view == "y" or view == "yes":
+                webbrowser.open("../Pages/menu.html",new=2) 
+            clear_screen()
+            cart = get_order()
+            if not cart.cart:
+                print("Thank you for visiting!")
+                return
+            hours = []  
+
+            for day,window in working_hours.items():
+                hours.append([day,f"{window[0].hour} {window[0].meridiem} - {window[1].hour} {window[1].meridiem}"]) 
+
+            if input("Would you like to make a reservation?\n(y/n): ").lower().strip() == "y":
+                while cart.reservation is None:
+                    clear_screen()
+                    print(tabulate(hours,headers=["Days","Hours"]))
+                    day = input("\nEnter the day of your reservation:\n: ").lower().strip()
+                    hour = input("\nHour of reservation\n(XX:XX format): ").lower().strip()
+                    meridiem = input("\nAM or PM?\n: ").lower().strip()
+                    try:
+                        cart.set_reservation(day,hour,meridiem)
+                    except ValueError:
+                        print("Sorry, one of your inputs wasn't correct. Try again!")
+            clear_screen()
+            print(cart)
+            if input("Ready to checkout?\n(y/n): ") == "y":
+                receipt = create_receipt(cart)
+                receipt.generate_receipt()
+                print("Thank you for visiting!")
+                print("Generated a copy of your receipt in Classes/receipt.txt")
+        elif user == "2":
             webbrowser.open("../Pages/menu.html",new=2) 
-        cart = get_order()
-        if not cart.cart:
+        else:
             print("Thank you for visiting!")
-            return
-        hours = []  
-
-        for day,window in working_hours.items():
-            hours.append([day,f"{window[0].hour} {window[0].meridiem} - {window[1].hour} {window[1].meridiem}"]) 
-
-        if input("Would you like to make a reservation?\n(y/n): ").lower().strip() == "y":
-            while cart.reservation is None:
-                print(tabulate(hours,headers=["Days","Hours"]))
-                day = input("\nEnter the day of your reservation:\n: ").lower().strip()
-                hour = input("\nHour of reservation\n(XX:XX format): ").lower().strip()
-                meridiem = input("\nAM or PM?\n: ").lower().strip()
-                try:
-                    cart.set_reservation(day,hour,meridiem)
-                except ValueError:
-                    print("Sorry, one of your inputs wasn't correct. Try again!")
-        print(cart)
-        if input("Ready to checkout?\n(y/n): ") == "y":
-            receipt = create_receipt(cart)
-            receipt.generate_receipt()
-            print("Thank you for visiting!")
-            print("Generated a copy of your receipt in Classes/receipt.txt")
-    elif user == "2":
-        webbrowser.open("../Pages/menu.html",new=2) 
-    else:
-        print("Thank you for visiting!")
-        return 
+            return 
 
 
 def get_order() -> ShoppingCart:
@@ -130,6 +140,20 @@ def create_receipt(cart: ShoppingCart) -> Receipt:
         cart.subtotal,
     )
 
+def clear_screen():
+    """
+    Function to clear terminal screen for ease of reading. Taken from https://www.geeksforgeeks.org/clear-screen-python/
+
+        Parameters:
+            None
+        Returns:
+            None
+    """
+    from os import system,name
+    if name == "nt":
+        _ = system("cls")
+    else:
+        _ = system("clear")
 
 if __name__ == "__main__":
     parser = generate_parser() 
@@ -139,7 +163,7 @@ if __name__ == "__main__":
         webbrowser.open("../Pages/menu.html",new=2)
 
     elif args.action == "interactive":
-        interactive() 
+        interactive()
     
     elif args.action == "about":
         webbrowser.open("../index.html",new=2)
