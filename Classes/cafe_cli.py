@@ -36,6 +36,9 @@ def interactive() -> None:
         if view == "y" or view == "yes":
             webbrowser.open("../Pages/menu.html",new=2) 
         cart = get_order()
+        if not cart.cart:
+            print("Thank you for visiting!")
+            return
         hours = []  
 
         for day,window in working_hours.items():
@@ -52,7 +55,7 @@ def interactive() -> None:
                 except ValueError:
                     print("Sorry, one of your inputs wasn't correct. Try again!")
         print(cart)
-        if input("Ready to checkout?]\n(y/n): ") == "y":
+        if input("Ready to checkout?\n(y/n): ") == "y":
             receipt = create_receipt(cart)
             receipt.generate_receipt()
             print("Thank you for visiting!")
@@ -85,7 +88,7 @@ def get_order() -> ShoppingCart:
         for item,count in cart.cart.items():
             print(f"{item}:\t{count}")
         print(f"\nTotal in cart: {cart.subtotal:.2f}")
-        print("\na. Add to cart\t b.Remove from cart\t c.Reservation and Checkout")
+        print("\na. Add to cart\t b.Remove from cart\t c.Checkout")
         action = input(": ")
         if action.lower() == "a":
             print("What item would you like to add?")
