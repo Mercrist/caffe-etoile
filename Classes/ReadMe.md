@@ -37,7 +37,7 @@ or
 ```
 
 Will display:
-```bash
+```console
 Welcome to Cafe Ettoile!
 What would you like to do today?
 1.Start ordering
