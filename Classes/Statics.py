@@ -203,6 +203,7 @@ menu = {
     "vietnamese egg coffee": MenuItem("Vietnamese Egg Coffee", 3.00, "Specialty","Considered a delicacy in Vietnam, egg coffee combines their world class robusta beans with an egg for crema.","https://bit.ly/3oUQEbl"),
     "cuban cortadito": MenuItem("Cuban Cortadito", 3.00, "Specialty", "A small espresso shot with a cut of heated, sweetened condesed milk, taste a part of Cuban culture.", "https://bit.ly/3LtSolp"),
     "turkish coffee": MenuItem("Turkish Coffee", 3.00, "Specialty", "Coffee prepared in a cezve and prepared without filtering, experience a tradition existing since the Ottoman Empire.", "https://bit.ly/3HJ505O"), 
+    "matcha": MenuItem("Matcha", 5.00, "Specialty", "Japanese green tea made from the Camellia sinensis plant. Its dried leaves and leaf buds are used to make several different teas, including black and oolong teas.", "https://bit.ly/3La0K0o"), 
 
     #sandwiches
     "breakfast panini": MenuItem("Breakfast Panini", 7.00, "Sandwiches", "Buttered Panini bread stuffed with egg, spinach, and more.", "https://bit.ly/3gGhaR2"),
