@@ -17,40 +17,17 @@
     <h2 class="menu-section-title"><i>Coffee drinks</i></h2>
     <div class="container">
       <div class="row">
+        {%for item in coffees%}
         <div class="col">
           <div class="card">
-            <img class="card-img-top" src="https://bit.ly/3Ljp8xC" alt="..." />
+            <img class="card-img-top" src={{item.image_link}} alt="..." />
             <div class="card-body">
-              <h5 class="card-title">Espresso<em class="menu-item-price">$1</em></h5>
-              <p class="card-text">The staple drink of italian origin, the espresso shot offers a strong coffee taste,
-                showing the bean's flavors as well as leaving a nice <i>crema </i>on the top to enjoy.</p>
+              <h5 class="card-title">{{item.name}}<em class="menu-item-price">${{item.price}}</em></h5>
+              <p class="card-text">{{item.description}}</p>
             </div>
           </div>
         </div>
-        <div class="col">
-          <div class="card">
-            <div class="image-wrapper">
-              <img class="card-img-top" src="https://bit.ly/3Baw4bB" alt="..." />
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">Cappuccino<em class="menu-item-price">$3</em></h5>
-              <p class="card-text">Espresso-based drink with a nice, steamed milk foam, the cappuccino gives a soft
-                yet rich drinking experience.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <div class="image-wrapper">
-              <img class="card-img-top" src="https://bit.ly/3Llk8Z8" alt="..." />
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">Americano<em class="menu-item-price">$2</em></h5>
-              <p class="card-text">A diluted espresso shot, the americano looks to keep the espresso's deep flavors
-                while softening it's strength.</p>
-            </div>
-          </div>
-        </div>
+        {% endfor %}
       </div>
     </div>
 
@@ -58,42 +35,17 @@
       <h2 class="menu-section-title"><i>Specialty drinks</i></h2>
       <div class="container">
         <div class="row">
-          <div class="col">
-            <div class="card">
-              <div class="image-wrapper">
-                <img class="card-img-top" src="https://bit.ly/3oUQEbl" alt="..." />
-              </div>
-              <div class="card-body">
-                <h5 class="card-title">Vietnamese Egg Coffee<em class="menu-item-price">$3</em></h5>
-                <p class="card-text">Considered a delicacy in Vietnam, egg coffee combines their world class robusta
-                  beans with an egg for crema.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <div class="image-wrapper">
-                <img class="card-img-top" src="https://bit.ly/3LtSolp" alt="..." />
-              </div>
-              <div class="card-body">
-                <h5 class="card-title">Cuban Cortadito<em class="menu-item-price">$3</em></h5>
-                <p class="card-text">A small espresso shot with a cut of heated, sweetened condesed milk, taste a part
-                  of Cuban culture.</p>
+            {%for item in specialties%}
+            <div class="col">
+              <div class="card">
+                <img class="card-img-top" src={{item.image_link}} alt="..." />
+                <div class="card-body">
+                  <h5 class="card-title">{{item.name}}<em class="menu-item-price">${{item.price}}</em></h5>
+                  <p class="card-text">{{item.description}}</p>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <div class="image-wrapper">
-                <img class="card-img-top" src="https://bit.ly/3HJ505O" alt="..." />
-              </div>
-              <div class="card-body">
-                <h5 class="card-title">Turkish coffee<em class="menu-item-price">$3</em></h5>
-                <p class="card-text">Coffee prepared in a <i>cezve</i> and prepared without filtering, experience a
-                  tradition existing since the Ottoman Empire.</p>
-              </div>
-            </div>
-          </div>
+            {% endfor %}
         </div>
       </div>
     </div>
@@ -102,39 +54,17 @@
     <h2 class="menu-section-title"><i>Sandwiches</i></h2>
     <div class="container">
       <div class="row">
+        {%for item in sandwiches%}
         <div class="col">
           <div class="card">
-            <div class="image-wrapper">
-              <img class="card-img-top" src="https://bit.ly/3gGhaR2" alt="..." />
-            </div>
+            <img class="card-img-top" src={{item.image_link}} alt="..." />
             <div class="card-body">
-              <h5 class="card-title">Breakfast Panini<em class="menu-item-price">$7</em></h5>
-              <p class="card-text">Buttered Panini bread stuffed with egg, spinach, and more.</p>
+              <h5 class="card-title">{{item.name}}<em class="menu-item-price">${{item.price}}</em></h5>
+              <p class="card-text">{{item.description}}</p>
             </div>
           </div>
         </div>
-        <div class="col">
-          <div class="card">
-            <div class="image-wrapper">
-              <img class="card-img-top" src="https://bit.ly/3JrtTDq" alt="..." />
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">Avocado Toast<em class="menu-item-price">$5</em></h5>
-              <p class="card-text">Toasted bread with slices of avocado along with whatever topping you'd like.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <div class="image-wrapper">
-              <img class="card-img-top" src="https://bit.ly/3oNtrHL" alt="..." />
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">BLT<em class="menu-item-price">$5</em></h5>
-              <p class="card-text">Bacon, Lettuce, and Tomato.</p>
-            </div>
-          </div>
-        </div>
+        {% endfor %}
       </div>
     </div>
   </div>
@@ -143,41 +73,17 @@
     <h2 class="menu-section-title"><i>Pastries</i></h2>
     <div class="container">
       <div class="row">
+        {%for item in pastries%}
         <div class="col">
           <div class="card">
-            <div class="image-wrapper">
-              <img class="card-img-top" src="https://bit.ly/3HGS40r" alt="..." />
-            </div>
+            <img class="card-img-top" src={{item.image_link}} alt="..." />
             <div class="card-body">
-              <h5 class="card-title">French Croissant<em class="menu-item-price">$5</em></h5>
-              <p class="card-text">Crescent shaped delicacy, made from dough layered with butter leading to a layered,
-                flaky texture.</p>
+              <h5 class="card-title">{{item.name}}<em class="menu-item-price">${{item.price}}</em></h5>
+              <p class="card-text">{{item.description}}</p>
             </div>
           </div>
         </div>
-        <div class="col">
-          <div class="card">
-            <div class="image-wrapper">
-              <img class="card-img-top" src="https://bit.ly/3Ba4gUU" alt="..." />
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">Puerto Rican Quesito<em class="menu-item-price">$5</em></h5>
-              <p class="card-text">Rich, cheese filled puff pastry dough brushed with a simple sugar glaze.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <div class="image-wrapper">
-              <img class="card-img-top" src="https://bit.ly/33bDn6j" alt="..." />
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">Mexican Concha<em class="menu-item-price">$5</em></h5>
-              <p class="card-text">Concha's, or <i>shell</i>, are ubiquitous in Mexican culture coated in a cruncy
-                topping.</p>
-            </div>
-          </div>
-        </div>
+        {% endfor %}
       </div>
     </div>
   </div>
@@ -185,42 +91,17 @@
     <h2 class="menu-section-title"><i>Desserts</i></h2>
     <div class="container">
       <div class="row">
+        {%for item in desserts%}
         <div class="col">
           <div class="card">
-            <div class="image-wrapper">
-              <img class="card-img-top" src="https://bit.ly/3rLklNL" alt="..." />
-            </div>
+            <img class="card-img-top" src={{item.image_link}} alt="..." />
             <div class="card-body">
-              <h5 class="card-title">Banana Bread<em class="menu-item-price">$3</em></h5>
-              <p class="card-text">Sweet and savory bread with a crumbly texture serves a nice pair to a cup of
-                coffee.</p>
+              <h5 class="card-title">{{item.name}}<em class="menu-item-price">${{item.price}}</em></h5>
+              <p class="card-text">{{item.description}}</p>
             </div>
           </div>
         </div>
-        <div class="col">
-          <div class="card">
-            <div class="image-wrapper">
-              <img class="card-img-top" src="https://bit.ly/3HPMQzh" alt="..." />
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">New York Cheesecake<em class="menu-item-price">$4</em></h5>
-              <p class="card-text">A staple of the big apple, comes with a reduced strawberry coating to enchance its
-                flavor.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <div class="image-wrapper">
-              <img class="card-img-top" src="https://bit.ly/3HPNiNZ" alt="..." />
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">Macaroons<em class="menu-item-price">$2</em></h5>
-              <p class="card-text">Small cakes made from almonds mixed with sugar and a grand variety of flavorings.
-              </p>
-            </div>
-          </div>
-        </div>
+        {% endfor %}
       </div>
     </div>
   </div>
