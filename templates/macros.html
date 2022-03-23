@@ -4,7 +4,9 @@
       {%for item in category %}
       <div class="col">
         <div class="card">
-          <img class="card-img-top" src={{item.image_link}} alt="..." />
+            <div class="image-wrapper">
+                <img class="card-img-top" src={{item.image_link}} alt="..." />
+            </div>
           <div class="card-body">
             <h5 class="card-title">{{item.name}}<em class="menu-item-price">${{item.price}}</em></h5>
             <p class="card-text">{{item.description}}</p>
