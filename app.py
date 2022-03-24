@@ -5,6 +5,15 @@ from Classes.Statics import MenuItem
 
 app = Flask(__name__) #initialize flask app
 
+# Enter MongoDB Details into Flask's config file
+# and initialize the DB. Collections are created once.
+# Access collection via db.collection_name
+app.config.from_object('config') 
+
+mongo = PyMongo(app)
+db = mongo.db
+db.create_collection('menu')
+
 '--Routes--'
 @app.route('/')
 @app.route('/index')
@@ -22,8 +31,8 @@ def contact():
 @app.route('/menu')
 def menu():
     return render_template("menu.html",
-    coffees=[item for item in cafe_menu.values() if item.category == "Coffee"],
-    sandwiches=[item for item in cafe_menu.values() if item.category == "Sandwiches"],
-    pastries=[item for item in cafe_menu.values() if item.category == "Pastries"],
-    desserts=[item for item in cafe_menu.values() if item.category == "Desserts"],
-    specialties=[item for item in cafe_menu.values() if item.category == "Specialty"])
+    coffees = db.menu.find({"category": "Coffee"}),
+    sandwiches = db.menu.find({"category": "Sandwiches"}),
+    pastries = db.menu.find({"category": "Pastries"}),
+    desserts = db.menu.find({"category": "Desserts"}),
+    specialties = db.menu.find({"category": "Specialty"}))

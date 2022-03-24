@@ -5,12 +5,12 @@
     <div class="col">
       <div class="card">
         <div class="image-wrapper">
-          <img class="card-img-top" src={{item.image_link}} alt="..." />
+          <img class="card-img-top" src={{item[image_link]}} alt="..." />
         </div>
         <div class="card-body">
-          <h5 class="card-title">{{item.name}}<em class="menu-item-price">
-              ${{'%0.2f'| format(item.price|float)}}</em></h5>
-          <p class="card-text">{{item.description}}</p>
+          <h5 class="card-title">{{item['name']}}<em class="menu-item-price">
+              ${{'%0.2f'| format(item['price']|float)}}</em></h5>
+          <p class="card-text">{{item['description']}}</p>
         </div>
       </div>
     </div>

@@ -1,6 +1,8 @@
 from collections import namedtuple
 from dataclasses import dataclass
-from time import strptime   
+from time import strptime 
+from config import Config
+import pymongo
 
 def valid_time(time:str)->bool:
     """Determines whether the input parameter is in the cafe's requested, 12-hour time format.
@@ -195,6 +197,32 @@ class Reservation:
         return self.day == other.day and self.hour == other.hour and self.meridiem == other.meridiem
 
 "Static values pertaining to the cafe's menu and working schedule"
+def reset_menu_collection(cafe_menu:dict)->None:
+    """Helps refactor the cafe menu into the online DB.
+       Resets the documents in the online DB and replaces 
+       them with the local database.
+
+    Args:
+        cafe_menu (dict): The cafe menu to add to MongoDB.
+    """
+    config = Config()
+    client = pymongo.MongoClient(config.MONGO_URI)
+    db = client.database
+    menu = db.menu
+    menu.delete_many({})
+
+    for item_obj in cafe_menu.values():
+        food_entry = {
+            "name": item_obj.name,
+            "price": item_obj.price,
+            "category": item_obj.category,
+            "description": item_obj.description,
+            "image_link": item_obj.image_link
+        }
+        menu.insert_one(food_entry) #inserts the document into the mongodb database
+
+
+
 menu = {
     #coffee
     "espresso": MenuItem("Espresso", 1.00, "Coffee","The staple drink of italian origin, the espresso shot offers a strong coffee taste, showing the bean's flavors as well as leaving a nice crema on the top to enjoy.","https://bit.ly/3Ljp8xC"), 
@@ -232,3 +260,5 @@ working_hours = {
     "friday": [hour_format("7:00", "AM"), hour_format("3:00", "PM")],
     "saturday": [hour_format("9:00", "AM"), hour_format("3:00", "PM")]
 }
+
+# reset_menu_collection(menu)
