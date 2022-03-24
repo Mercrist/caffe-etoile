@@ -262,11 +262,4 @@ def reset_menu_collection():
     db_menu.delete_many({})
 
     for item_obj in menu.values():
-        food_entry = {
-            "name": item_obj.name,
-            "price": item_obj.price,
-            "category": item_obj.category,
-            "description": item_obj.description,
-            "image_link": item_obj.image_link
-        }
-        db_menu.insert_one(food_entry) #inserts the document into the mongodb database
+        db_menu.insert_one(item_obj.asdict()) #inserts the menu field into the mongodb database
