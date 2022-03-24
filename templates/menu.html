@@ -14,28 +14,13 @@
 <div class="bg"></div>
 <div class="menu">
   <h1 class="display-2 menu-section-title">Menu</h1>
+  {%for category in categories %}
   <div class="menu-section-cafe">
-    <h2 class="menu-section-title"><i>Coffee drinks</i></h2>
-        {{ menu_item_section(coffees) }}
+    <h2 class="menu-section-title"><i>{{category}}</i></h2>
+    {{menu_item_section(database.menu.find({"category": category}))}}
+  </div>
+  {% endfor %}
 
-    <div class="menu-section-cafe-specialties">
-      <h2 class="menu-section-title"><i>Specialty drinks</i></h2>
-        {{ menu_item_section(specialties) }} 
-    </div>
-  </div>
-  <div class="menu-section-cafe-sandwiches">
-    <h2 class="menu-section-title"><i>Sandwiches</i></h2>
-        {{ menu_item_section(sandwiches) }}
-  </div>
-  <!-- Pastries menu -->
-  <div class="menu-section-cafe-pastries">
-    <h2 class="menu-section-title"><i>Pastries</i></h2>
-        {{ menu_item_section(pastries) }}
-  </div>
-  <div class="menu-section-cafe-desserts">
-    <h2 class="menu-section-title"><i>Desserts</i></h2>
-        {{ menu_item_section(desserts) }}
-  </div>
 </div>
 {% endblock %}
 

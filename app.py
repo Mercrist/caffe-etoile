@@ -35,9 +35,4 @@ def contact():
 
 @app.route('/menu')
 def menu():
-    return render_template("menu.html",
-    coffees = db.menu.find({"category": "Coffee"}),
-    sandwiches = db.menu.find({"category": "Sandwiches"}),
-    pastries = db.menu.find({"category": "Pastries"}),
-    desserts = db.menu.find({"category": "Desserts"}),
-    specialties = db.menu.find({"category": "Specialty"}))
+    return render_template("menu.html", database = db, categories=local_data.categories)
