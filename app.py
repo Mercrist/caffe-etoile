@@ -1,7 +1,6 @@
 from flask import Flask, url_for, redirect, request, render_template
 from flask_pymongo import PyMongo
-from Classes.Statics import menu as cafe_menu
-from Classes.Statics import MenuItem
+from Classes import Statics as local_data
 
 app = Flask(__name__) #initialize flask app
 
@@ -12,7 +11,8 @@ app.config.from_object('config')
 
 mongo = PyMongo(app)
 db = mongo.db
-db.create_collection('menu')
+# db.create_collection('menu')
+# local_data.reset_menu_collection()
 
 '--Routes--'
 @app.route('/')

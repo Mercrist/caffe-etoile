@@ -196,33 +196,7 @@ class Reservation:
 
         return self.day == other.day and self.hour == other.hour and self.meridiem == other.meridiem
 
-"Static values pertaining to the cafe's menu and working schedule"
-def reset_menu_collection(cafe_menu:dict)->None:
-    """Helps refactor the cafe menu into the online DB.
-       Resets the documents in the online DB and replaces 
-       them with the local database.
-
-    Args:
-        cafe_menu (dict): The cafe menu to add to MongoDB.
-    """
-    config = Config()
-    client = pymongo.MongoClient(config.MONGO_URI)
-    db = client.database
-    menu = db.menu
-    menu.delete_many({})
-
-    for item_obj in cafe_menu.values():
-        food_entry = {
-            "name": item_obj.name,
-            "price": item_obj.price,
-            "category": item_obj.category,
-            "description": item_obj.description,
-            "image_link": item_obj.image_link
-        }
-        menu.insert_one(food_entry) #inserts the document into the mongodb database
-
-
-
+'Local database values'
 menu = {
     #coffee
     "espresso": MenuItem("Espresso", 1.00, "Coffee","The staple drink of italian origin, the espresso shot offers a strong coffee taste, showing the bean's flavors as well as leaving a nice crema on the top to enjoy.","https://bit.ly/3Ljp8xC"), 
@@ -261,4 +235,23 @@ working_hours = {
     "saturday": [hour_format("9:00", "AM"), hour_format("3:00", "PM")]
 }
 
-# reset_menu_collection(menu)
+def reset_menu_collection()->None:
+    """Helps refactor the cafe menu into the online DB.
+       Resets the documents in the online DB and replaces 
+       them with the local database.
+    """
+    config = Config()
+    client = pymongo.MongoClient(config.MONGO_URI)
+    db = client.database
+    db_menu = db.menu
+    db_menu.delete_many({})
+
+    for item_obj in menu.values():
+        food_entry = {
+            "name": item_obj.name,
+            "price": item_obj.price,
+            "category": item_obj.category,
+            "description": item_obj.description,
+            "image_link": item_obj.image_link
+        }
+        db_menu.insert_one(food_entry) #inserts the document into the mongodb database
