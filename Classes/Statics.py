@@ -1,8 +1,8 @@
 from collections import namedtuple
 from dataclasses import dataclass
 from time import strptime 
-from config import Config
 import pymongo
+
 
 def valid_time(time:str)->bool:
     """Determines whether the input parameter is in the cafe's requested, 12-hour time format.
@@ -235,14 +235,29 @@ working_hours = {
     "saturday": [hour_format("9:00", "AM"), hour_format("3:00", "PM")]
 }
 
-def reset_menu_collection()->None:
+def start_db():
+    """Starts a connection to the 
+       MongoDB database from within
+       this local folder.
+
+    Returns:
+        Database: A MongoDB database object.
+    """
+    import sys
+    from config import Config
+    sys.path.append("../")
+
+    config = Config()
+    client = pymongo.MongoClient(config.MONGO_URI)
+    db = client.database
+    return db
+
+def reset_menu_collection():
     """Helps refactor the cafe menu into the online DB.
        Resets the documents in the online DB and replaces 
        them with the local database.
     """
-    config = Config()
-    client = pymongo.MongoClient(config.MONGO_URI)
-    db = client.database
+    db = start_db()
     db_menu = db.menu
     db_menu.delete_many({})
 
