@@ -11,8 +11,13 @@ app.config.from_object('config')
 
 mongo = PyMongo(app)
 db = mongo.db
-# db.create_collection('menu')
-# local_data.reset_menu_collection()
+# first time setup
+if 'menu' not in db.list_collection_names():
+    db.create_collection('menu')
+    # passes flask as context to this function
+    # in order to access the MongoDB URI
+    with app.app_context():
+        local_data.reset_menu_collection()
 
 '--Routes--'
 @app.route('/')

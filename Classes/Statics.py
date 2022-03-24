@@ -1,7 +1,8 @@
+from flask import current_app as app
+from flask_pymongo import PyMongo
 from collections import namedtuple
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 from time import strptime 
-import pymongo
 
 
 def valid_time(time:str)->bool:
@@ -243,13 +244,8 @@ def start_db():
     Returns:
         Database: A MongoDB database object.
     """
-    import sys
-    from config import Config
-    sys.path.append("../")
-
-    config = Config()
-    client = pymongo.MongoClient(config.MONGO_URI)
-    db = client.database
+    mongo = PyMongo(app)
+    db = mongo.db
     return db
 
 def reset_menu_collection():
@@ -262,4 +258,4 @@ def reset_menu_collection():
     db_menu.delete_many({})
 
     for item_obj in menu.values():
-        db_menu.insert_one(item_obj.asdict()) #inserts the menu field into the mongodb database
+        db_menu.insert_one(asdict(item_obj)) #inserts the menu field into the mongodb database
