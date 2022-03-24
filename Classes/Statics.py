@@ -1,7 +1,7 @@
 from collections import namedtuple
 from dataclasses import dataclass
 from time import strptime 
-from ..config import Config
+from config import Config
 import pymongo
 
 def valid_time(time:str)->bool:
