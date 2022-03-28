@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>Admin Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block bodyclass %}class="admin"{% endblock %}
+
+{% block main %}
+<div class="admin_section">
+    <h2>Menu Config</h2>
+    <hr class="solid">
+
+    <h3>Add an item</h3>
+    <form method="post">
+        <div class="form-group row">
+            <label for="inputName" class="col-sm-2 col-form-label">Item Name</label>
+            <div class="col-sm-2">
+                <input type="text" name="item_name" pattern="^[a-zA-ZÀ-ÿ-' ]+$" maxlength="25" class="form-control"
+                    id="inputName" placeholder="Food Item Name">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="inputPrice" class="col-sm-2 col-form-label">Price</label>
+            <div class="col-sm-2">
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                    </div>
+                    <input type="number" name="item_price" step=".01" min="0.10" max="49.00" class="form-control"
+                        id="inputPrice" placeholder="Item Price (USD)">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="inputCategory" class="col-sm-2 col-form-label">Food Category</label>
+            <div class="col-sm-2">
+                <select name="item_category" id="inputCategory">
+                    <option value="" disabled selected>Select a category</option>
+                    {% for category in categories %}
+                    <option>{{category}}</option>
+                    {% endfor %}
+                </select>
+
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="inputDescription" class="col-sm-2 col-form-label">Description</label>
+            <div class="col-sm-2">
+                <textarea maxlength="200" input class="form-control" name="item_description"
+                    placeholder="Enter the food item description." id="inputDescription" rows="3"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="inputLink" class="col-sm-2 col-form-label">Image Link</label>
+            <div class="col-sm-2">
+                <input type="url" name="item_url" class="form-control" id="inputLink"
+                    placeholder="Ex. https://i.imgur.com/iCwB4WX.jpeg">
+            </div>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+</div>
+<hr class="solid">
+
+<div class="admin_section">
+    <h2>Receipts Config</h2>
+    <hr class="solid">
+
+    <hr class="solid">
+</div>
+
+{% endblock %}
+
+{% block navbartype %}fixed-bottom{% endblock %}

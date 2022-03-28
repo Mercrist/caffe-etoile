@@ -156,3 +156,23 @@ table, td{
     border: solid 2px black;
     font-family: 'Special Elite', cursive;
 }
+
+hr.solid {
+  border-top: 3px solid lightgrey;
+}
+
+body.admin{
+    overflow-x: hidden;
+}
+
+body.admin h2, .alert{
+    font-family: 'Nunito', sans-serif;
+}
+
+body.admin h3{
+    font-family: 'Inconsolata', monospace;
+}
+
+.admin_section{
+    margin-top: 2rem;
+}

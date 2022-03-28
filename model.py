@@ -5,16 +5,26 @@ from dataclasses import asdict
 
 categories = ["Coffee", "Specialty Drinks", "Sandwiches", "Desserts"]
 
+def start_db()->"Database":
+    """Starts a connection to the 
+       website's MongoDB database.
+
+    Returns:
+        Database: A MongoDB database object.
+    """
+    mongo = PyMongo(app)
+    db = mongo.db
+    return db
+
 def reset_menu_collection()->None:
     """Resets the menu collection by 
        clearing all its documents out
        and re-uploading the locally stored 
-       menu items which are then loaded
-       on the website.
+       menu items. These initial items
+       are later loaded onto the website.
     """
     #starts the db
-    mongo = PyMongo(app)
-    db = mongo.db
+    db = start_db()
     #access the menu collection
     db_menu = db.menu
     db_menu.delete_many({})
