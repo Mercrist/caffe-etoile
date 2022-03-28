@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block head %}
+<!-- More Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block main %}
+<body>
+    <form method="POST">
+        <div class="form-group">
+          <label for="itemToAdd">Item name</label>
+          <input type="item" class="form-control" id="itemToAdd" placeholder="Type Item name here">
+        </div>
+    </form>
+    {% for item in cart.cart %}
+    {{item}}
+    {% endfor %}
+</body>
+{% endblock %}

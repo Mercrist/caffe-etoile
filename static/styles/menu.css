@@ -54,6 +54,13 @@
     text-align: right;
 }
 
+.item-btn { 
+    position:absolute;
+    bottom:20px;
+    left:0px;
+    font-family: 'Crimson Pro', serif;
+
+}
 .bg { 
     background-image: url(../Images/Backgrounds/menu_pattern.jpg);
     background-position: center; 
