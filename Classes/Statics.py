@@ -1,7 +1,5 @@
-from flask import current_app as app
-from flask_pymongo import PyMongo
 from collections import namedtuple
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass
 from time import strptime 
 
 
@@ -224,8 +222,6 @@ menu = {
     "macaroons": MenuItem("Macaroons", 2.00, "Desserts", "Small cakes made from almonds mixed with sugar and a grand variety of flavorings.", "https://bit.ly/3HPNiNZ")
 }
 
-categories = ["Coffee", "Specialty Drinks", "Sandwiches", "Desserts"]
-
 #accessing the opened and closing hours by .get(day)[0 or 1].hour and .meridiem
 hour_format = namedtuple('hour_format', 'hour meridiem') 
 
@@ -238,28 +234,3 @@ working_hours = {
     "friday": [hour_format("7:00", "AM"), hour_format("3:00", "PM")],
     "saturday": [hour_format("9:00", "AM"), hour_format("3:00", "PM")]
 }
-
-def start_db():
-    """Starts a connection to the 
-       MongoDB database from within
-       this local folder.
-
-    Returns:
-        Database: A MongoDB database object.
-    """
-    mongo = PyMongo(app)
-    db = mongo.db
-    return db
-
-def reset_menu_collection():
-    """Helps refactor the cafe menu into the online DB.
-       Resets the documents in the online DB and replaces 
-       them with the local database.
-    """
-    db = start_db()
-    db_menu = db.menu
-    db_menu.delete_many({})
-
-    #inserts the menu field into the mongodb database
-    for item_obj in menu.values():
-        db_menu.insert_one(asdict(item_obj)) 

@@ -1,6 +1,6 @@
 from flask import Flask, url_for, redirect, request, render_template
 from flask_pymongo import PyMongo
-from Classes import Statics as local_data
+import model
 
 app = Flask(__name__) #initialize flask app
 
@@ -17,7 +17,7 @@ if 'menu' not in db.list_collection_names():
     # passes flask as context to this function
     # in order to access the MongoDB URI
     with app.app_context():
-        local_data.reset_menu_collection()
+        model.reset_menu_collection()
 
 '--Routes--'
 @app.route('/')
@@ -35,4 +35,4 @@ def contact():
 
 @app.route('/menu')
 def menu():
-    return render_template("menu.html", database = db, categories=local_data.categories)
+    return render_template("menu.html", database = db, categories=model.categories)
