@@ -226,7 +226,8 @@ menu = {
 
 categories = ["Coffee", "Specialty Drinks", "Sandwiches", "Desserts"]
 
-hour_format = namedtuple('hour_format', 'hour meridiem') #accessing the opened and closing hours by .get(day)[0 or 1].hour and .meridiem
+#accessing the opened and closing hours by .get(day)[0 or 1].hour and .meridiem
+hour_format = namedtuple('hour_format', 'hour meridiem') 
 
 working_hours = {
     "sunday": [hour_format("9:00", "AM"), hour_format("3:00", "PM")],
@@ -259,5 +260,6 @@ def reset_menu_collection():
     db_menu = db.menu
     db_menu.delete_many({})
 
+    #inserts the menu field into the mongodb database
     for item_obj in menu.values():
-        db_menu.insert_one(asdict(item_obj)) #inserts the menu field into the mongodb database
+        db_menu.insert_one(asdict(item_obj)) 
