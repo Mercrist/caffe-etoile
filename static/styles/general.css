@@ -8,7 +8,7 @@
 }
 
 body, html{
-  font-family: 'Quintessential', cursive;
+  font-family: 'Quintessential', cursive !important;
 }
 
 body.index, html.index{

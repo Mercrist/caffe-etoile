@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% from "macros.html" import menu_item_section %}
+
+{% block head %}
+<title>Menu</title>
+<link href="{{url_for('static', filename='styles/menu.css')}}" rel="stylesheet" type="text/css" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@200&display=swap" rel="stylesheet" />
+{% endblock %}
+
+{% block main %}
+<!-- experimenting with background image -->
+<div class="bg"></div>
+<div class="menu">
+  <h1 class="display-2 menu-section-title">Menu</h1>
+  {%for category in categories %}
+  <div class="menu-section-cafe">
+    <h2 class="menu-section-title"><i>{{category}}</i></h2>
+    {{menu_item_section(database.menu.find({"category": category}))}}
+  </div>
+  {% endfor %}
+
+</div>
+{% endblock %}
+
+{% block navbartype %}bottom{% endblock %}

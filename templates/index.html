@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block htmlclass %}class="index"{% endblock %}
+
+{% block head %}
+<title>Caffè Étoilé</title>
+{% endblock %}
+
+{% block bodyclass %}class="index"{% endblock %}
+
+{% block main %}
+<!-- Center -->
+<div id="Description" class="d-flex justify-content-center">
+  <span>
+    <p align="center">A delicious and <br> unforgettable experience <br> awaits</p>
+  </span>
+  <a class="btn btn-success" href="{{url_for('menu')}}" role="button" id="Button">Menu</a>
+</div>
+{% endblock %}
+
+{% block navbartype %}fixed-bottom{% endblock %}

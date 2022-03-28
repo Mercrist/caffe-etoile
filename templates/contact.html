@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block htmlclass %}class="contact"{% endblock %}
+
+{% block head %}
+<title>Contact Us</title>
+<!-- More Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block bodyclass %}class="contact"{% endblock %}
+
+{% block main %}
+<!-- Collapsable Dropdowns -->
+<div class="row">
+    <div id="Collapsables">
+        <div class="col">
+            <div id="accordion">
+                <div class="card border-0">
+                    <div class="card-header " id="headingOne">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-decoration-none" data-toggle="collapse"
+                                data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                <div class="Title">Locate Us</div>
+                            </button>
+                        </h5>
+                    </div>
+
+                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="text">
+                                Caffè Étoilé is located in a cozy locale in Seattle, Washington near the
+                                beachfront.<br> You can find us at the pin below!
+                            </div>
+                            <!-- Map -->
+                            <div class="Map">
+                                <iframe
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2689.9775313879527!2d-122.3369381694485!3d47.60712656790279!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54906ab22a37108b%3A0x53e974e1ab79a518!2s1225%202nd%20Ave%2C%20Seattle%2C%20WA%2098101%2C%20USA!5e0!3m2!1sen!2spr!4v1644511028442!5m2!1sen!2spr"
+                                    width="60%" height="300rem" style="border:0.15rem solid orange;" allowfullscreen=""
+                                    loading="lazy"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card border-0">
+                    <div class="card-header" id="headingTwo">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed text-decoration-none" data-toggle="collapse"
+                                data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <div class="Title">Working Hours</div>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="text">
+                                Our cafe opens every day with the exception of holidays! Our weekly schedule can be
+                                found below. <br><br>
+
+                                <div class="Table">
+                                    <table style="width:100%">
+                                        <tr>
+                                            <td><strong>Weekdays</strong></td>
+                                            <td><strong>Open</strong></td>
+                                            <td><strong>Closed</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Sunday</td>
+                                            <td>9:00 AM</td>
+                                            <td>3:00 PM</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Monday</td>
+                                            <td>7:00 AM</td>
+                                            <td>5:00 PM</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tuesday</td>
+                                            <td>7:00 AM</td>
+                                            <td>5:00 PM</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Wednesday</td>
+                                            <td>7:00 AM</td>
+                                            <td>5:00 PM</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Thursday</td>
+                                            <td>7:00 AM</td>
+                                            <td>5:00 PM</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Friday</td>
+                                            <td>7:00 AM</td>
+                                            <td>3:00 PM</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Saturday</td>
+                                            <td>9:00 AM</td>
+                                            <td>3:00 PM</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card border-0">
+                    <div class="card-header" id="headingThree">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed text-decoration-none" data-toggle="collapse"
+                                data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                <div class="Title">Reach us directly</div>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="text">
+                                For any inquiries, email the owners of the locale directly at <br>
+                                <a href="mailto: yariel.mercado1@upr.edu">yariel.mercado1@upr.edu</a> or
+                                <a href="mailto: xavier.rosado1@upr.edu">xavier.rosado1@upr.edu</a>!<br><br>
+                                For professional inquiries, reach out to us via LinkedIn: <br>
+                                <div class="Profile">
+                                    <a href="https://www.linkedin.com/in/yariel-mercado/" target="blank">
+                                        <img src="{{url_for('static', filename='Images/Contact/yariel.jpg')}}"
+                                            width="100" height="100" class="d-inline-block align-center" alt="">
+                                    </a>
+
+                                    <a href="https://www.linkedin.com/in/xavier-rosado/" target="blank">
+                                        <img src="{{url_for('static', filename='Images/Contact/xavier.jpg')}}"
+                                            width="100" height="100" class="d-inline-block align-center" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block navbartype %}bottom{% endblock %}

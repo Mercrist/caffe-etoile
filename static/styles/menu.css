@@ -1,0 +1,65 @@
+.cafe-block-content { 
+    margin: 20px;
+}
+
+.card {
+    width: 18rem;
+    height: 40rem;
+    border-color: white;
+    border-width: 5px;
+    padding: 20px; 
+    background-color: #ffffffde;
+}
+
+.image-wrapper { 
+    height: 350px;
+    overflow: hidden; 
+}
+
+.card-img-top {
+    max-width: 100%;
+    height: auto;
+    margin-top: auto;
+    margin-bottom: auto; 
+}
+
+.card-text { 
+    position:absolute;
+    text-align: left;
+    font-family: 'Crimson Pro', serif;
+    font-size: large;
+}
+
+.card-title {
+    font-weight: bold;
+    position:relative;
+    font-family: 'Quintessential', cursive;
+}
+
+.menu-section-title { 
+    font-weight: bold;
+    font-family: 'Quintessential', cursive;
+    position: relative;
+    margin-left:auto;
+    margin-right: auto;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    width: 150px;
+
+}
+
+.menu-item-price {
+    font-family: 'Crimson Pro', serif;
+    padding-left: 1rem;
+    text-align: right;
+}
+
+.bg { 
+    background-image: url(../Images/Backgrounds/menu_pattern.jpg);
+    background-position: center; 
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    position: fixed;
+}

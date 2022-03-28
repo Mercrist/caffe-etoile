@@ -1,6 +1,9 @@
+from flask import current_app as app
+from flask_pymongo import PyMongo
 from collections import namedtuple
-from dataclasses import dataclass
-from time import strptime   
+from dataclasses import dataclass, asdict
+from time import strptime 
+
 
 def valid_time(time:str)->bool:
     """Determines whether the input parameter is in the cafe's requested, 12-hour time format.
@@ -74,13 +77,13 @@ class MenuItem:
     description: str
     image_link: str
 
-    def __init__(self, name:str, price:float, category:str = "specialty", description:str = "N/A", image_link:str = "invalid_link"):
+    def __init__(self, name:str, price:float, category:str = "specialty drinks", description:str = "N/A", image_link:str = "invalid_link"):
         """Initializes an instance of a cafe menu item.
 
         Args:
             name (str): A valid menu item name.
             price (float): The non-zero, positive price of the menu item.
-            category (str, optional): The menu category the food belongs to. Defaults to the specialty category.
+            category (str, optional): The menu category the food belongs to. Defaults to the specialty drinks category.
             description (str, optional): The food item description, as shown on the cafe's website. Defaults to "Not Applicable".
             image_link (str, optional): The image link for the food item, as displayed on the cafe's website. Defaults to placeholder text.
 
@@ -104,7 +107,7 @@ class MenuItem:
         if price >= 50: #arbitrary value
             raise ValueError("Excessive pricing")
 
-        if category.lower() not in ["specialty","coffee","desserts","sandwiches","pastries"]:
+        if category.lower() not in ["specialty drinks","coffee","desserts","sandwiches","pastries"]:
             raise ValueError("Not a valid category")
         
         self.name = name
@@ -194,15 +197,16 @@ class Reservation:
 
         return self.day == other.day and self.hour == other.hour and self.meridiem == other.meridiem
 
-"Static values pertaining to the cafe's menu and working schedule"
+'Local database values'
 menu = {
     #coffee
     "espresso": MenuItem("Espresso", 1.00, "Coffee","The staple drink of italian origin, the espresso shot offers a strong coffee taste, showing the bean's flavors as well as leaving a nice crema on the top to enjoy.","https://bit.ly/3Ljp8xC"), 
     "cappuccino": MenuItem("Cappuccino", 3.00, "Coffee","Espresso-based drink with a nice, steamed milk foam, the cappuccino gives a soft yet rich drinking experience.","https://bit.ly/3Baw4bB"), 
     "americano": MenuItem("Americano", 2.00, "Coffee", "A diluted espresso shot, the americano looks to keep the espresso's deep flavors while softening it's strength.", "https://bit.ly/3Llk8Z8"),
-    "vietnamese egg coffee": MenuItem("Vietnamese Egg Coffee", 3.00, "Specialty","Considered a delicacy in Vietnam, egg coffee combines their world class robusta beans with an egg for crema.","https://bit.ly/3oUQEbl"),
-    "cuban cortadito": MenuItem("Cuban Cortadito", 3.00, "Specialty", "A small espresso shot with a cut of heated, sweetened condesed milk, taste a part of Cuban culture.", "https://bit.ly/3LtSolp"),
-    "turkish coffee": MenuItem("Turkish Coffee", 3.00, "Specialty", "Coffee prepared in a cezve and prepared without filtering, experience a tradition existing since the Ottoman Empire.", "https://bit.ly/3HJ505O"), 
+    "vietnamese egg coffee": MenuItem("Vietnamese Egg Coffee", 3.00, "Specialty Drinks","Considered a delicacy in Vietnam, egg coffee combines their world class robusta beans with an egg for crema.","https://bit.ly/3oUQEbl"),
+    "cuban cortadito": MenuItem("Cuban Cortadito", 3.00, "Specialty Drinks", "A small espresso shot with a cut of heated, sweetened condesed milk, taste a part of Cuban culture.", "https://bit.ly/3LtSolp"),
+    "turkish coffee": MenuItem("Turkish Coffee", 3.00, "Specialty Drinks", "Coffee prepared in a cezve and prepared without filtering, experience a tradition existing since the Ottoman Empire.", "https://bit.ly/3HJ505O"), 
+    "matcha": MenuItem("Matcha", 5.00, "Specialty Drinks", "Japanese green tea made from the Camellia sinensis plant. Its dried leaves and leaf buds are used to make several different teas, including black and oolong teas.", "https://bit.ly/3La0K0o"), 
 
     #sandwiches
     "breakfast panini": MenuItem("Breakfast Panini", 7.00, "Sandwiches", "Buttered Panini bread stuffed with egg, spinach, and more.", "https://bit.ly/3gGhaR2"),
@@ -220,7 +224,10 @@ menu = {
     "macaroons": MenuItem("Macaroons", 2.00, "Desserts", "Small cakes made from almonds mixed with sugar and a grand variety of flavorings.", "https://bit.ly/3HPNiNZ")
 }
 
-hour_format = namedtuple('hour_format', 'hour meridiem') #accessing the opened and closing hours by .get(day)[0 or 1].hour and .meridiem
+categories = ["Coffee", "Specialty Drinks", "Sandwiches", "Desserts"]
+
+#accessing the opened and closing hours by .get(day)[0 or 1].hour and .meridiem
+hour_format = namedtuple('hour_format', 'hour meridiem') 
 
 working_hours = {
     "sunday": [hour_format("9:00", "AM"), hour_format("3:00", "PM")],
@@ -231,3 +238,28 @@ working_hours = {
     "friday": [hour_format("7:00", "AM"), hour_format("3:00", "PM")],
     "saturday": [hour_format("9:00", "AM"), hour_format("3:00", "PM")]
 }
+
+def start_db():
+    """Starts a connection to the 
+       MongoDB database from within
+       this local folder.
+
+    Returns:
+        Database: A MongoDB database object.
+    """
+    mongo = PyMongo(app)
+    db = mongo.db
+    return db
+
+def reset_menu_collection():
+    """Helps refactor the cafe menu into the online DB.
+       Resets the documents in the online DB and replaces 
+       them with the local database.
+    """
+    db = start_db()
+    db_menu = db.menu
+    db_menu.delete_many({})
+
+    #inserts the menu field into the mongodb database
+    for item_obj in menu.values():
+        db_menu.insert_one(asdict(item_obj)) 
