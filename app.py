@@ -65,8 +65,21 @@ def admin():
                 db.menu.delete_one({'name': item_name})
                 flash(f"{item_name} was removed from the menu!", "success")
 
+        elif 'remove_receipt_button' in request.form and request.form['remove_receipt_button'] == "clicked":
+            receipt_number = request.form['remove_receipt_number']
+
+            if not db.receipt.find_one({'receipt_num': receipt_number}):
+                flash(f"Receipt #{receipt_number} does not exist.", "danger")
+
+            else:
+                db.receipt.delete_one({'receipt_num': receipt_number})
+                flash(f"Receipt #{receipt_number} was removed from our logs!", "success")
+
         elif 'reset_menu_button' in request.form and request.form['reset_menu_button'] == "clicked":
             model.reset_menu_collection()
+
+        elif 'reset_reservation_button' in request.form and request.form['reset_reservation_button'] == "clicked":
+            model.reset_receipts_collection()
 
         return redirect(url_for('admin'))
         

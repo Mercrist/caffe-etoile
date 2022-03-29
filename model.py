@@ -33,3 +33,11 @@ def reset_menu_collection()->None:
     #inserts the menu field into the mongodb database
     for item_obj in local_data.menu.values():
         db_menu.insert_one(asdict(item_obj)) 
+
+
+def reset_receipts_collection()->None:
+    """Resets the receipt collection by 
+       clearing all its documents out.
+    """
+    db = start_db()
+    db.receipt.delete_many({})
