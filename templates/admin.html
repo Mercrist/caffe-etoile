@@ -17,8 +17,8 @@
         <div class="form-group row">
             <label for="inputName" class="col-sm-2 col-form-label">Item Name</label>
             <div class="col-sm-2">
-                <input type="text" name="item_name" pattern="^[a-zA-ZÀ-ÿ-' ]+$" maxlength="25" class="form-control"
-                    id="inputName" placeholder="Food Item Name">
+                <input type="text" name="item_name" pattern="^[a-zA-ZÀ-ÿ-'" ]+$" maxlength="25" class="form-control"
+                    id="inputName" placeholder="Food Item Name" required>
             </div>
         </div>
 
@@ -30,7 +30,7 @@
                         <span class="input-group-text">$</span>
                     </div>
                     <input type="number" name="item_price" step=".01" min="0.10" max="49.00" class="form-control"
-                        id="inputPrice" placeholder="Item Price (USD)">
+                        id="inputPrice" placeholder="Item Price (USD)" required>
                 </div>
             </div>
         </div>
@@ -38,7 +38,7 @@
         <div class="form-group row">
             <label for="inputCategory" class="col-sm-2 col-form-label">Food Category</label>
             <div class="col-sm-2">
-                <select name="item_category" id="inputCategory">
+                <select name="item_category" id="inputCategory" required>
                     <option value="" disabled selected>Select a category</option>
                     {% for category in categories %}
                     <option>{{category}}</option>
@@ -51,8 +51,8 @@
         <div class="form-group row">
             <label for="inputDescription" class="col-sm-2 col-form-label">Description</label>
             <div class="col-sm-2">
-                <textarea maxlength="200" input class="form-control" name="item_description"
-                    placeholder="Enter the food item description." id="inputDescription" rows="3"></textarea>
+                <textarea maxlength="200" class="form-control" name="item_description"
+                    placeholder="Enter the food item description." id="inputDescription" rows="3" required></textarea>
             </div>
         </div>
 
@@ -60,7 +60,7 @@
             <label for="inputLink" class="col-sm-2 col-form-label">Image Link</label>
             <div class="col-sm-2">
                 <input type="url" name="item_url" class="form-control" id="inputLink"
-                    placeholder="Ex. https://i.imgur.com/iCwB4WX.jpeg">
+                    placeholder="Ex. https://i.imgur.com/iCwB4WX.jpeg" required>
             </div>
         </div>
 

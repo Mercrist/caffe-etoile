@@ -40,9 +40,9 @@ def menu():
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
     if request.method == 'POST':
-        new_item = {"Name": request.form['item_name'], "Price": request.form['item_price'], 
-                "Category": request.form['item_category'], "Description": request.form['item_description'], 
-                "Link": request.form['item_url']}
+        new_item = {"name": request.form['item_name'], "price": round(float(request.form['item_price']), 2), 
+                "category": request.form['item_category'], "description": request.form['item_description'], 
+                "image_link": request.form['item_url']}
 
         # message categories: "success", "danger" (per bootstrap)
         flash("Food item added to the menu!", "success")
