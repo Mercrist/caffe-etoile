@@ -5,6 +5,7 @@
     --grey-transparent: rgba(202, 197, 197, 0);
     --lime: rgb(141, 218, 0);
     --cyan: rgb(5, 202, 192);
+    --bootstrap-grey: rgb(169, 169, 169);
 }
 
 body, html{
@@ -155,4 +156,34 @@ body.contact, html.contact{
 table, td{
     border: solid 2px black;
     font-family: 'Special Elite', cursive;
+}
+
+hr.solid {
+  border-top: 3px solid lightgrey;
+}
+
+body.admin{
+    overflow-x: hidden;
+}
+
+body.admin h2, .alert{
+    font-family: 'Nunito', sans-serif;
+}
+
+body.admin h3{
+    font-family: 'Inconsolata', monospace;
+}
+
+.admin_section{
+    margin-top: 2rem;
+}
+
+.admin_section_content{
+    font-family: 'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin-left: 2rem;
+}
+
+select{
+    border-color: var(--bootstrap-grey);
+    border-radius: 5px;
 }
