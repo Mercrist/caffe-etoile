@@ -4,6 +4,7 @@ from flask_pymongo import PyMongo
 from dataclasses import asdict
 
 categories = ["Coffee", "Specialty Drinks", "Sandwiches", "Desserts"]
+collections = ["menu", "receipt"]
 
 def start_db()->"Database":
     """Starts a connection to the 
