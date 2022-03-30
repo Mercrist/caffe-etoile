@@ -174,8 +174,15 @@ body.admin h3{
     font-family: 'Inconsolata', monospace;
 }
 
+.admin_title{
+    margin-top: 2rem;
+    text-align: center;
+}
+
 .admin_section{
     margin-top: 2rem;
+    margin-left: 40%;
+    margin-right: auto;
 }
 
 .admin_section_content{

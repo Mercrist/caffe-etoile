@@ -8,10 +8,12 @@
 {% block bodyclass %}class="admin"{% endblock %}
 
 {% block main %}
-<div class="admin_section">
+
+<div class="admin_title">
     <h2>Website Config</h2>
     <hr class="solid">
-
+</div>
+<div class="admin_section">
     <h3>Add Menu Items</h3>
 
     <div class="admin_section_content">
@@ -107,7 +109,7 @@
                 <label for="deleteReceipt" class="col-sm-2 col-form-label">Refund a Receipt</label>
                 <div class="col-sm-2">
                     <input type="text" name="remove_receipt_number" pattern="^\d{10}$" minlength="10" maxlength="10"
-                        class="form-control" id="deleteReceipt" placeholder="Enter a Receipt Number" required>
+                        class="form-control" id="deleteReceipt" placeholder="Receipt Number" required>
                 </div>
             </div>
 
@@ -154,7 +156,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary" name="reset_menu_button"
-                                value="clicked">Ok</button>
+                                value="clicked">Confirm</button>
                         </div>
                     </div>
                 </div>
@@ -191,7 +193,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary" name="reset_reservation_button"
-                                value="clicked">Ok</button>
+                                value="clicked">Confirm</button>
                         </div>
                     </div>
                 </div>
@@ -200,6 +202,8 @@
         </form>
     </div>
 </div>
+</div>
+
 
 
 <hr class="solid">
