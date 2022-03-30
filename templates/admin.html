@@ -8,25 +8,28 @@
 {% block bodyclass %}class="admin"{% endblock %}
 
 {% block main %}
-<div class="admin_section">
+
+<div class="admin_title">
     <h2>Website Config</h2>
     <hr class="solid">
+</div>
+<div class="admin_section">
 
-    <h3>Add Menu Items</h3>
+    <div class="admin_section_content container col-md-5">
+        <h3>Add Menu Items</h3>
 
-    <div class="admin_section_content">
         <form method="post">
             <div class="form-group row">
-                <label for="inputName" class="col-sm-2 col-form-label">Item Name</label>
-                <div class="col-sm-2">
+                <label for="inputName" class="col-md-3 col-form-label">Item Name</label>
+                <div class="col-md-6">
                     <input type="text" name="item_name" pattern="^[a-zA-ZÀ-ÿ-' ]+$" maxlength="25" class="form-control"
                         id="inputName" placeholder="Food Item Name" required>
                 </div>
             </div>
 
             <div class="form-group row">
-                <label for="inputPrice" class="col-sm-2 col-form-label">Price</label>
-                <div class="col-sm-2">
+                <label for="inputPrice" class="col-md-3 col-form-label">Price</label>
+                <div class="col-md-6">
                     <div class="input-group mb-2">
                         <div class="input-group-prepend">
                             <span class="input-group-text">$</span>
@@ -38,8 +41,8 @@
             </div>
 
             <div class="form-group row">
-                <label for="inputCategory" class="col-sm-2 col-form-label">Food Category</label>
-                <div class="col-sm-2">
+                <label for="inputCategory" class="col-md-3 col-form-label">Food Category</label>
+                <div class="col-md-6">
                     <select name="item_category" id="inputCategory" required>
                         <option value="" disabled selected>Select a category</option>
                         {% for category in categories %}
@@ -51,8 +54,8 @@
             </div>
 
             <div class="form-group row">
-                <label for="inputDescription" class="col-sm-2 col-form-label">Description</label>
-                <div class="col-sm-2">
+                <label for="inputDescription" class="col-md-3 col-form-label">Description</label>
+                <div class="col-md-6">
                     <textarea maxlength="200" class="form-control" name="item_description"
                         placeholder="Enter the food item description." id="inputDescription" rows="3"
                         required></textarea>
@@ -60,16 +63,16 @@
             </div>
 
             <div class="form-group row">
-                <label for="inputLink" class="col-sm-2 col-form-label">Image Link</label>
-                <div class="col-sm-2">
+                <label for="inputLink" class="col-md-3 col-form-label">Image Link</label>
+                <div class="col-md-6">
                     <input type="url" name="item_url" class="form-control" id="inputLink"
                         placeholder="Ex. https://i.imgur.com/iCwB4WX.jpeg" required>
                 </div>
             </div>
 
             <div class="form-group row">
-                <label for="itemSubmit" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-2 text-right">
+                <label for="itemSubmit" class="col-md-3 col-form-label"></label>
+                <div class="col-md-6 text-right">
                     <button type="submit" class="btn btn-primary" id="itemSubmit" name="add_item_button"
                         value="clicked">Add</button>
                 </div>
@@ -78,22 +81,22 @@
     </div>
 </div>
 
-<div class="admin_section">
-    <h3>Removals</h3>
 
-    <div class="admin_section_content">
+<div class="admin_section">
+    <div class="admin_section_content container col-md-5">
+        <h3>Removals</h3>
         <form method="post">
             <div class="form-group row">
-                <label for="deleteName" class="col-sm-2 col-form-label">Remove a Menu Item</label>
-                <div class="col-sm-2">
+                <label for="deleteName" class="col-md-4 col-form-label">Remove a Menu Item</label>
+                <div class="col-md-5">
                     <input type="text" name="remove_item_name" pattern="^[a-zA-ZÀ-ÿ-' ]+$" maxlength="25"
                         class="form-control" id="deleteName" placeholder="Food Item Name" required>
                 </div>
             </div>
 
             <div class="form-group row">
-                <label for="removeItem" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-2 text-right">
+                <label for="removeItem" class="col-md-5 col-form-label"></label>
+                <div class="col-md-4 text-right">
                     <button type="submit" class="btn btn-danger" id="removeItem" name="remove_item_button"
                         value="clicked">Remove Item</button>
                 </div>
@@ -104,16 +107,16 @@
 
         <form method="post">
             <div class="form-group row">
-                <label for="deleteReceipt" class="col-sm-2 col-form-label">Refund a Receipt</label>
-                <div class="col-sm-2">
+                <label for="deleteReceipt" class="col-md-6 col-form-label">Refund a Receipt</label>
+                <div class="col-md-3">
                     <input type="text" name="remove_receipt_number" pattern="^\d{10}$" minlength="10" maxlength="10"
-                        class="form-control" id="deleteReceipt" placeholder="Enter a Receipt Number" required>
+                        class="form-control" id="deleteReceipt" placeholder="Receipt Number" required>
                 </div>
             </div>
 
             <div class="form-group row">
-                <label for="removeReceipt" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-2 text-right">
+                <label for="removeReceipt" class="col-sm-3 col-form-label"></label>
+                <div class="col-md-6 text-right">
                     <button type="submit" class="btn btn-danger" id="removeReceipt" name="remove_receipt_button"
                         value="clicked">Refund Receipt</button>
                 </div>
@@ -123,16 +126,17 @@
 </div>
 
 <div class="admin_section">
-    <h3>Reset Collections</h3>
-    <div class="admin_section_content">
+    <div class="admin_section_content container col-md-5">
+        <h3>Reset Collections</h3>
+
         <form method="post">
             <div class="form-group row">
-                <label for="resetMenu" class="col-sm-2 col-form-label">Reset Website Menu</label>
-                <div class="col-sm-2 text-right">
+                <label for="resetMenu" class="col-md-4 col-form-label">Reset Website Menu</label>
+                <div class="col-md-3">
                     <!-- Modal Button -->
-                    <button type="button" class="btn btn-outline-danger" id="resetMenu" data-toggle="modal"
+                    <button type="button" class="btn btn-outline-danger btn-block" id="resetMenu" data-toggle="modal"
                         data-target="#resetWarning">
-                        Reset Menu</button>
+                        Reset Menu </button>
                 </div>
             </div>
 
@@ -154,7 +158,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary" name="reset_menu_button"
-                                value="clicked">Ok</button>
+                                value="clicked">Confirm</button>
                         </div>
                     </div>
                 </div>
@@ -164,11 +168,11 @@
 
         <form method="post">
             <div class="form-group row">
-                <label for="resetReceipts" class="col-sm-2 col-form-label">Remove all Receipts</label>
-                <div class="col-sm-2 text-right">
+                <label for="resetReceipts" class="col-md-4 col-form-label">Remove all Receipts</label>
+                <div class="col-md-3">
                     <!-- Modal Button -->
-                    <button type="button" class="btn btn-outline-danger" id="resetReceipts" data-toggle="modal"
-                        data-target="#resetReceiptsWarning">
+                    <button type="button" class="btn btn-outline-danger btn-block" id="resetReceipts"
+                        data-toggle="modal" data-target="#resetReceiptsWarning">
                         Delete Receipts</button>
                 </div>
             </div>
@@ -191,18 +195,14 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary" name="reset_reservation_button"
-                                value="clicked">Ok</button>
+                                value="clicked">Confirm</button>
                         </div>
                     </div>
                 </div>
             </div>
-
         </form>
     </div>
 </div>
-
-
-<hr class="solid">
 
 
 {% endblock %}
