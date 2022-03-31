@@ -23,7 +23,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quintessential&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
     {% block head %}
     {% endblock %}
 
@@ -82,7 +82,7 @@
     <nav class="navbar {% block navbartype %} {% endblock %} navbar-light bg-dark">
         <div class="container-fluid">
             <div class="navbar-brand">
-                <a href="{{url_for('admin')}}">
+                <a href="{{url_for('login')}}">
                     <img src="{{url_for('static', filename='Images/Icons/sandwich.png')}}" width="35" height="35"
                         class="d-inline-block align-center" alt=""></a>
                 <span class="text-light navbar-text">
