@@ -66,3 +66,7 @@ def add_to_cart(item_name):
 
     return redirect("/menu")
 
+@app.route('/checkout',methods=["POST"])
+def checkout():
+    return request.form
+
