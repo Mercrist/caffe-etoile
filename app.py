@@ -47,21 +47,17 @@ def order():
 
     return render_template("order.html", cart=session['cart'])
 
-@app.route('/setcookie', methods = ['POST', 'GET'])
-def setcookie():
-   if request.method == 'POST':
-       pass
-
 @app.route('/add_to_cart/<string:item_name>',methods=['POST'])
 def add_to_cart(item_name):
     if 'cart' not in session:
         print('CART NOT FOUND')
         session['cart'] = vars(ShoppingCart("User"))
 
+    amount = int(request.form['amount'])
     print(session['cart'])
     cart = json_to_cart(session['cart'])
     print(cart)
-    cart.add_items(item_name)
+    cart.add_items(item_name,amount)
     session.pop('cart')
     session['cart'] = vars(cart)
     session.modified = True
@@ -70,14 +66,3 @@ def add_to_cart(item_name):
 
     return redirect("/menu")
 
-# #background process happening without any refreshing
-# @app.route('/background_process_test')
-# def background_process_test():
-#     print ("Attempted to add item")
-#     print(request.data)
-#     if "cart" not in session:
-#         session['cart'] = ShoppingCart("User")
-    
-#     session['cart'].add_item()
-
-#     return ("nothing")

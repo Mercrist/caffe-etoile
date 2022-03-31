@@ -9,14 +9,19 @@
 
 {% block main %}
 <body>
-    <form method="POST">
-        <div class="form-group">
-          <label for="itemToAdd">Item name</label>
-          <input type="item" class="form-control" id="itemToAdd" placeholder="Type Item name here">
-        </div>
-    </form>
-    {% for item in cart.cart %}
-    {{item}}
-    {% endfor %}
+    <h1>Items in cart:</h1>
+    {% if cart.cart %}
+        <ul class="list-group list-group-flush">
+            {% for item,amount in cart.cart.items() %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">{{item}}
+                <span class="badge bg-primary rounded-pill">{{amount}}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h4>You have no items in your cart!</h4>
+        <a href="/menu" class="btn btn-secondary">View menu</a>
+    {% endif %}
 </body>
 {% endblock %}
+{% block navbartype %}bottom{% endblock %}
