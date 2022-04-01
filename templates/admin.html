@@ -203,6 +203,57 @@
     </div>
 </div>
 
+<div class="admin_section">
+    <div class="admin_section_content container col-md-5">
+        <h3>Admin Account</h3>
+        <form method="post">
+            <div class="form-group row">
+                <label for="newUsername" class="col-md-4 col-form-label">Change Username</label>
+                <div class="col-md-5">
+                    <input type="text" name="new_username_input" minlength="3" maxlength="30" class="form-control"
+                        id="newUsername" placeholder="New Username" required>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="changeUsername" class="col-md-5 col-form-label"></label>
+                <div class="col-md-4 text-right">
+                    <button type="submit" class="btn btn-warning" id="changeUsername" name="remove_username_button"
+                        value="clicked">Change Username</button>
+                </div>
+            </div>
+        </form>
+
+        <br><br>
+
+        <form method="post">
+            <div class="form-group row">
+                <label for="newPswd" class="col-md-4 col-form-label">Change Password</label>
+                <div class="col-md-5">
+                    <input type="password" name="new_password_input" minlength="4" maxlength="30" class="form-control"
+                        id="newPswd" placeholder="New Password" required>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="newPswdConf" class="col-md-4 col-form-label"></label>
+                <div class="col-md-5">
+                    <input type="password" name="confirm_password_input" minlength="4" maxlength="50"
+                        class="form-control" id="newPswdConf" placeholder="Confirm Password" required>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="changePswd" class="col-md-4 col-form-label"></label>
+                <div class="col-md-5 text-right">
+                    <button type="submit" class="btn btn-warning" id="changePswd" name="new_password_button"
+                        value="clicked">Change Password</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 
 {% endblock %}
 
