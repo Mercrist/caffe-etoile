@@ -2,6 +2,7 @@ from Classes import Statics as local_data
 from flask import current_app as app
 from flask_pymongo import PyMongo
 from dataclasses import asdict
+import bcrypt
 
 categories = ["Coffee", "Specialty Drinks", "Sandwiches", "Desserts"]
 collections = ["menu", "receipt", "admin"]
@@ -16,6 +17,21 @@ def start_db()->"Database":
     mongo = PyMongo(app)
     db = mongo.db
     return db
+
+def encrypt_pswd(password:str)->bytes:
+    """Encrypts a password with bcrypt
+       and returns bcrypt's representation
+       of the hash.
+
+    Args:
+        password (str): The password to hash, as a string.
+
+    Returns:
+        bytes: The hashed password in bytes, encoded by bcrypt.
+    """
+    password = password.encode('utf-8')
+    salt = bcrypt.gensalt()
+    return bcrypt.hashpw(password, salt)
 
 def reset_menu_collection()->None:
     """Resets the menu collection by

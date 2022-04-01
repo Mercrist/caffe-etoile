@@ -71,12 +71,12 @@ def login():
             # correctly logged into the admin page
             else:
                 # prevents redirect from being interpreted as GET
-                return redirect(url_for('admin'), code=307)
+                return redirect(url_for('admin', username=local_username), code=307)
 
     return render_template("login.html")
 
-@app.route('/admin', methods=['GET', 'POST'])
-def admin():
+@app.route('/admin/<username>', methods=['GET', 'POST'])
+def admin(username):
     if request.method == 'GET':
         return redirect(url_for('index'))
 
@@ -94,21 +94,19 @@ def admin():
 
     elif 'remove_item_button' in request.form and request.form['remove_item_button'] == "clicked":
         item_name = request.form['remove_item_name']
-        if not db.menu.find_one({'name': item_name}):
+        if not db.menu.find_one_and_delete({'name': item_name}):
             flash(f"{item_name} is not in the menu.", "danger")
 
         else:
-            db.menu.delete_one({'name': item_name})
             flash(f"{item_name} was removed from the menu!", "success")
 
     elif 'remove_receipt_button' in request.form and request.form['remove_receipt_button'] == "clicked":
         receipt_number = request.form['remove_receipt_number']
 
-        if not db.receipt.find_one({'receipt_num': receipt_number}):
+        if not db.receipt.find_one_and_delete({'receipt_num': receipt_number}):
             flash(f"Receipt #{receipt_number} does not exist.", "danger")
 
         else:
-            db.receipt.delete_one({'receipt_num': receipt_number})
             flash(f"Receipt #{receipt_number} was removed from our logs!", "success")
 
     elif 'reset_menu_button' in request.form and request.form['reset_menu_button'] == "clicked":
@@ -117,4 +115,38 @@ def admin():
     elif 'reset_reservation_button' in request.form and request.form['reset_reservation_button'] == "clicked":
         model.reset_receipts_collection()
 
-    return render_template("admin.html", categories=model.categories)
+    elif 'delete_account_button' in request.form and request.form['delete_account_button'] == 'clicked':
+        username_to_remove = request.form['username_to_remove']
+
+        if username == username_to_remove:
+            flash("Cannot delete the current account!", "danger")
+
+        elif not db.admin.find_one_and_delete({'username': username_to_remove}):
+            flash(f"{username_to_remove} does not exist!", "danger")
+
+        else:
+            flash("Account removed succesfully!", "success")
+
+    elif 'new_password_button' in request.form and request.form['new_password_button'] == 'clicked':
+        hashed_pswd = model.encrypt_pswd(request.form['confirm_password_input'])
+
+        db.admin.find_one_and_update(
+            {'username': username},
+            {'$set': {'password': hashed_pswd}})
+
+        flash("Password updated succesfully!", "success")
+
+    elif 'add_account_button' in request.form and request.form['add_account_button'] == 'clicked':
+        local_username = request.form['new_acc_username']
+
+        if not db.admin.find_one({'username': local_username}):
+            new_acc = {'username': local_username,
+                    'password': model.encrypt_pswd(request.form['confirm_new_password'])}
+
+            db.admin.insert_one(new_acc)
+            flash("Account added succesfully!", "success")
+
+        else:
+            flash("Account username already in use!", "danger")
+
+    return render_template("admin.html", username=username, categories=model.categories)
