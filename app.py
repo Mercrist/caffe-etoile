@@ -138,10 +138,11 @@ def admin(username):
 
     elif 'add_account_button' in request.form and request.form['add_account_button'] == 'clicked':
         local_username = request.form['new_acc_username']
+        new_password = request.form['confirm_new_password']
 
         if not db.admin.find_one({'username': local_username}):
             new_acc = {'username': local_username,
-                    'password': model.encrypt_pswd(request.form['confirm_new_password'])}
+                    'password': model.encrypt_pswd(new_password)}
 
             db.admin.insert_one(new_acc)
             flash("Account added succesfully!", "success")
