@@ -11,10 +11,45 @@
 {% endblock %}
 
 {% block main %}
+{% if checked_out %}
+  <h1 class="display-2">MODAL SHOULD BE RENDERED</h1>
+  <div class="modal" tabindex="-1" id="checkedOutModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Thank you for your order!</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Here's your receipt information:
+            Note: Be sure to save your receipt number!
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Go back to menu</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    window.onload = function() { 
+      openCheckoutPopup();
+    };
+    function openCheckoutPopup() { 
+      $('#checkedOutModal').modal("show");
+    }
+    
+  </script>
+
+  {% endif %}
 <!-- experimenting with background image -->
 <div class="bg"></div>
 <div class="menu">
   <h1 class="display-2 menu-section-title">Menu</h1>
+
+
   {%for category in categories %}
   <div class="menu-section-cafe">
     <h2 class="menu-section-title"><i>{{category}}</i></h2>

@@ -37,7 +37,9 @@ def contact():
 
 @app.route('/menu')
 def menu():
-    return render_template("menu.html", database = db, categories=local_data.categories)
+    if request.args.get('checked_out'):
+        return render_template("menu.html", database=db, categories=local_data.categories,checked_out=True)
+    return render_template("menu.html", database = db, categories=local_data.categories, checked_out=False)
 
 @app.route("/order",methods=['GET','POST'])
 def order():
@@ -68,5 +70,6 @@ def add_to_cart(item_name):
 
 @app.route('/checkout',methods=["POST"])
 def checkout():
-    return request.form
+    print(request.form) 
+    return redirect(url_for("menu",checked_out=True))
 
