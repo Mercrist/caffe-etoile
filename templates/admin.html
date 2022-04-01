@@ -2,7 +2,6 @@
 
 {% block head %}
 <title>Admin Panel</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block bodyclass %}class="admin"{% endblock %}
@@ -156,7 +155,7 @@
                             Are you sure you'd like to proceed?
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary" name="reset_menu_button"
                                 value="clicked">Confirm</button>
                         </div>
@@ -193,7 +192,7 @@
                             Are you sure you'd like to proceed?
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary" name="reset_reservation_button"
                                 value="clicked">Confirm</button>
                         </div>
@@ -201,6 +200,148 @@
                 </div>
             </div>
         </form>
+    </div>
+</div>
+
+<div class="admin_section">
+    <div class="admin_section_content container col-md-5">
+        <h3>Admin Account</h3>
+        <form method="post">
+            <div class="form-group row">
+                <label for="newUsername" class="col-md-4 col-form-label">Delete Account</label>
+                <div class="col-md-5">
+                    <input type="text" name="username_to_remove" minlength="3" maxlength="30" class="form-control"
+                        id="newUsername" placeholder="Enter Account Username" required>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="deleteUsername" class="col-md-5 col-form-label"></label>
+                <div class="col-md-4 text-right">
+                    <button type="button" class="btn btn-danger" id="deleteUsername" data-toggle="modal"
+                        data-target="#deleteAccountWarning">Delete Account</button>
+                </div>
+            </div>
+            <!-- Modal Popup-->
+            <div class="modal fade" id="deleteAccountWarning" tabindex="-1" role="dialog"
+                aria-labelledby="deleteAccountWarning" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteAccountWarning">Warning!</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            You are about to delete an admin account. You cannot delete
+                            the account currently in use. This action is irreversible.
+                            Would you like to proceed?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-danger" name="delete_account_button"
+                                value="clicked">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <br><br>
+
+        <!-- Validate passwords -->
+        <form method="post">
+            <div class="form-group row">
+                <label for="newPswd" class="col-md-4 col-form-label">Update Password</label>
+                <div class="col-md-5">
+                    <input type="password" name="new_password_input"
+                        onchange="if(this.checkValidity()) form.confirm_password_input.pattern = this.value;"
+                        minlength="4" maxlength="30" class="form-control" id="newPswd" placeholder="New Password"
+                        required>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="newPswdConf" class="col-md-4 col-form-label"></label>
+                <div class="col-md-5">
+                    <input type="password" name="confirm_password_input"
+                        onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same password as above.' : '');"
+                        minlength="4" maxlength="30" class="form-control" id="newPswdConf"
+                        placeholder="Confirm Password" required>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="changePswd" class="col-md-4 col-form-label"></label>
+                <div class="col-md-5 text-right">
+                    <button type="submit" name="new_password_button" class="btn btn-warning" id="changePswd"
+                        value="clicked">Change Password</button>
+                </div>
+            </div>
+        </form>
+
+        <br>
+        <div class="form-group row">
+            <label for="newAcc" class="col-md-4 col-form-label">Add Admin Account</label>
+            <div class="col-md-5 text-right">
+                <button type="button" class="btn btn-warning" id="addAcc" data-toggle="modal"
+                    data-target="#addAccPopUp">Add Account</button>
+            </div>
+        </div>
+
+        <!-- Modal Popup-->
+        <div class="modal fade" id="addAccPopUp" tabindex="-1" role="dialog" aria-labelledby="addAccPopUpLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addAccPopUpLabel">Enter the new Account details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form Body -->
+                        <form method="post">
+                            <div class="form-group row">
+                                <label for="newAccUsername" class="col-md-4 col-form-label">New Username</label>
+                                <div class="col-md-5">
+                                    <input type="text" name="new_acc_username" minlength="3" maxlength="30"
+                                        class="form-control" id="newAccUsername" placeholder="New Username" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="newAccPswd" class="col-md-4 col-form-label">Set Password</label>
+                                <div class="col-md-5">
+                                    <input type="password" name="new_acc_password_input"
+                                        onchange="if(this.checkValidity()) form.confirm_new_password_input.pattern = this.value;"
+                                        minlength="4" maxlength="30" class="form-control" id="newAccPswd"
+                                        placeholder="New Password" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="newAccPswdConf" class="col-md-4 col-form-label"></label>
+                                <div class="col-md-5">
+                                    <input type="password" name="confirm_new_password"
+                                        onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same password as above.' : '');"
+                                        minlength="4" maxlength="30" class="form-control" id="newAccPswdConf"
+                                        placeholder="Confirm Password" required>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary" name="add_account_button"
+                                    value="clicked">Add
+                                    Account</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

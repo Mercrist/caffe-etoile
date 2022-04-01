@@ -1,4 +1,4 @@
-:root{
+:root {
     --solid-white: rgba(228, 230, 231, 0.568);
     --gold: #ffcc40;
     --grey-footer: #e7e6e6;
@@ -10,20 +10,23 @@
     --form-grey: #f2f2f2;
 }
 
-body, html{
-  font-family: 'Quintessential', cursive !important;
+body,
+html {
+    font-family: 'Quintessential', cursive !important;
 }
 
-body.index, html.index{
+body.index,
+html.index {
     background-image: url(../Images/Backgrounds/shop-front.jpg);
     background-position: center;
     background-repeat: no-repeat;
     height: 100%;
     width: 100%;
-    background-size: cover;   
+    background-size: cover;
 }
 
-body.about, html.about{
+body.about,
+html.about {
     background-image: url(../Images/Backgrounds/about.jpg);
     background-position: center;
     background-repeat: repeat;
@@ -31,17 +34,17 @@ body.about, html.about{
     overflow-x: hidden;
 }
 
-.navbar-brand{
+.navbar-brand {
     font-size: 1.5rem;
 }
 
-#Description{
+#Description {
     padding-top: 0.5%;
     margin-left: -3rem;
     font-size: 3rem;
 }
 
-#Description span{
+#Description span {
     height: 13.5rem;
     background-color: var(--grey-transparent);
     backdrop-filter: blur(0.2rem);
@@ -49,61 +52,65 @@ body.about, html.about{
     border-radius: 2rem;
 }
 
-#Description p{
+#Description p {
     color: var(--gold);
 }
 
-#Description #Button{
+#Description #Button {
     margin-top: 14rem;
     margin-left: -15.5rem;
 }
 
-#Info p{
+#Info p {
     color: var(--solid-white);
     padding-right: 1.5rem;
     padding-top: 1rem;
     font-family: None;
 }
 
-#Info img:hover{
+#Info img:hover {
     -webkit-border-radius: 2rem;
     border-radius: 2rem;
     -webkit-box-shadow: 0rem 0rem 2rem 0rem white;
-    box-shadow:         0rem 0rem 2rem 0rem white;
+    box-shadow: 0rem 0rem 2rem 0rem white;
 }
 
-#Links a{
+#Links a {
     font-size: 1.5rem;
     padding: 2rem;
     color: azure;
 }
 
-#About-Info{
+#About-Info {
     margin-top: 5rem;
     margin-bottom: 3rem;
     padding-left: 8rem;
     font-family: 'Comfortaa', cursive;
 }
 
-#About-Info .card, .card-header, .card-body, .card-footer{
+#About-Info .card,
+.card-header,
+.card-body,
+.card-footer {
     border-radius: 20%;
 }
 
-#About-Info .card-footer{
+#About-Info .card-footer {
     background-color: var(--grey-footer);
 }
 
-#About-Info h3{
+#About-Info h3 {
     font-family: 'Kanit', sans-serif;
 }
 
-#About-Info img{
+#About-Info img {
     border-radius: 30%;
     width: auto;
     height: 27rem;
 }
 
-body.contact, html.contact{
+body.contact,
+html.contact {
     overflow-x: hidden;
     background: url(../Images/Backgrounds/contact.png);
     height: 100%;
@@ -111,7 +118,7 @@ body.contact, html.contact{
     background-size: cover;
 }
 
-#Collapsables{
+#Collapsables {
     display: block;
     margin-top: 6rem;
     width: 50%;
@@ -122,74 +129,110 @@ body.contact, html.contact{
 }
 
 
-#Collapsables .card{
+#Collapsables .card {
     margin-bottom: 10rem;
     overflow: auto;
     max-height: 30rem;
 }
 
-#Collapsables .card-header{
+#Collapsables .card-header {
     background-color: var(--lime);
 }
 
 
-#Collapsables .collapse, .card-body, .text{
+#Collapsables .collapse,
+.card-body,
+.text {
     background-color: white;
 }
 
-#Collapsables .Title{
+#Collapsables .Title {
     font-size: 2em;
 }
 
-#Collapsables .text, .Table strong{
-    font-family: 'Noto Serif Display', serif;   
+#Collapsables .text,
+.Table strong {
+    font-family: 'Noto Serif Display', serif;
 }
 
-#Collapsables .Profile img{
+#Collapsables .Profile img {
     border-radius: 50%;
     margin-right: 1rem;
     border: 3px solid var(--cyan);
 }
 
-#Collapsables .Profile a{
-    text-decoration: none!important;
+#Collapsables .Profile a {
+    text-decoration: none !important;
 }
 
-table, td{
+table,
+td {
     border: solid 2px black;
     font-family: 'Special Elite', cursive;
 }
 
-hr.solid {
-  border-top: 3px solid var(--lighter-black);
+/* Sign In Page CSS */
+
+body.login {
+    background: url(../Images/Backgrounds/login.jpg);
+    height: 100%;
+    width: 100%;
+    background-size: cover;
 }
 
-body.admin{
+body.login h3 {
+    font-family: 'Merriweather Sans', sans-serif;
+    text-align: center;
+}
+
+.loginContent {
+    font-family: 'Segoe UI',
+        'Open Sans',
+        'Helvetica Neue',
+        sans-serif;
+
+    margin-top: 10%;
+    background-color: rgb(255, 255, 255);
+    border-radius: 15px;
+    padding: 15px;
+    border-color: grey;
+    border-style: solid;
+}
+
+
+/* Admin Page CSS */
+
+hr.solid {
+    border-top: 3px solid var(--lighter-black);
+}
+
+body.admin {
     overflow-x: hidden;
     background: linear-gradient(0.25turn, #C9D6FF, #E2E2E2);
 }
 
-body.admin h2, .alert{
+body.admin h2,
+.alert {
     font-family: 'Nunito', sans-serif;
 }
 
-body.admin h3{
+body.admin h3 {
     font-family: 'Inconsolata', monospace;
     text-align: center;
     margin-bottom: 1rem;
 }
 
-.admin_title{
+.admin_title {
     margin-top: 2rem;
     text-align: center;
 }
 
-.admin_section{
+.admin_section {
     margin-bottom: 1.5rem;
     margin-right: auto;
 }
 
-.admin_section_content{
+.admin_section_content {
     font-family: 'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif;
     margin-left: 2rem;
     background-color: var(--form-grey);
@@ -197,7 +240,7 @@ body.admin h3{
     padding: 15px;
 }
 
-select{
+select {
     border-color: var(--bootstrap-grey);
     border-radius: 5px;
 }
