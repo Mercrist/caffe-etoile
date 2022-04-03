@@ -1,9 +1,8 @@
 from flask import Flask, url_for, redirect, request, render_template, make_response, Response, session, flash
 from flask_pymongo import PyMongo
 from Classes import Statics as local_data
-from Classes.Shopping import ShoppingCart as ShoppingCart
-from Classes.Shopping import Receipt
 from model import json_to_cart, receipt_to_json
+from model import ShoppingCart, Receipt
 import json
 import model
 import bcrypt
@@ -127,7 +126,7 @@ def admin(username):
     elif 'remove_receipt_button' in request.form and request.form['remove_receipt_button'] == "clicked":
         receipt_number = request.form['remove_receipt_number']
 
-        if not db.receipt.find_one_and_delete({'receipt_num': receipt_number}):
+        if not db.receipts.find_one_and_delete({'receipt_num': receipt_number}):
             flash(f"Receipt #{receipt_number} does not exist.", "danger")
 
         else:
