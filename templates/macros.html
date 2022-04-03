@@ -1,20 +1,27 @@
 {% macro menu_item_section(category) %}
 <div class="container">
-  <div class="row">
-    {%for item in category %}
-    <div class="col">
-      <div class="card">
-        <div class="image-wrapper">
-          <img class="card-img-top" src={{item['image_link']}} alt="..." />
+    <div class="row">
+        {%for item in category %}
+        <div class="col">
+            <div class="card">
+                <div class="image-wrapper">
+                    <img class="card-img-top" src={{ item['image_link'] }} alt="..." />
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{item['name']}}<em class="menu-item-price"> ${{'%0.2f'| format(item['price']|float)}}</em></h5>
+                    <p class="card-text">{{item['description']}}</p>
+
+                    <div class="form-wrapper">
+                        <form method="POST" action="add_to_cart/{{item.name}}">
+                            <input type="submit" class="item-btn btn btn-secondary" value="Add to cart" />
+                            <input name="amount" type="range" value="1" class="form-range" min="0" max="10" oninput="this.nextElementSibling.value = this.value" />
+                            <output class="badge bg-secondary text-light">1</output>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-          <h5 class="card-title">{{item['name']}}<em class="menu-item-price">
-              ${{'%0.2f'| format(item['price']|float)}}</em></h5>
-          <p class="card-text">{{item['description']}}</p>
-        </div>
-      </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-  </div>
 </div>
 {% endmacro %}

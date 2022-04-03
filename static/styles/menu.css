@@ -54,6 +54,13 @@
     text-align: right;
 }
 
+.item-btn { 
+    position:relative;
+    bottom:0px;
+    left:0px;
+    font-family: 'Crimson Pro', serif;
+
+}
 .bg { 
     background-image: url(../Images/Backgrounds/menu_pattern.jpg);
     background-position: center; 
@@ -63,3 +70,23 @@
     background-size: cover;
     position: fixed;
 }
+
+.form-wrapper { 
+    position: absolute;
+    bottom: 10px;
+    left: 0px;
+
+ }
+.form-range { 
+    position: relative;
+    bottom: 0px;
+    left: 0px;
+ }
+
+output {
+    font-weight: bold;
+    font-family: 'Crimson Pro', serif;
+    position: absolute;
+    left: 5 rem;
+    top: 1 rem;
+ }

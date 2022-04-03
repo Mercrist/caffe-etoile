@@ -1,0 +1,120 @@
+{% extends "base.html" %} {% block head %}
+<!-- More Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:wght@500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet" />
+{% endblock %} {% block main %}
+<body>
+    <h1>Items in cart:</h1>
+    {% if cart.cart %}
+    <div class="row">
+        <div class="col">
+            <ul class="list-group">
+                {% for item,amount in cart.cart.items() %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{item}}
+                    <span class="badge bg-primary rounded-pill">{{amount}}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col">
+            <form class="row g-3" method="POST" action="/checkout">
+                <div class="col-md-6">
+                    <label for="inputFirstName" class="form-label">First Name</label>
+                    <input type="text" class="form-control" id="inputFirstName" name="firstName"/>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputLastName" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" id="inputLastName" name="lastName" />
+                </div>
+
+                <!-- set datalist to show day options -->
+                <div class="col-md-12">
+                    <label for="inputReservationDay" class="form-label">Day of Reservation</label>
+                    <input type="text" list="reservationDayOptions" class="form-control" id="inputReservationDay" 
+                        name="reservationDay"/>
+                </div>
+                <datalist id="reservationDayOptions">
+                    <option value="Sunday">
+                    <option value="Monday">
+                    <option value="Tuesday">
+                    <option value="Wednesday">
+                    <option value="Thursday">
+                    <option value="Friday">
+                    <option value="Saturday">
+                </datalist>
+
+                <div class="col-md-4">
+                    <label for="inputReservationHour" class="form-label">Reservation Hour</label>
+                    <select id="inputReservationHour" class="form-select" name="reservationHour">
+                        <option selected>Choose...</option>
+                        <option>1:00</option>
+                        <option>2:00</option>
+                        <option>3:00</option>
+                        <option>4:00</option>
+                        <option>5:00</option>
+                        <option>6:00</option>
+                        <option>7:00</option>
+                        <option>8:00</option>
+                        <option>9:00</option>
+                        <option>10:00</option>
+                        <option>11:00</option>
+                        <option>12:00</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="inputReservationMeridiem" class="form-label">Meridiem</label>
+                    <select id="inputReservationMeridiem" class="form-select" name="reservationMeridiem">
+                        <option selected>Choose...</option>
+                        <option>AM</option>
+                        <option>PM</option>
+                    </select>
+                </div>
+
+               <div class="col-12">
+                 <div class="form-check">
+                   <input class="form-check-input" type="checkbox" id="receiptDownload" name="downloadReceipt">
+                   <label class="form-check-label" for="receiptDownload">
+                     Download receipt
+                   </label>
+                 </div>
+               </div> 
+
+                <div id="checkout-button" class="col-12">
+                    <button type="submit" class="btn btn-primary">Checkout</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% else %}
+    <h4>You have no items in your cart!</h4>
+    <a href="/menu" class="btn btn-secondary">View menu</a>
+   <!-- Button trigger modal -->
+   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+     Launch demo modal
+   </button>
+
+   <!-- Modal -->
+   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     <div class="modal-dialog">
+       <div class="modal-content">
+         <div class="modal-header">
+           <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+         <div class="modal-body">
+           ...
+         </div>
+         <div class="modal-footer">
+           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+           <button type="button" class="btn btn-primary">Save changes</button>
+         </div>
+       </div>
+     </div>
+   </div>
+  
+    {% endif %}
+</body>
+{% endblock %} {% block navbartype %}bottom{% endblock %}

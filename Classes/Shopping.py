@@ -1,9 +1,11 @@
 from datetime import datetime, timezone
-from Statics import Reservation, menu   
+from .Statics import Reservation, menu   
 from collections import defaultdict
 from tabulate import tabulate
 import hashlib
+from dataclasses import dataclass
 
+@dataclass
 class ShoppingCart:
     """ 
     A class that represents the customers' shopping 
@@ -109,8 +111,8 @@ class ShoppingCart:
         Raises:
             TypeError: Raised if the food item to remove from the cart isn't a string or if the amount of items to remove isn't 
                         an integer.
-            ValueError: Raised if the food item isn't present in the cart, if the customer attemps to remove more than the maximum 
-                        or minimum allowed, or if the amount of food items to remove all is greater than the 
+            ValueError: Raised if the food item isn't present in the cart, if the customer attemps to remove more than 
+                        the maximum or minimum allowed, or if the amount of food items to remove all is greater than the 
                         current amount of items in the cart.
         """
         if type(item) != str: # Verifying if item to add is valid
@@ -173,7 +175,8 @@ class Receipt:
     their subtotal.
 
     Attributes:
-        items: A dictionary containing each food item from their order, as string keys, and their quantities as integer values.
+        items: A dictionary containing each food item from their order, as string keys, and their quantities as integer
+        values.
         reservation: A reservation object containing the date of the reservation, or None if a reservation wasn't set.
         name: A string, representing a valid customer name.
         subtotal: A float which represents the final subtotal. Items ordered cannot be changed.
@@ -193,9 +196,9 @@ class Receipt:
             TypeError: Raised if the food items aren't in a dictionary, if the reservation is not a valid Reservation object,
                        the customer name isn't a string, or the subtotal isn't a float or integer.
 
-            ValueError: Raised if the food items' dictionary is empty or contains invalid keys or values, the customer name contains 
-                        non alphanumeric characters or is empty, or if the subtotal is less than or equals to zero. All orders
-                        must have a positive, non zero subtotal.
+            ValueError: Raised if the food items' dictionary is empty or contains invalid keys or values, the customer
+                        name contains non alphanumeric characters or is empty, or if the subtotal is less than 
+                        or equals to zero. All orders must have a positive, non zero subtotal.
         """
         if type(food_items) not in [dict, defaultdict]:
             raise TypeError(f"Items must be a dictionary. Given type: {type(food_items)}")
