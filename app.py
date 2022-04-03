@@ -46,7 +46,7 @@ def contact():
 
 @app.route('/menu')
 def menu():
-    if request.args.get('checked_out'):
+    if request.args.get('checked_out') or request.args.get('search'):
         receipt_number = request.args.get('receipt')
         print(receipt_number)
         print(type(receipt_number))
@@ -60,6 +60,8 @@ def menu():
             checked_out=True,
             receipt=receipt)
         
+    if request.args.get('added'):
+        flash('Added items to cart!','info')
     return render_template("menu.html", 
         database = db,
         categories=model.categories, 
@@ -178,7 +180,7 @@ def admin(username):
 @app.route("/order",methods=['GET','POST'])
 def order():
     if "cart" not in session:
-        flash("There's in nothing your cart!")
+        flash("There's nothing in your cart!","danger")
         session['cart'] = vars(ShoppingCart("User"))
 
     return render_template("order.html", cart=session['cart'])
@@ -200,7 +202,7 @@ def add_to_cart(item_name):
     print("added to cart!")
     print(session['cart'])
 
-    return redirect("/menu")
+    return redirect(url_for("menu",added=True))
 
 @app.route('/checkout',methods=["POST"])
 def checkout():
@@ -229,3 +231,8 @@ def checkout():
     session.pop('cart')
     return redirect(url_for("menu",checked_out=True,receipt=json_receipt['receipt_number']))
 
+
+@app.route("/search_receipt",methods=["POST"])
+def search_receipt():
+    receipt_number = request.form['look_up_number']
+    return redirect(url_for('menu',receipt=receipt_number,search=True))
