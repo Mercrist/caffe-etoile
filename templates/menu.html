@@ -12,7 +12,6 @@
 
 {% block main %}
 {% if checked_out %}
-  <h1 class="display-2">MODAL SHOULD BE RENDERED</h1>
   <div class="modal" tabindex="-1" id="checkedOutModal">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -24,10 +23,23 @@
           <p>Here's your receipt information:
             Note: Be sure to save your receipt number!
           </p>
+          <h5>Receipt number: {{receipt.receipt_number}}</h5>
+          <h5>Reserved for: {{receipt.reservation}}</h5>
+          <div class="col">
+            <ul class="list-group">
+                {% for item,amount in receipt.food_items.items() %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{item}}
+                    <span class="badge bg-primary rounded-pill">{{amount}}</span>
+                </li>
+                {% endfor %}
+            </ul>
+            <p>Subtotal: {{receipt.subtotal}}</p>
+            <p>Total: {{receipt.total}}</p>
+        </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Go back to menu</button>
         </div>
       </div>
     </div>
