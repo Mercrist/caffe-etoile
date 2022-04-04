@@ -1,24 +1,51 @@
 {% extends "base.html" %} {% block head %}
 <!-- More Fonts -->
+<link href="{{url_for('static', filename='styles/order.css')}}" rel="stylesheet" type="text/css" />
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:wght@500&display=swap" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@200&display=swap" rel="stylesheet" />
 {% endblock %}
 
 {% block bodyclass %}class="order"{% endblock %}
 
 {% block main %}
 
+<!-- <ol class="list-group list-group-numbered">
+  <li class="list-group-item d-flex justify-content-between align-items-start">
+    <div class="ms-2 me-auto">
+      <div class="fw-bold">Subheading</div>
+      Content for list item
+    </div>
+    <span class="badge bg-primary rounded-pill">14</span>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-start">
+    <div class="ms-2 me-auto">
+      <div class="fw-bold">Subheading</div>
+      Content for list item
+    </div>
+    <span class="badge bg-primary rounded-pill">14</span>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-start">
+    <div class="ms-2 me-auto">
+      <div class="fw-bold">Subheading</div>
+      Content for list item
+    </div>
+    <span class="badge bg-primary rounded-pill">14</span>
+  </li>
+</ol> -->
+
+
 <body>
-    <h1>Items in cart:</h1>
+    <h1 class="crimson-font">Items in cart:</h1>
     {% if cart.cart %}
     <div class="row">
         <div class="col">
             <ul class="list-group">
                 {% for item,amount in cart.cart.items() %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    {{item}}
-                    <span class="badge bg-primary rounded-pill">{{amount}}</span>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    {{item.title()}}
+                    <span class="crimson-font badge bg-primary text-white">{{amount}}</span>
                 </li>
                 {% endfor %}
             </ul>
@@ -26,18 +53,18 @@
         <div class="col">
             <form class="row g-3" method="POST" action="/checkout">
                 <div class="col-md-6">
-                    <label for="inputFirstName" class="form-label">First Name</label>
-                    <input type="text" class="form-control" id="inputFirstName" name="firstName" required />
+                    <label for="inputFirstName" class="crimson-font form-label">First Name</label>
+                    <input type="text" class="crimson-font form-control" id="inputFirstName" name="firstName" required />
                 </div>
                 <div class="col-md-6">
-                    <label for="inputLastName" class="form-label">Last Name</label>
-                    <input type="text" class="form-control" id="inputLastName" name="lastName"/>
+                    <label for="inputLastName" class="crimson-font form-label">Last Name</label>
+                    <input type="text" class="crimson-font form-control" id="inputLastName" name="lastName"/>
                 </div>
 
                 <!-- set datalist to show day options -->
                 <div class="col-md-12">
-                    <label for="inputReservationDay" class="form-label">Day of Reservation</label>
-                    <input type="text" list="reservationDayOptions" class="form-control" id="inputReservationDay"
+                    <label for="inputReservationDay" class="crimson-font form-label">Day of Reservation</label>
+                    <input type="text" list="reservationDayOptions" class="crimson-font form-control" id="inputReservationDay"
                         name="reservationDay" />
                 </div>
                 <datalist id="reservationDayOptions">
@@ -51,8 +78,8 @@
                 </datalist>
 
                 <div class="col-md-4">
-                    <label for="inputReservationHour" class="form-label">Reservation Hour</label>
-                    <select id="inputReservationHour" class="form-select" name="reservationHour">
+                    <label for="inputReservationHour" class="crimson-font form-label">Reservation Hour</label>
+                    <select id="inputReservationHour" class="crimson-font form-select" name="reservationHour">
                         <option selected>Choose...</option>
                         <option>1:00</option>
                         <option>2:00</option>
@@ -70,8 +97,8 @@
                 </div>
 
                 <div class="col-md-4">
-                    <label for="inputReservationMeridiem" class="form-label">Meridiem</label>
-                    <select id="inputReservationMeridiem" class="form-select" name="reservationMeridiem">
+                    <label for="inputReservationMeridiem" class="form-label crimson-font">Meridiem</label>
+                    <select id="inputReservationMeridiem" class="form-select crimson-font" name="reservationMeridiem">
                         <option selected>Choose...</option>
                         <option>AM</option>
                         <option>PM</option>
@@ -80,40 +107,41 @@
 
                 <div class="col-12">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="receiptDownload" name="downloadReceipt" />
-                        <label class="form-check-label" for="receiptDownload">
+                        <input class="form-check-input crimson-font" type="checkbox" id="receiptDownload" name="downloadReceipt" />
+                        <label class="form-check-label crimson-font" for="receiptDownload">
                             Download receipt
                         </label>
                     </div>
                 </div>
 
                 <div id="checkout-button" class="col-12">
-                    <button type="submit" class="btn btn-primary">Checkout</button>
+                    <button type="submit" class="crimson-font btn btn-primary">Checkout</button>
                 </div>
             </form>
         </div>
     </div>
     {% else %}
     <div align="center">
-        <h4>You have no items in your cart!</h4>
-        <a href="/menu" class="btn btn-secondary">View menu</a>
+        <h4 class="crimson-font">You have no items in your cart!</h4>
+        <a href="/menu" class="crimson-font btn btn-secondary">View menu</a>
     </div>
     {% endif %}
-    <div class="row">
-        <div class="col-md-6">
+    <div align="center">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 center" id="searchFormWrapper">
             <form method="post" action="/search_receipt">
                 <div class="form-group row">
-                    <label for="lookUpReceipt" class="col-md-3 col-form-label">Search for receipt</label>
-                    <div class="col-md-3">
+                    <label for="lookUpReceipt" class="crimson-font col-md-3 col-form-label">Search for receipt</label>
+                    <div class="col-md-6">
                         <input type="text" name="look_up_number" pattern="^\d{10}$" minlength="10" maxlength="10"
-                            class="form-control" id="lookUpReceipt" placeholder="Receipt Number" required />
+                            class="crimson-font form-control" id="lookUpReceipt" placeholder="Receipt Number" required />
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="searchReceipt" class="col-sm-3 col-form-label"></label>
                     <div class="col-md-3 text-right">
-                        <button type="submit" class="btn btn-info" id="searchReceipt" name="search_button"
+                        <button type="submit" class="crimson-font btn btn-info" id="searchReceipt" name="search_button"
                             value="clicked">Search</button>
                     </div>
                 </div>

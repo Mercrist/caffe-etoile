@@ -7,7 +7,6 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@200&display=swap" rel="stylesheet" />
-<script type="text/javascript" src="{{url_for('static',filename='testing.js')}}" async></script>
 {% endblock %}
 
 {% block main %}
@@ -16,39 +15,39 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Thank you for your order!</h5>
+        <h5 class="crimson-font modal-title">Thank you for your order!</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="crimson-font modal-body">
         <p>Here's your receipt information:
           Note: Be sure to save your receipt number!
         </p>
         <div class="col">
           <ul class="list-group">
             <li class="list-group-item d-flex align-items-center justify-content-between">
-              <span class="badge bg-info">Item</span>
-              <span class="badge bg-primary">Price</span>
-              <span class="badge bg-danger">Amount</span>
+              <span class="crimson-font badge bg-info">Item</span>
+              <span class="crimson-font badge bg-primary">Price</span>
+              <span class="crimson-font badge bg-danger">Amount</span>
             </li>
             {% for item,amount in receipt.food_items.items() %}
             <li class="list-group-item d-flex align-items-center justify-content-between">
               {{item.title()}}
-              <span class="badge bg-primary">{{ menu.find_one({'name':item.title()}).price }}</span>
-              <span class="badge bg-danger">{{amount}}</span>
+              <span class="crimson-font badge bg-primary">{{ menu.find_one({'name':item.title()}).price }}</span>
+              <span class="crimson-font badge bg-danger">{{amount}}</span>
             </li>
             {% endfor %}
           </ul>
-          <p>Subtotal: ${{'%0.2f'| format(receipt.subtotal | float)}}</p>
-          <p>Tax: ${{'%0.2f'| format(receipt.tax | float)}}</p>
-          <p>Total: ${{'%0.2f'| format(receipt.total | float)}}</p>
+          <p class="crimson-font">Subtotal: ${{'%0.2f'| format(receipt.subtotal | float)}}</p>
+          <p class="crimson-font">Tax: ${{'%0.2f'| format(receipt.tax | float)}}</p>
+          <p class="crimson-font">Total: ${{'%0.2f'| format(receipt.total | float)}}</p>
         </div>
-        <h5>Receipt #{{receipt.receipt_number}}</h5>
-        <h5>Customer Name: {{receipt.name}}</h5>
-        <h5>Reservation date: {{receipt.reservation}} <a class="btn btn-success"
+        <h5 class="crimson-font">Receipt #{{receipt.receipt_number}}</h5>
+        <h5 class="crimson-font">Customer Name: {{receipt.name}}</h5>
+        <h5 class="crimson-font">Reservation date: {{receipt.reservation}} <a class="btn btn-success"
             href='edit_receipt/{{receipt.receipt_number}}'>Edit</a></h5>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="crimson-font btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

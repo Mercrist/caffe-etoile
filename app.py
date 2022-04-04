@@ -225,7 +225,9 @@ def checkout():
     If the form has downloadReceipt set to True, downloads receipt.txt into folder
     """
     cart = model.json_to_cart(session['cart'])
-    if request.form['firstName']:
+    if request.form['lastName']:
+        cart.name = f"{request.form['firstName']} {request.form['lastName']}"
+    else:
         cart.name = request.form['firstName']
     if request.form['reservationDay'] and request.form['reservationHour'] and request.form['reservationMeridiem']:
         day = request.form['reservationDay']

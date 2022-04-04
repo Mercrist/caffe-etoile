@@ -1,0 +1,23 @@
+.crimson-font {
+    font-family: 'Crimson Pro', serif;
+    font-weight: bold;
+ }
+
+ #lookUpReceipt { 
+    width: 100%;
+  }
+
+#searchFormWrapper { 
+    margin-top: 30px;
+ }
+
+ .remove-btn { 
+    position: relative;
+    /*margin-left: 720px;*/
+
+}
+
+body {
+    overflow-x: hidden;
+    background: linear-gradient(0.25turn, #E2E2E2,#C9D6FF);
+}

@@ -97,3 +97,8 @@ output {
 .badge {
     color: whitesmoke;
 }
+
+.crimson-font {
+    font-family: 'Crimson Pro', serif;
+    font-weight: bold;
+ }
