@@ -451,6 +451,6 @@ def receipt_to_json(receipt: Receipt) -> dict:
         "total" : receipt.total(),
         "receipt_number" : receipt.receipt_number(),
         "food_items" : receipt.food_items,
-        "tax_percent" : receipt.tax_percent,
+        "tax" : receipt.tax(),
         "reservation" : str(receipt.reservation)
     }
