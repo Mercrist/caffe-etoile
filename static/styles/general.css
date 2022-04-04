@@ -199,6 +199,10 @@ body.login h3 {
     border-style: solid;
 }
 
+body.order {
+    overflow: hidden;
+}
+
 
 /* Admin Page CSS */
 
