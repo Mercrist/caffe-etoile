@@ -91,3 +91,7 @@ output {
     left: 5 rem;
     top: 1 rem;
  }
+
+ .badge {
+    color: whitesmoke;
+ }
