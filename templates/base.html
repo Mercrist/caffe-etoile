@@ -41,18 +41,24 @@
                 </span>
             </a>
 
-            <a href="{{url_for('order')}}">
-                <img src="{{url_for('static',filename='Images/Icons/cart.png')}}" width="40" height="40"
-                    class="d-inline-block align-top" style="filter: invert(100%);" alt="">
-            </a>
 
             <!-- Collapsable content -->
             <div class="collapse" id="navbarToggleExternalContent">
-                <div id="Links" class="bg-dark p-4">
-                    <a href="{{url_for('index')}}">Home</a>
-                    <a href="{{url_for('about')}}">About</a>
-                    <a href="{{url_for('contact')}}">Contact</a>
+                <div class="links-nav">
+                    <div id="Links" class="bg-dark p-4">
+                        <a href="{{url_for('index')}}">Home</a>
+                        <a href="{{url_for('about')}}">About</a>
+                        <a href="{{url_for('contact')}}">Contact</a>
+                    </div>
                 </div>
+            </div>
+
+            <!-- Shopping cart icon -->
+            <div class="shopping-cart">
+                <a href="{{url_for('order')}}">
+                    <img src="{{url_for('static', filename='Images/Icons/cart.png')}}" width="40" height="40"
+                        class="d-inline-block align-top" style="filter: invert(100%);" alt="">
+                </a>
             </div>
 
             <!-- Button -->
