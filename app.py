@@ -1,9 +1,6 @@
 from flask import Flask, url_for, redirect, request, render_template, make_response, Response, session, flash
-from flask_pymongo import PyMongo
-from Classes import Statics as local_data
-from model import json_to_cart, receipt_to_json
 from model import ShoppingCart, Receipt
-import json
+from flask_pymongo import PyMongo
 import model
 import bcrypt
 
@@ -48,18 +45,19 @@ def menu():
     if request.args.get('checked_out') or request.args.get('search'):
         receipt_number = request.args.get('receipt')
         receipt = db.receipts.find_one({"receipt_number":receipt_number})
-        return render_template("menu.html", 
-            database=db, 
+        return render_template("menu.html",
+            database=db,
             categories=model.categories,
             checked_out=True,
             receipt=receipt,
             menu=db.menu)
-        
+
     if request.args.get('added'):
         flash('Added items to cart!','info')
-    return render_template("menu.html", 
+
+    return render_template("menu.html",
         database = db,
-        categories=model.categories, 
+        categories=model.categories,
         checked_out=False)
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -110,7 +108,7 @@ def admin(username):
         db.menu.insert_one(new_item)
         flash(f"{new_item['name']} was added to the menu!", "success")
 
-
+    # removes an item from the menu
     elif 'remove_item_button' in request.form and request.form['remove_item_button'] == "clicked":
         item_name = request.form['remove_item_name']
         if not db.menu.find_one_and_delete({'name': item_name}):
@@ -119,6 +117,7 @@ def admin(username):
         else:
             flash(f"{item_name} was removed from the menu!", "success")
 
+    # refund a receipt
     elif 'remove_receipt_button' in request.form and request.form['remove_receipt_button'] == "clicked":
         receipt_number = request.form['remove_receipt_number']
 
@@ -128,12 +127,15 @@ def admin(username):
         else:
             flash(f"Receipt #{receipt_number} was removed from our logs!", "success")
 
+    # reset the menu
     elif 'reset_menu_button' in request.form and request.form['reset_menu_button'] == "clicked":
         model.reset_menu_collection()
 
+    # reset receipts
     elif 'reset_reservation_button' in request.form and request.form['reset_reservation_button'] == "clicked":
         model.reset_receipts_collection()
 
+    # remove an existing user account
     elif 'delete_account_button' in request.form and request.form['delete_account_button'] == 'clicked':
         username_to_remove = request.form['username_to_remove']
 
@@ -146,6 +148,7 @@ def admin(username):
         else:
             flash("Account removed succesfully!", "success")
 
+    # updates an existing password
     elif 'new_password_button' in request.form and request.form['new_password_button'] == 'clicked':
         hashed_pswd = model.encrypt_pswd(request.form['confirm_password_input'])
 
@@ -155,6 +158,7 @@ def admin(username):
 
         flash("Password updated succesfully!", "success")
 
+    # creates a new account
     elif 'add_account_button' in request.form and request.form['add_account_button'] == 'clicked':
         local_username = request.form['new_acc_username']
         new_password = request.form['confirm_new_password']
@@ -170,7 +174,7 @@ def admin(username):
             flash("Account username already in use!", "danger")
 
     return render_template("admin.html", username=username, categories=model.categories)
-   
+
 
 @app.route("/order",methods=['GET','POST'])
 def order():
@@ -184,7 +188,7 @@ def add_to_cart(item_name):
         session['cart'] = vars(ShoppingCart("User"))
 
     amount = int(request.form['amount'])
-    cart = json_to_cart(session['cart'])
+    cart = model.json_to_cart(session['cart'])
     cart.add_items(item_name,amount)
     session.pop('cart')
     session['cart'] = vars(cart)
@@ -194,7 +198,7 @@ def add_to_cart(item_name):
 
 @app.route('/checkout',methods=["POST"])
 def checkout():
-    cart = json_to_cart(session['cart']) 
+    cart = model.json_to_cart(session['cart'])
     if request.form['firstName']:
         cart.name = request.form['firstName']
     if request.form['reservationDay'] and request.form['reservationHour'] and request.form['reservationMeridiem']:
@@ -206,8 +210,8 @@ def checkout():
     receipt = Receipt(cart.cart,cart.reservation,cart.name,cart.subtotal)
     if 'receipts' not in db.list_collection_names():
         db.create_collection('receipts')
-    json_receipt = receipt_to_json(receipt)
-    db.receipts.insert_one(json_receipt) 
+    json_receipt = model.receipt_to_json(receipt)
+    db.receipts.insert_one(json_receipt)
     if request.form.get('downloadReceipt'):
         receipt.generate_receipt()
 
