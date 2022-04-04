@@ -43,6 +43,7 @@
           <p>Total: ${{'%0.2f'| format(receipt.total | float)}}</p>
         </div>
         <h5>Receipt #{{receipt.receipt_number}}</h5>
+        <h5>Customer Name: {{receipt.name}}</h5>
         <h5>Reservation date: {{receipt.reservation}} <a class="btn btn-success"
             href='edit_receipt/{{receipt.receipt_number}}'>Edit</a></h5>
       </div>

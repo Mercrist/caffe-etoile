@@ -42,6 +42,14 @@ def contact():
 
 @app.route('/menu')
 def menu():
+    """
+    Menu endpoint.
+
+    If the POST request includes a checked_out or search header,
+    render a modal for the receipt. 
+
+    Otherwise render regular menu.
+    """
     if request.args.get('checked_out') or request.args.get('search'):
         receipt_number = request.args.get('receipt')
         receipt = db.receipts.find_one({"receipt_number":receipt_number})
@@ -178,12 +186,23 @@ def admin(username):
 
 @app.route("/order",methods=['GET','POST'])
 def order():
+    """
+    Order endpoint.
+
+    Renders order with cart in session cookie.
+    """
     if "cart" not in session:
         session['cart'] = vars(ShoppingCart("User"))
     return render_template("order.html", cart=session['cart'])
 
 @app.route('/add_to_cart/<string:item_name>',methods=['POST'])
 def add_to_cart(item_name):
+    """
+    add_to_cart endpoint.
+
+    Takes amount to add from the request's form and adds it to the session cart. 
+    Redirects to menu with the request header added.
+    """
     if 'cart' not in session:
         session['cart'] = vars(ShoppingCart("User"))
 
@@ -198,6 +217,13 @@ def add_to_cart(item_name):
 
 @app.route('/checkout',methods=["POST"])
 def checkout():
+    """
+    checkout endpoint.
+
+    Takes values from form to set the cart's reservation.
+    Then generates a receipt and pushes it to the receipts collection in the database.
+    If the form has downloadReceipt set to True, downloads receipt.txt into folder
+    """
     cart = model.json_to_cart(session['cart'])
     if request.form['firstName']:
         cart.name = request.form['firstName']
@@ -222,5 +248,10 @@ def checkout():
 
 @app.route("/search_receipt",methods=["POST"])
 def search_receipt():
+    """
+    search_receipt endpoint.
+
+    Takes the receipt number and redirects to menu with search header as True.
+    """
     receipt_number = request.form['look_up_number']
     return redirect(url_for('menu',receipt=receipt_number,search=True))
