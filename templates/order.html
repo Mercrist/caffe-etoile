@@ -3,7 +3,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:wght@500&display=swap" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet" />
-{% endblock %} {% block main %}
+{% endblock %}
+
+{% block bodyclass %}class="order"{% endblock %}
+
+{% block main %}
+
 <body>
     <h1>Items in cart:</h1>
     {% if cart.cart %}
@@ -32,7 +37,8 @@
                 <!-- set datalist to show day options -->
                 <div class="col-md-12">
                     <label for="inputReservationDay" class="form-label">Day of Reservation</label>
-                    <input type="text" list="reservationDayOptions" class="form-control" id="inputReservationDay" name="reservationDay" />
+                    <input type="text" list="reservationDayOptions" class="form-control" id="inputReservationDay"
+                        name="reservationDay" />
                 </div>
                 <datalist id="reservationDayOptions">
                     <option value="Sunday"> </option>
@@ -89,8 +95,8 @@
     </div>
     {% else %}
     <div align="center">
-       <h4>You have no items in your cart!</h4>
-        <a href="/menu" class="btn btn-secondary">View menu</a> 
+        <h4>You have no items in your cart!</h4>
+        <a href="/menu" class="btn btn-secondary">View menu</a>
     </div>
     {% endif %}
     <div class="row">
@@ -99,18 +105,20 @@
                 <div class="form-group row">
                     <label for="lookUpReceipt" class="col-md-3 col-form-label">Search for receipt</label>
                     <div class="col-md-3">
-                        <input type="text" name="look_up_number" pattern="^\d{10}$" minlength="10" maxlength="10" class="form-control" id="lookUpReceipt" placeholder="Receipt Number" required />
+                        <input type="text" name="look_up_number" pattern="^\d{10}$" minlength="10" maxlength="10"
+                            class="form-control" id="lookUpReceipt" placeholder="Receipt Number" required />
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="searchReceipt" class="col-sm-3 col-form-label"></label>
                     <div class="col-md-3 text-right">
-                        <button type="submit" class="btn btn-info" id="searchReceipt" name="search_button" value="clicked">Search</button>
+                        <button type="submit" class="btn btn-info" id="searchReceipt" name="search_button"
+                            value="clicked">Search</button>
                     </div>
                 </div>
             </form>
         </div>
-    </div> 
+    </div>
 </body>
-{% endblock %} {% block navbartype %}bottom{% endblock %}
+{% endblock %} {% block navbartype %}fixed-bottom{% endblock %}

@@ -1,5 +1,5 @@
 from datetime import datetime, timezone
-from .Statics import Reservation, menu   
+from Statics import Reservation, menu
 from collections import defaultdict
 from tabulate import tabulate
 import hashlib
@@ -7,10 +7,10 @@ from dataclasses import dataclass
 
 @dataclass
 class ShoppingCart:
-    """ 
-    A class that represents the customers' shopping 
+    """
+    A class that represents the customers' shopping
     cart. It contains their name, the current items added to the
-    cart along with the items' quantity, the current subtotal, 
+    cart along with the items' quantity, the current subtotal,
     and the date of a reservation if any was made.
 
     Attributes:
@@ -35,7 +35,7 @@ class ShoppingCart:
 
         if not name or not name.strip():
             raise ValueError("Customer name cannot be empty!")
-        
+
         for names in name.split():
             if not names.isalpha():
                 raise ValueError("Customer name must not have special characters or numbers!")
@@ -67,7 +67,7 @@ class ShoppingCart:
 
         cart_string += table + "\n\n" + f"Current subtotal: ${self.subtotal:.2f}" + "\n" + f"Reservation: {self.reservation}" + "\n\n" #format string
         return cart_string
-    
+
     def add_items(self, item:str, amount_to_add:int=1)->None:
         """Adds a food item to the shopping cart along with the quantity the user desires to order.
 
@@ -82,7 +82,7 @@ class ShoppingCart:
         """
         if type(item) != str:
             raise TypeError("Menu item must be a valid string!")
-        
+
         original_string = item #needed so that the error string returned isn't formatted
         item = item.lower()
 
@@ -109,16 +109,16 @@ class ShoppingCart:
             amount_to_remove (int, optional): The amount of items to remove from the cart. Defaults to 1.
 
         Raises:
-            TypeError: Raised if the food item to remove from the cart isn't a string or if the amount of items to remove isn't 
+            TypeError: Raised if the food item to remove from the cart isn't a string or if the amount of items to remove isn't
                         an integer.
-            ValueError: Raised if the food item isn't present in the cart, if the customer attemps to remove more than 
-                        the maximum or minimum allowed, or if the amount of food items to remove all is greater than the 
+            ValueError: Raised if the food item isn't present in the cart, if the customer attemps to remove more than
+                        the maximum or minimum allowed, or if the amount of food items to remove all is greater than the
                         current amount of items in the cart.
         """
         if type(item) != str: # Verifying if item to add is valid
             raise TypeError(f"The item to be removed must be a string!")
 
-        original_string = item 
+        original_string = item
         item = item.lower()
 
         if item not in self.cart:
@@ -126,13 +126,13 @@ class ShoppingCart:
 
         # Verifying if the amount to remove is valid and its edge cases
         amount_in_cart = self.cart.get(item)
-        
+
         if type(amount_to_remove) != int:
             raise TypeError("The amount of items to be removed must be a whole integer!")
 
         if amount_to_remove < 1 or amount_to_remove > 10:
             raise ValueError("Can't remove more items than the maximum or minimum allowed!")
-    
+
         if amount_to_remove > amount_in_cart:
             raise ValueError("Can't remove more items than currently present in the cart!")
 
@@ -142,7 +142,7 @@ class ShoppingCart:
         else:
             self.cart[item] -= amount_to_remove
 
-        self.subtotal -= menu.get(item).price*amount_to_remove 
+        self.subtotal -= menu.get(item).price*amount_to_remove
 
     def set_reservation(self, day:str, hour:str, meridiem:str)->None:
         """Sets a cafe reservation on the given date.
@@ -167,9 +167,9 @@ class ShoppingCart:
             raise ValueError("You can't clear empty reservations!")
 
 class Receipt:
-    """ 
+    """
     A class that represents the customers' order receipt. Based
-    on their final order after payment, contains all information 
+    on their final order after payment, contains all information
     based on their order info: the items and quantities purchased,
     the reservation date if any was made, the customers' name, and
     their subtotal.
@@ -197,12 +197,12 @@ class Receipt:
                        the customer name isn't a string, or the subtotal isn't a float or integer.
 
             ValueError: Raised if the food items' dictionary is empty or contains invalid keys or values, the customer
-                        name contains non alphanumeric characters or is empty, or if the subtotal is less than 
+                        name contains non alphanumeric characters or is empty, or if the subtotal is less than
                         or equals to zero. All orders must have a positive, non zero subtotal.
         """
         if type(food_items) not in [dict, defaultdict]:
             raise TypeError(f"Items must be a dictionary. Given type: {type(food_items)}")
-            
+
         if type(reservation) is not Reservation and reservation is not None: #Reservations can be None
             raise TypeError(f"Error: Reservations must be Reservation type. Given type: {type(reservation)}")
 
@@ -227,8 +227,8 @@ class Receipt:
 
         self.food_items = food_items
         self.reservation = reservation
-        self.name = name 
-        self.subtotal = subtotal 
+        self.name = name
+        self.subtotal = subtotal
         self.tax_percent = 10.25/100
 
     def tax(self)->float:
@@ -240,29 +240,29 @@ class Receipt:
         return round(self.subtotal * self.tax_percent, 2)
 
     def total(self)->float:
-        """Calculates the customers' final order total. By definition, 
+        """Calculates the customers' final order total. By definition,
            the final total is the sum of the order subtotal combined
            with its corresponding sales tax.
 
         Returns:
             float: The final total of the customers' order.
         """
-        return self.subtotal + self.tax() 
+        return self.subtotal + self.tax()
 
-    def receipt_number(self)->str: 
-        """Generates a 10 digit receipt number for the current order. 
-           Every receipt must have a unique, corresponding receipt number 
+    def receipt_number(self)->str:
+        """Generates a 10 digit receipt number for the current order.
+           Every receipt must have a unique, corresponding receipt number
            which can be recreated given the customers' order info.
            Generated by taking the first four digits of the customers'
            name hash, the first three digits of the total order's value in
-           pennies, and the number of unique items ordered. 
-        
+           pennies, and the number of unique items ordered.
+
         Returns:
-            str: The current receipts' unique receipt number, as a string. 
+            str: The current receipts' unique receipt number, as a string.
         """
 
         def simple_hash(name:str)->str:
-            """Calculates a simple hash given a string using RSA's MD5 
+            """Calculates a simple hash given a string using RSA's MD5
                algorithm. Unlike the built in hash function, this guarantees
                a constant hash across sessions.
 
@@ -276,10 +276,10 @@ class Receipt:
             md5_hash = hashlib.md5()
             md5_hash.update(name)
             return str(int(md5_hash.hexdigest(), 16))[:4] #converts to hex, converts to the equivalent int, gets first four digits
-        
+
         def to_pennies(order_total:float)->str:
             """Converts the order's total from USD to pennies.
-               Since the cheapest item in the menu is a dollar, 
+               Since the cheapest item in the menu is a dollar,
                this is always guaranteed to be at least three digits
                long.
 
@@ -293,8 +293,8 @@ class Receipt:
 
         def first_three_length_cart(items_ordered:int)->str:
             """Calculates the final three digits in the receipt number
-               by getting the amount of unique items ordered. 
-               If this amount is less than three, fills in the 
+               by getting the amount of unique items ordered.
+               If this amount is less than three, fills in the
                remaining digits to the left with zeros.
 
             Args:
@@ -320,9 +320,9 @@ class Receipt:
 
     def generate_receipt(self)->None:
         """Writes the final receipt to a text file within the current directory.
-           Displays the receipt's attributes, orders, and more such as: 
-           items ordered with their quantities, the totals, the receipt number, 
-           the time at which the order was placed, the customer's name, 
+           Displays the receipt's attributes, orders, and more such as:
+           items ordered with their quantities, the totals, the receipt number,
+           the time at which the order was placed, the customer's name,
            and the reservation date.
         """
         receipt_string = "CAFFÈ ÉTOILÉ\n"
@@ -330,15 +330,15 @@ class Receipt:
         receipt_rows = []
         for food_order, quantity in self.food_items.items():
             receipt_rows.append([menu.get(food_order.lower()).name, quantity, f"${menu.get(food_order.lower()).price:.2f}"]) #item name, amount, and price
-        
+
         receipt_body = tabulate(
             receipt_rows,
-            headers=["Items", "Amount", "Price"], 
+            headers=["Items", "Amount", "Price"],
             stralign="left",
             numalign="center",
             tablefmt="psql"
         )
-        
+
         receipt_string += receipt_body + "\n\n"
 
         #Price calculations
@@ -355,8 +355,7 @@ class Receipt:
         time_string = local_time_obj.strftime("%m-%d-%Y at %I:%M %p") #get current/local time as 12-hour string
 
         receipt_string += payments + "\n\n" + f"Customer: {self.name}\n" + f"Receipt Number: #{self.receipt_number()}\n" + f"Reservation: {self.reservation}\n" \
-                         f"Time Generated: {time_string}\n\n" + "Thanks for stopping by!" 
+                         f"Time Generated: {time_string}\n\n" + "Thanks for stopping by!"
 
         with open("receipt.txt", "w", encoding='utf-8') as receipt_file: #write receipt to text file, utf-8 for special characters
             receipt_file.write(receipt_string)
-        
