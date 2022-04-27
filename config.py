@@ -1,4 +1,4 @@
 import os
-SECRET_KEY = os.urandom(16).hex()
-MONGO_DBNAME = 'mainframe'
-MONGO_URI = f"mongodb+srv://mainframe:WlZZs0TzAwc9j2IN@cluster0.ftsgg.mongodb.net/{MONGO_DBNAME}?retryWrites=true&w=majority"
+SECRET_KEY = os.environ.get('SECRET_KEY')
+MONGO_DBNAME = os.environ.get('MONGO_DBNAME')
+MONGO_URI = os.environ.get('MONGO_URI')
